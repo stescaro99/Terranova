@@ -19,7 +19,6 @@ using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using JsonException = System.Text.Json.JsonException;
 
-
 namespace CocktailDebacle
 {
     public class Program
@@ -54,14 +53,14 @@ namespace CocktailDebacle
             }
             else
             {
-                url += "filter.php?c=Cocktail"; // This will fetch all cocktails
+                url += "random.php";
             }
 
             var response = await client.GetStringAsync(url);
 
             try
             {
-                var data = JsonSerializer.Deserialize<CocktailFilterResponse>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                var data = JsonSerializer.Deserialize<CocktailApiResponse>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 Console.WriteLine("\nCocktails retrieved from API:");
                 if (data?.Drinks != null && data.Drinks.Count > 0)
@@ -75,9 +74,25 @@ namespace CocktailDebacle
                         {
                             var detailedDrink = detailData.Drinks[0];
                             Console.WriteLine($"- {detailedDrink.StrDrink}: {detailedDrink.StrInstructions}");
+                            Console.WriteLine("Ingredients:");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient1)) Console.WriteLine($"  - {detailedDrink.StrIngredient1}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient2)) Console.WriteLine($"  - {detailedDrink.StrIngredient2}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient3)) Console.WriteLine($"  - {detailedDrink.StrIngredient3}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient4)) Console.WriteLine($"  - {detailedDrink.StrIngredient4}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient5)) Console.WriteLine($"  - {detailedDrink.StrIngredient5}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient6)) Console.WriteLine($"  - {detailedDrink.StrIngredient6}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient7)) Console.WriteLine($"  - {detailedDrink.StrIngredient7}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient8)) Console.WriteLine($"  - {detailedDrink.StrIngredient8}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient9)) Console.WriteLine($"  - {detailedDrink.StrIngredient9}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient10)) Console.WriteLine($"  - {detailedDrink.StrIngredient10}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient11)) Console.WriteLine($"  - {detailedDrink.StrIngredient11}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient12)) Console.WriteLine($"  - {detailedDrink.StrIngredient12}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient13)) Console.WriteLine($"  - {detailedDrink.StrIngredient13}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient14)) Console.WriteLine($"  - {detailedDrink.StrIngredient14}");
+                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient15)) Console.WriteLine($"  - {detailedDrink.StrIngredient15}");
                         }
 
-                        // deley per evitare le troppe richieste in poco tempo
+                        // Delay to avoid too many requests in a short time
                         await Task.Delay(500);
                     }
                 }
@@ -85,6 +100,7 @@ namespace CocktailDebacle
                 {
                     Console.WriteLine("No cocktails found.");
                 }
+                Console.WriteLine();
             }
             catch (JsonException ex)
             {
@@ -117,19 +133,29 @@ namespace CocktailDebacle
         public class CocktailData
         {
             public string StrDrink { get; set; } = string.Empty;
+
+            public string IdDrink { get; set; } = string.Empty;
             public string StrInstructions { get; set; } = string.Empty;
+            public string StrIngredient1 { get; set; } = string.Empty;
+            public string StrIngredient2 { get; set; } = string.Empty;
+            public string StrIngredient3 { get; set; } = string.Empty;
+            public string StrIngredient4 { get; set; } = string.Empty;
+            public string StrIngredient5 { get; set; } = string.Empty;
+            public string StrIngredient6 { get; set; } = string.Empty;
+            public string StrIngredient7 { get; set; } = string.Empty;
+            public string StrIngredient8 { get; set; } = string.Empty;
+            public string StrIngredient9 { get; set; } = string.Empty;
+            public string StrIngredient10 { get; set; } = string.Empty;
+            public string StrIngredient11 { get; set; } = string.Empty;
+            public string StrIngredient12 { get; set; } = string.Empty;
+            public string StrIngredient13 { get; set; } = string.Empty;
+            public string StrIngredient14 { get; set; } = string.Empty;
+            public string StrIngredient15 { get; set; } = string.Empty;
         }
-    }
 
-    public class CocktailApiResponse
-    {
-        public List<CocktailData> Drinks { get; set; } = new List<CocktailData>();
-    }
-
-
-    public class CocktailData
-    {
-        public string StrDrink { get; set; } = string.Empty;
-        public string StrInstructions { get; set; } = string.Empty;
+        public class CocktailApiResponse
+        {
+            public List<CocktailData> Drinks { get; set; } = new List<CocktailData>();
+        }
     }
 }
