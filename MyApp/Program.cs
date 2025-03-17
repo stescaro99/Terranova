@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Xunit;
@@ -75,21 +76,14 @@ namespace CocktailDebacle
                             var detailedDrink = detailData.Drinks[0];
                             Console.WriteLine($"- {detailedDrink.StrDrink}: {detailedDrink.StrInstructions}");
                             Console.WriteLine("Ingredients:");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient1)) Console.WriteLine($"  - {detailedDrink.StrIngredient1}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient2)) Console.WriteLine($"  - {detailedDrink.StrIngredient2}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient3)) Console.WriteLine($"  - {detailedDrink.StrIngredient3}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient4)) Console.WriteLine($"  - {detailedDrink.StrIngredient4}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient5)) Console.WriteLine($"  - {detailedDrink.StrIngredient5}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient6)) Console.WriteLine($"  - {detailedDrink.StrIngredient6}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient7)) Console.WriteLine($"  - {detailedDrink.StrIngredient7}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient8)) Console.WriteLine($"  - {detailedDrink.StrIngredient8}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient9)) Console.WriteLine($"  - {detailedDrink.StrIngredient9}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient10)) Console.WriteLine($"  - {detailedDrink.StrIngredient10}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient11)) Console.WriteLine($"  - {detailedDrink.StrIngredient11}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient12)) Console.WriteLine($"  - {detailedDrink.StrIngredient12}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient13)) Console.WriteLine($"  - {detailedDrink.StrIngredient13}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient14)) Console.WriteLine($"  - {detailedDrink.StrIngredient14}");
-                            if (!string.IsNullOrEmpty(detailedDrink.StrIngredient15)) Console.WriteLine($"  - {detailedDrink.StrIngredient15}");
+                            for (int i = 0; i < detailedDrink.Ingredients.Length; i++)
+                            {
+                                if (!string.IsNullOrEmpty(detailedDrink.Ingredients[i]))
+                                {
+                                    Console.WriteLine($"  - {detailedDrink.Ingredients[i]}");
+                                }
+                            }
+                            Console.WriteLine();
                         }
 
                         // Delay to avoid too many requests in a short time
@@ -132,25 +126,78 @@ namespace CocktailDebacle
 
         public class CocktailData
         {
-            public string StrDrink { get; set; } = string.Empty;
-
             public string IdDrink { get; set; } = string.Empty;
+            public string StrDrink { get; set; } = string.Empty;
             public string StrInstructions { get; set; } = string.Empty;
-            public string StrIngredient1 { get; set; } = string.Empty;
-            public string StrIngredient2 { get; set; } = string.Empty;
-            public string StrIngredient3 { get; set; } = string.Empty;
-            public string StrIngredient4 { get; set; } = string.Empty;
-            public string StrIngredient5 { get; set; } = string.Empty;
-            public string StrIngredient6 { get; set; } = string.Empty;
-            public string StrIngredient7 { get; set; } = string.Empty;
-            public string StrIngredient8 { get; set; } = string.Empty;
-            public string StrIngredient9 { get; set; } = string.Empty;
-            public string StrIngredient10 { get; set; } = string.Empty;
-            public string StrIngredient11 { get; set; } = string.Empty;
-            public string StrIngredient12 { get; set; } = string.Empty;
-            public string StrIngredient13 { get; set; } = string.Empty;
-            public string StrIngredient14 { get; set; } = string.Empty;
-            public string StrIngredient15 { get; set; } = string.Empty;
+
+            private string[] ingredients = new string[10];
+            public string[] Ingredients
+            {
+                get
+                {
+                    return ingredients;
+                }
+            }
+
+            [JsonPropertyName("strIngredient1")]
+            public string StrIngredient1
+            {
+                set { ingredients[0] = value; }
+            }
+
+            [JsonPropertyName("strIngredient2")]
+            public string StrIngredient2
+            {
+                set { ingredients[1] = value; }
+            }
+
+            [JsonPropertyName("strIngredient3")]
+            public string StrIngredient3
+            {
+                set { ingredients[2] = value; }
+            }
+
+            [JsonPropertyName("strIngredient4")]
+            public string StrIngredient4
+            {
+                set { ingredients[3] = value; }
+            }
+
+            [JsonPropertyName("strIngredient5")]
+            public string StrIngredient5
+            {
+                set { ingredients[4] = value; }
+            }
+
+            [JsonPropertyName("strIngredient6")]
+            public string StrIngredient6
+            {
+                set { ingredients[5] = value; }
+            }
+
+            [JsonPropertyName("strIngredient7")]
+            public string StrIngredient7
+            {
+                set { ingredients[6] = value; }
+            }
+
+            [JsonPropertyName("strIngredient8")]
+            public string StrIngredient8
+            {
+                set { ingredients[7] = value; }
+            }
+
+            [JsonPropertyName("strIngredient9")]
+            public string StrIngredient9
+            {
+                set { ingredients[8] = value; }
+            }
+
+            [JsonPropertyName("strIngredient10")]
+            public string StrIngredient10
+            {
+                set { ingredients[9] = value; }
+            }
         }
 
         public class CocktailApiResponse
