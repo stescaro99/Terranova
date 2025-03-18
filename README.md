@@ -30,19 +30,19 @@ Preparare una documentazione iniziale con le specifiche tecniche e funzionali.
 2.2 Creazione del progetto
 
 
-Avviare un nuovo progetto ASP.NET Core Web API.
+~~Avviare un nuovo progetto ASP.NET Core Web API.~~
 
 
 Strutturare il progetto in modo modulare:
 
 
-Models: Definire le entità (User, Cocktail, Ingredient).
+Models: Definire le entità (User, ~~Cocktail~~, Ingredient).
 
 
 DTOs: Creare i Data Transfer Objects per evitare esposizione diretta delle entità.
 
 
-Controllers: Implementare i controller API (AuthController, CocktailController, UserController).
+Controllers: Implementare i controller API (AuthController, ~~CocktailController~~, UserController).
 
 
 Services: Creare servizi per la business logic.
@@ -66,7 +66,7 @@ Definire le entità:
 User (Id, Email, PasswordHash, Preferenze)
 
 
-Cocktail (Id, Nome, Ingredienti, Categoria, Immagine)
+~~Cocktail (Id, Nome, Ingredienti, Categoria, Immagine)~~
 
 
 FavoriteCocktail (UserId, CocktailId)
