@@ -12,19 +12,19 @@ Preparare una documentazione iniziale con le specifiche tecniche e funzionali.
 ~~Installare SQL Server Express e SQL Server Management Studio (SSMS).~~
 ~~Creare un repository Git per il backend.~~
 2.2 Creazione del progetto
-Avviare un nuovo progetto ASP.NET Core Web API.
+~~Avviare un nuovo progetto ASP.NET Core Web API.~~
 Strutturare il progetto in modo modulare:
-Models: Definire le entità (User, Cocktail, Ingredient).
+Models: Definire le entità (User, ~~Cocktail~~, Ingredient).
 DTOs: Creare i Data Transfer Objects per evitare esposizione diretta delle entità.
-Controllers: Implementare i controller API (AuthController, CocktailController, UserController).
+Controllers: Implementare i controller API (AuthController, ~~CocktailController~~, UserController).
 Services: Creare servizi per la business logic.
 Repositories: Implementare pattern Repository per la gestione del database.
 2.3 Database e connessione
-Configurare Entity Framework Core con SQL Server.
+~~Configurare Entity Framework Core con SQL Server.~~
 Creare il DbContext e le migrazioni (dotnet ef migrations add InitialCreate).
 Definire le entità:
 User (Id, Email, PasswordHash, Preferenze)
-Cocktail (Id, Nome, Ingredienti, Categoria, Immagine)
+~~Cocktail (Id, Nome, Ingredienti, Categoria, Immagine)~~
 FavoriteCocktail (UserId, CocktailId)
 2.4 Implementazione API
 Autenticazione JWT per la gestione degli utenti (login, registrazione, token JWT).
