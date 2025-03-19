@@ -42,7 +42,7 @@ namespace CocktailDebacle.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cocktails");
+                    b.ToTable("Cocktails", (string)null);
                 });
 #pragma warning restore 612, 618
         }

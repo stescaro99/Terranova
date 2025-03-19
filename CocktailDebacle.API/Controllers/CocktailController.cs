@@ -38,17 +38,3 @@ public class CocktailController : ControllerBase
         return CreatedAtAction(nameof(GetCocktailById), new { id = newCocktail.Id }, newCocktail);
     }
 }
-
-// Modello per il cocktail
-public class Cocktail
-{
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Ingredients { get; set; } = string.Empty;
-    public string Category { get; set; } = string.Empty;
-    public string ImageUrl { get; set; } = string.Empty;
-    public bool IsAlcoholic => Category.Equals("Alcoholic", StringComparison.OrdinalIgnoreCase);
-    public string Creator { get; set; } = string.Empty;
-    // prezzo medio da cercare in base al paese/citta' (non presente nell'API, collegare un'AI?)
-    // public string Price { get; set; } = string.Empty;
-}

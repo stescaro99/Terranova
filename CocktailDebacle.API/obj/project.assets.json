@@ -5174,11 +5174,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mp20t\\Desktop\\CocktailDebacle.API\\CocktailDebacle.API.csproj",
+      "projectUniqueName": "C:\\Users\\mp20t\\Desktop\\Terranova\\CocktailDebacle.API\\CocktailDebacle.API.csproj",
       "projectName": "CocktailDebacle.API",
-      "projectPath": "C:\\Users\\mp20t\\Desktop\\CocktailDebacle.API\\CocktailDebacle.API.csproj",
+      "projectPath": "C:\\Users\\mp20t\\Desktop\\Terranova\\CocktailDebacle.API\\CocktailDebacle.API.csproj",
       "packagesPath": "C:\\Users\\mp20t\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mp20t\\Desktop\\CocktailDebacle.API\\obj\\",
+      "outputPath": "C:\\Users\\mp20t\\Desktop\\Terranova\\CocktailDebacle.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mp20t\\AppData\\Roaming\\NuGet\\NuGet.Config"
