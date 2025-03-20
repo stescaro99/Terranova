@@ -130,7 +130,7 @@ namespace CocktailDebacle
             public string StrDrink { get; set; } = string.Empty;
             public string StrInstructions { get; set; } = string.Empty;
 
-            private string[] ingredients = new string[10];
+            private string[] ingredients = new string[15];
             public string[] Ingredients
             {
                 get
@@ -197,6 +197,36 @@ namespace CocktailDebacle
             public string StrIngredient10
             {
                 set { ingredients[9] = value; }
+            }
+
+            [JsonPropertyName("strIngredient11")]
+            public string StrIngredient11
+            {
+                set { ingredients[10] = value; }
+            }
+
+            [JsonPropertyName("strIngredient12")]
+            public string StrIngredient12
+            {
+                set { ingredients[11] = value; }
+            }
+
+            [JsonPropertyName("strIngredient13")]
+            public string StrIngredient13
+            {
+                set { ingredients[12] = value; }
+            }
+
+            [JsonPropertyName("strIngredient14")]
+            public string StrIngredient14
+            {
+                set { ingredients[13] = value; }
+            }
+
+            [JsonPropertyName("strIngredient15")]
+            public string StrIngredient15
+            {
+                set { ingredients[14] = value; }
             }
         }
 

@@ -1,40 +1,67 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 [ApiController]
 [Route("api/[controller]")]
 public class CocktailController : ControllerBase
 {
-    private static readonly List<Cocktail> cocktails = new()
-    {
-        new Cocktail { Id = 1, Name = "Margarita", Ingredients = "Tequila, Lime, Triple Sec", Category = "Alcoholic" },
-        new Cocktail { Id = 2, Name = "Mojito", Ingredients = "Rum, Mint, Sugar, Lime, Soda", Category = "Alcoholic" },
-        new Cocktail { Id = 3, Name = "Virgin Colada", Ingredients = "Pineapple, Coconut Milk", Category = "Non-Alcoholic" }
-    };
+	private readonly CocktailDbContext _context;
 
-    [HttpGet]
-    public IActionResult GetCocktails()
-    {
-        return Ok(cocktails);
-    }
+	public CocktailController(CocktailDbContext context)
+	{
+		_context = context;
+	}
 
-    [HttpGet("{id}")]
-    public IActionResult GetCocktailById(int id)
-    {
-        var cocktail = cocktails.FirstOrDefault(c => c.Id == id);
-        if (cocktail == null)
-            return NotFound($"Cocktail with ID {id} not found");
+	[HttpGet]
+	public async Task<IActionResult> GetCocktails()
+	{
+		var cocktails = await _context.Cocktails.ToListAsync();
+		return Ok(cocktails);
+	}
 
-        return Ok(cocktail);
-    }
+	[HttpGet("{id}")]
+	public async Task<IActionResult> GetCocktailById(int id)
+	{
+		var cocktail = await _context.Cocktails.FirstOrDefaultAsync(c => c.Id == id);
+		if (cocktail == null)
+			return NotFound($"Cocktail with ID {id} not found");
 
-    [HttpPost]
-    public IActionResult AddCocktail([FromBody] Cocktail newCocktail)
-    {
-        if (newCocktail == null)
-            return BadRequest("Invalid cocktail data");
+		return Ok(cocktail);
+	}
 
-        newCocktail.Id = cocktails.Count + 1;
-        cocktails.Add(newCocktail);
-        return CreatedAtAction(nameof(GetCocktailById), new { id = newCocktail.Id }, newCocktail);
-    }
+	[HttpPost]
+	public async Task<IActionResult> AddCocktail([FromBody] Cocktail newCocktail)
+	{
+		if (newCocktail == null)
+			return BadRequest("Invalid cocktail data");
+
+		_context.Cocktails.Add(newCocktail);
+		await _context.SaveChangesAsync();
+
+		return CreatedAtAction(nameof(GetCocktailById), new { id = newCocktail.Id }, newCocktail);
+	}
+
+	[HttpPost("populate")]
+	public async Task<IActionResult> PopulateCocktails([FromServices] CocktailApiService apiService, [FromServices] CocktailDbContext dbContext)
+	{
+		try
+		{
+			var cocktails = await apiService.FetchCocktailsFromApi();
+
+			foreach (var cocktail in cocktails)
+			{
+				if (!dbContext.Cocktails.Any(c => c.Name == cocktail.Name))
+				{
+					dbContext.Cocktails.Add(cocktail);
+				}
+			}
+
+			await dbContext.SaveChangesAsync();
+			return Ok("Database populated with cocktails.");
+		}
+		catch (Exception ex)
+		{
+			return StatusCode(500, $"Error populating database: {ex.Message}");
+		}
+}
 }
