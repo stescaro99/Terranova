@@ -1,38 +1,77 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
 
 public class Cocktail
 {
-	public int Id { get; set; }
+    [Key]
+    public int Id { get; set; }
 
-	[Required]
-	[MaxLength(30)]
-	public string Name { get; set; } = string.Empty;
+    [Required]
+    public CocktailApiDrink Drink { get; set; } = new();
 
-	[Required]
-	public string Ingredients { get; set; } = string.Empty;
+    [ForeignKey("CreatedByUserId")]
+    public User? CreatedByUser { get; set; }
+    public int? CreatedByUserId { get; set; }
 
-	[Required]
-	[MaxLength(20)]
-	public string GlassType { get; set; } = string.Empty;
+    [InverseProperty("FavoriteCocktails")]
+    public ICollection<User> FavoriteByUsers { get; set; } = new List<User>();
+}
 
-	[Required]
-	[MaxLength(20)]
-	public string Category { get; set; } = string.Empty;
+public class CocktailApiDrink
+{
+    [JsonPropertyName("IdDrink")]
+    public string? IdDrink { get; set; }
 
-	[Url]
-	public string? ImageUrl { get; set; } = string.Empty;
-	//usare array di byte nel database per immagini al posto dell'url
-	//public byte[]? ImageData { get; set; };
-	//oppure usare un path locale e salvare le immagini in directory sul server
-	//public string ImagePath { get; set; } = string.Empty;
+    [JsonPropertyName("strDrink")]
+    public string? StrDrink { get; set; }
 
-	[ForeignKey("CreatedByUserId")]
-	public User? CreatedByUser { get; set; }
-	public int? CreatedByUserId { get; set; }
+    [JsonPropertyName("strGlass")]
+    public string? StrGlass { get; set; }
 
-	[InverseProperty("FavoriteCocktails")]
-	public ICollection<User> FavoriteByUsers { get; set; } = new List<User>();
-	// prezzo medio da cercare in base al paese/citta' (non presente nell'API, collegare un'AI?)
-	// public string Price { get; set; } = string.Empty;
+    [JsonPropertyName("strCategory")]
+    public string? StrCategory { get; set; }
+
+    [JsonPropertyName("strDrinkThumb")]
+    public string? StrDrinkThumb { get; set; }
+
+    [JsonPropertyName("strInstructions")]
+    public string? StrInstructions { get; set; }
+
+    [JsonPropertyName("strIngredient1")]
+    public string? StrIngredient1 { get; set; }
+
+    [JsonPropertyName("strIngredient2")]
+    public string? StrIngredient2 { get; set; }
+
+    [JsonPropertyName("strIngredient3")]
+    public string? StrIngredient3 { get; set; }
+
+    [JsonPropertyName("strIngredient4")]
+    public string? StrIngredient4 { get; set; }
+
+    [JsonPropertyName("strIngredient5")]
+    public string? StrIngredient5 { get; set; }
+
+    [JsonPropertyName("strIngredient6")]
+    public string? StrIngredient6 { get; set; }
+
+    [JsonPropertyName("strMeasure1")]
+    public string? StrMeasure1 { get; set; }
+
+    [JsonPropertyName("strMeasure2")]
+    public string? StrMeasure2 { get; set; }
+
+    [JsonPropertyName("strMeasure3")]
+    public string? StrMeasure3 { get; set; }
+
+    [JsonPropertyName("strMeasure4")]
+    public string? StrMeasure4 { get; set; }
+
+    [JsonPropertyName("strMeasure5")]
+    public string? StrMeasure5 { get; set; }
+
+    [JsonPropertyName("strMeasure6")]
+    public string? StrMeasure6 { get; set; }
 }
