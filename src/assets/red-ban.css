@@ -1,0 +1,32 @@
+.red-band {
+    width: 100%;
+    height: 12vh; /* Altezza relativa per la banda */
+    position: relative;
+    background-color: rgb(20, 55, 48); /* Colore aggiornato */
+    display: flex;
+    justify-content: flex-end; /* Allinea l'immagine a destra */
+    align-items: center; /* Allinea verticalmente al centro */
+    overflow: hidden; 
+  }
+  
+  .red-band img {
+    height: 130%; /* Immagine grande quanto la banda */
+    width: auto; /* Mantieni la proporzione quadrata */
+    object-fit: cover; /* Fa in modo che l'immagine riempia il contorno e venga tagliata */
+    object-position: center; /* Centra l'immagine */
+  }
+  /* Responsive Design */
+  @media (max-width: 0px) {
+    .red-band img {
+      width: 20%;  /* Riduce la larghezza dell'immagine al 50% della larghezza della finestra */
+      height: auto; /* Mantiene le proporzioni dell'immagine */
+    }
+  }
+  
+  
+  /*@media (max-width: 480px) {
+    .red-band img {
+      width: 20%;  /* Riduce ulteriormente la larghezza per schermi molto piccoli 
+      height: auto;  Mantiene le proporzioni dell'immagine 
+    }
+  }*/
