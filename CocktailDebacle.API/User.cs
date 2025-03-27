@@ -10,6 +10,10 @@ public class User
 	public string Name { get; set; } = string.Empty;
 
 	[Required]
+	[MaxLength(20)]
+	public string Username { get; set; } = string.Empty;
+
+	[Required]
 	[EmailAddress]
 	public string Email { get; set; } = string.Empty;
 
@@ -17,7 +21,8 @@ public class User
 	[MinLength(6)]
 	public string Password { get; set; } = string.Empty;
 
-	public int[] BirthDate { get; set; } = new int[3];
+	[Required]
+	public string BirthDate { get; set; } = string.Empty;
 
 	[MaxLength(30)]
 	public string Country { get; set; } = string.Empty;

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CocktailDebacle.API.Migrations
 {
     [DbContext(typeof(CocktailDbContext))]
-    [Migration("20250324110032_ConfigureDrinkMapping")]
-    partial class ConfigureDrinkMapping
+    [Migration("20250327130309_Migration1")]
+    partial class Migration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,7 +67,7 @@ namespace CocktailDebacle.API.Migrations
                     b.Property<bool>("AppPermissions")
                         .HasColumnType("bit");
 
-                    b.PrimitiveCollection<string>("BirthDate")
+                    b.Property<string>("BirthDate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -100,6 +100,11 @@ namespace CocktailDebacle.API.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 

@@ -64,7 +64,7 @@ namespace CocktailDebacle.API.Migrations
                     b.Property<bool>("AppPermissions")
                         .HasColumnType("bit");
 
-                    b.PrimitiveCollection<string>("BirthDate")
+                    b.Property<string>("BirthDate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -97,6 +97,11 @@ namespace CocktailDebacle.API.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 

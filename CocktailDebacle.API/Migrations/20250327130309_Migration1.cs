@@ -5,49 +5,11 @@
 namespace CocktailDebacle.API.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateCocktailSchema : Migration
+    public partial class Migration1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Cocktails",
-                type: "nvarchar(30)",
-                maxLength: 30,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Category",
-                table: "Cocktails",
-                type: "nvarchar(20)",
-                maxLength: 20,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.AddColumn<int>(
-                name: "CreatedByUserId",
-                table: "Cocktails",
-                type: "int",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "GlassType",
-                table: "Cocktails",
-                type: "nvarchar(20)",
-                maxLength: 20,
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "ImageUrl",
-                table: "Cocktails",
-                type: "nvarchar(max)",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -55,6 +17,7 @@ namespace CocktailDebacle.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -67,6 +30,43 @@ namespace CocktailDebacle.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cocktails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Drink_IdDrink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrDrink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrGlass = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrDrinkThumb = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrInstructions = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrIngredient1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrIngredient2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrIngredient3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrIngredient4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrIngredient5 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrIngredient6 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrMeasure1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrMeasure2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrMeasure3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrMeasure4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrMeasure5 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrMeasure6 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByUserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cocktails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cocktails_Users_CreatedByUserId",
+                        column: x => x.CreatedByUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,62 +102,19 @@ namespace CocktailDebacle.API.Migrations
                 name: "IX_UserFavoriteCocktails_FavoriteCocktailsId",
                 table: "UserFavoriteCocktails",
                 column: "FavoriteCocktailsId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Cocktails_Users_CreatedByUserId",
-                table: "Cocktails",
-                column: "CreatedByUserId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Cocktails_Users_CreatedByUserId",
-                table: "Cocktails");
-
             migrationBuilder.DropTable(
                 name: "UserFavoriteCocktails");
 
             migrationBuilder.DropTable(
+                name: "Cocktails");
+
+            migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Cocktails_CreatedByUserId",
-                table: "Cocktails");
-
-            migrationBuilder.DropColumn(
-                name: "CreatedByUserId",
-                table: "Cocktails");
-
-            migrationBuilder.DropColumn(
-                name: "GlassType",
-                table: "Cocktails");
-
-            migrationBuilder.DropColumn(
-                name: "ImageUrl",
-                table: "Cocktails");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Cocktails",
-                type: "nvarchar(max)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(30)",
-                oldMaxLength: 30);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Category",
-                table: "Cocktails",
-                type: "nvarchar(max)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(20)",
-                oldMaxLength: 20);
         }
     }
 }

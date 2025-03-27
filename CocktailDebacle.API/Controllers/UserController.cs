@@ -52,6 +52,8 @@ public class UserController : ControllerBase
     {
         if (newUser == null)
             return BadRequest("Invalid user data");
+        if (newUser.BirthDate == default)
+        return BadRequest("Invalid BirthDate format. Use 'YYYY-MM-DD'.");
 
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
