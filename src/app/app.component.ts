@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
-  imports: [ RouterModule, TitleComponent, LoginComponent ],
+  imports: [ RouterModule, TitleComponent, LoginComponent],
   template: `
   <main>
     <app-title></app-title>
