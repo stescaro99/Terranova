@@ -1,40 +1,55 @@
 {
-  "hash": "74fc39fe",
-  "configHash": "518e202c",
+  "hash": "8093d381",
+  "configHash": "c6594390",
   "lockfileHash": "d2288c47",
-  "browserHash": "a2abcc2b",
+  "browserHash": "c7e1433e",
   "optimized": {
+    "@angular/common/http": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "c1033f4b",
+      "needsInterop": false
+    },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "9047e036",
+      "fileHash": "1b0ba8a1",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "ee09351c",
+      "fileHash": "490d6080",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "f21e94a4",
+      "fileHash": "9a82a7a6",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "e022fdcc",
+      "fileHash": "27642222",
+      "needsInterop": false
+    },
+    "@angular/common": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "ecb68412",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-LDXHM6UI": {
-      "file": "chunk-LDXHM6UI.js"
+    "chunk-44E6RDMB": {
+      "file": "chunk-44E6RDMB.js"
     },
-    "chunk-TIWJ4Q5Z": {
-      "file": "chunk-TIWJ4Q5Z.js"
+    "chunk-UU67A755": {
+      "file": "chunk-UU67A755.js"
+    },
+    "chunk-GXYBOUXQ": {
+      "file": "chunk-GXYBOUXQ.js"
     },
     "chunk-N4DX67WA": {
       "file": "chunk-N4DX67WA.js"

@@ -11,11 +11,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SiginComponent } from './sigin/sigin.component';
 
 
 @NgModule({
   declarations: [AppComponent,
-    LoginComponent],
+    LoginComponent, SiginComponent],
   imports: [
     CommonModule, BrowserModule, RouterModule, FormsModule,
     RouterModule.forRoot(routeConfig),  BrowserModule,
@@ -26,6 +27,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatFormFieldModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, SiginComponent]
 })
 export class AppModule  { }

@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import { TitleComponent } from './title/title.component';
-import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
-  imports: [ RouterModule, TitleComponent, LoginComponent],
+  imports: [ RouterModule, TitleComponent],
   template: `
   <main>
     <app-title></app-title>

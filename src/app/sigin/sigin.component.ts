@@ -1,55 +1,54 @@
 import { Component } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../user';
-import { HttpClient } from '@angular/common/http'
+import { User } from '../user/user.model';
+import { UserService } from '../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-sigin',
-  imports: [FormsModule, HttpClient],
+  imports: [FormsModule],
+  providers: [],
   template: `
     <h2>Sign In</h2>
     <br>
     <form (ngSubmit)="submitForm()">
-     <p>name*:    <input type="text" [(ngModel)]="user.name"  name="name"/></p>
-     <p>Username*: <input type="text" [(ngModel)]="user.username" name="username"></p>
-      <p>Password*: <input type="text" [(ngModel)]="user.password" name="password"></p>
-      <p>Email*: <input type="email" [(ngModel)]="user.email" name="email"></p>
-     <p>
-       Data di nascita*:  
-       <input type="date" [(ngModel)]="birthDate"  [(ngModel)]="user.birthDate" name="birthDate" (change)="calculateAge()" />
-     </p>
-      <p>Address: <input type="text" [(ngModel)]="user.address" name="address"></p>
-      <p>City: <input type="text" [(ngModel)]="user.city" name="city"></p>
-      <p><input type="checkbox" [(ngModel)]="user.accept" name="accept"> Accept Terms</p>
-      <p><input type="checkbox" [(ngModel)]="user.astemi" name="astemi"> modalita senza alcool</p>
+      <p>Nome*: <input type="text" [(ngModel)]="user.name" name="name" required /></p>
+      <p>Username*: <input type="text" [(ngModel)]="user.username" name="username" required></p>
+      <p>Password*: <input type="password" [(ngModel)]="user.password" name="password" required></p>
+      <p>Email*: <input type="email" [(ngModel)]="user.email" name="email" required></p>
+      <p>
+        Data di nascita*:  
+        <input type="date" [(ngModel)]="user.birthDate" name="birthDate" (change)="calculateAge()" required />
+      </p>
+      <p>Indirizzo: <input type="text" [(ngModel)]="user.address" name="address"></p>
+      <p>Città: <input type="text" [(ngModel)]="user.city" name="city"></p>
+      
       <label for="imgUpload">Upload Image:</label>
       <input type="file" id="imgUpload" (change)="onFileSelected($event)" accept="image/*" />
-
+      
       <img *ngIf="user.imgUrl" [src]="user.imgUrl" alt="Uploaded Image" />
-
-      <button type="submit" [disabled]="!user.name || !user.username || !user.password || !user.email || !user.birthDate">Submit</button>
+      
+      <p><input type="checkbox" [(ngModel)]="user.accept" name="accept"> Accetta Termini</p>
+      <p><input type="checkbox" [(ngModel)]="user.astemi" name="astemi"> Modalità senza alcool</p>
+      
+      <button type="submit" [disabled]="!user.name || !user.username || !user.password || !user.email || !user.birthDate">Invia</button>
     </form>
+
+    <p *ngIf="message">{{ message }}</p>
     `,
   styles: [``]
 
 })
 export class SiginComponent {
-  user: User = {
-    name: '',
-    email: '',
-    password: '',
-    birthDate: '',
-    country: '',
-    city: '',
-    canDrinkAlcohol: false,
-    appPermissions: false,
-    imageUrl: '',
-    favoriteCocktails: [],
-    createdCocktails: []
-  };
+  
+  user: User = new User();
   birthDate: string = '';
   age: number | null = null;
+  message: string = '';
+
+  constructor(private userService: UserService) {}
 
   calculateAge() {
     if (this.birthDate) {
@@ -69,7 +68,16 @@ export class SiginComponent {
     }
   }
   submitForm() {
-    console.log(this.user);  // Gestisci la logica del form qui
+    this.userService.registerUser(this.user).subscribe(
+      (response: any) => {  // Tipizzazione esplicita di 'response'
+        this.message = response.message;
+        console.log('User registered:', response);
+      },
+      (error: HttpErrorResponse) => {  // Tipizzazione esplicita di 'error'
+        this.message = "Errore durante la registrazione!";
+        console.error('Error:', error);
+      }
+    );
   }
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
@@ -78,10 +86,11 @@ export class SiginComponent {
       const reader = new FileReader();
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.user.imageUrl = e.target?.result;  // Salva l'URL dell'immagine nel modello
+        this.user.imgUrl = e.target?.result;  // Salva l'URL dell'immagine nel modello
       };
 
       reader.readAsDataURL(file); // Legge il file come URL base64
     }
   }
+  
 }
