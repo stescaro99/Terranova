@@ -2,19 +2,22 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
+using System.IO;
 
 public class CocktailApiService
 {
     private readonly HttpClient _httpClient;
+    private readonly string _logFilePath = "cocktail_api_log.txt";
 
     public CocktailApiService(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
 
-    public async Task<List<Cocktail>> FetchCocktailsFromApi()
+    public async Task<List<Cocktail>> FetchCocktailsFromApi(char letter)
     {
-        var response = await _httpClient.GetAsync("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=a");
+        string url = $"https://www.thecocktaildb.com/api/json/v1/1/search.php?f={letter}";
+        var response = await _httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync();
@@ -23,7 +26,9 @@ public class CocktailApiService
 
         if (apiResponse?.Drinks == null)
         {
-            throw new Exception("Failed to fetch cocktails from API.");
+            int asciiValue = (int)letter;
+            await LogToFile($"No drinks found for the letter: {letter} in int {asciiValue}\n");
+            return new List<Cocktail>();
         }
 
         return apiResponse.Drinks.Select(drink => new Cocktail
@@ -31,6 +36,14 @@ public class CocktailApiService
                 Drink = drink
             })
             .ToList();
+    }
+
+    private async Task LogToFile(string message)
+    {
+        using (var writer = new StreamWriter(_logFilePath, append: true))
+        {
+            await writer.WriteLineAsync($"{DateTime.Now}: {message}");
+        }
     }
 }
 

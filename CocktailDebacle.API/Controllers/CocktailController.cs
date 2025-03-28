@@ -50,22 +50,59 @@ public class CocktailController : ControllerBase
     {
         try
         {
-            var cocktails = await apiService.FetchCocktailsFromApi();
-
-            foreach (var cocktail in cocktails)
+            int count = 0;
+            char letter = '1';
+            var ignoredLetters = new HashSet<char> { '8', ':', ';', '<', '=', '>', '?', '@', 'U', 'X', '[', ']', '^', '_', '`' };
+            //con letter == % stampa tutti i cocktail ma probabilmente sono divisi in pagine e prendo solo i primi 25           
+            while (letter < 'a')
             {
-                if (!_context.Cocktails.Any(c => c.Drink.IdDrink == cocktail.Drink.IdDrink)) 
+                if (ignoredLetters.Contains(letter))
                 {
-                    _context.Cocktails.Add(cocktail);
+                    letter++;
+                    continue;
                 }
-            }
+                var cocktails = await apiService.FetchCocktailsFromApi(letter);
 
-            await _context.SaveChangesAsync();
-            return Ok("Database populated with cocktails.");
+                foreach (var cocktail in cocktails)
+                {
+                    if (!_context.Cocktails.Any(c => c.Drink.IdDrink == cocktail.Drink.IdDrink))
+                    {
+                        count++;
+                        _context.Cocktails.Add(cocktail);
+                    }
+                }
+                letter++;
+                await _context.SaveChangesAsync();
+            }
+            return Ok($"Database populated with {count} cocktails.");
         }
         catch (Exception ex)
         {
             return StatusCode(500, $"Error populating database: {ex.Message}");
+        }
+    }
+
+    private async Task LogToFile(string message)
+    {
+        string logFilePath = "cocktail_log.txt"; // Nome del file di log
+        using (var writer = new StreamWriter(logFilePath, append: true))
+        {
+            await writer.WriteLineAsync($"{DateTime.Now}: {message}");
+        }
+    }
+
+    [HttpDelete("reset")]
+    public async Task<IActionResult> ResetDatabase()
+    {
+        try
+        {
+            _context.Cocktails.RemoveRange(_context.Cocktails); // Rimuove tutti i record dalla tabella Cocktails
+            await _context.SaveChangesAsync(); // Salva le modifiche nel database
+            return Ok("Database reset successfully.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error resetting database: {ex.Message}");
         }
     }
 }

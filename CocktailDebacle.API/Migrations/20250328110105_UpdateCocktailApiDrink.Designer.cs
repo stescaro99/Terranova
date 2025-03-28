@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CocktailDebacle.API.Migrations
 {
     [DbContext(typeof(CocktailDbContext))]
-    [Migration("20250327130309_Migration1")]
-    partial class Migration1
+    [Migration("20250328110105_UpdateCocktailApiDrink")]
+    partial class UpdateCocktailApiDrink
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,20 +123,40 @@ namespace CocktailDebacle.API.Migrations
                             b1.Property<int>("CocktailId")
                                 .HasColumnType("int");
 
+                            b1.Property<string>("DateModified")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_DateModified")
+                                .HasAnnotation("Relational:JsonPropertyName", "dateModified");
+
                             b1.Property<string>("IdDrink")
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Drink_IdDrink")
                                 .HasAnnotation("Relational:JsonPropertyName", "IdDrink");
+
+                            b1.Property<string>("StrAlcoholic")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrAlcoholic")
+                                .HasAnnotation("Relational:JsonPropertyName", "strAlcoholic");
 
                             b1.Property<string>("StrCategory")
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Drink_StrCategory")
                                 .HasAnnotation("Relational:JsonPropertyName", "strCategory");
 
+                            b1.Property<string>("StrCreativeCommonsConfirmed")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrCreativeCommonsConfirmed")
+                                .HasAnnotation("Relational:JsonPropertyName", "strCreativeCommonsConfirmed");
+
                             b1.Property<string>("StrDrink")
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Drink_StrDrink")
                                 .HasAnnotation("Relational:JsonPropertyName", "strDrink");
+
+                            b1.Property<string>("StrDrinkAlternate")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrDrinkAlternate")
+                                .HasAnnotation("Relational:JsonPropertyName", "strDrinkAlternate");
 
                             b1.Property<string>("StrDrinkThumb")
                                 .HasColumnType("nvarchar(max)")
@@ -148,10 +168,55 @@ namespace CocktailDebacle.API.Migrations
                                 .HasColumnName("Drink_StrGlass")
                                 .HasAnnotation("Relational:JsonPropertyName", "strGlass");
 
+                            b1.Property<string>("StrIBA")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIBA")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIBA");
+
+                            b1.Property<string>("StrImageAttribution")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrImageAttribution")
+                                .HasAnnotation("Relational:JsonPropertyName", "strImageAttribution");
+
+                            b1.Property<string>("StrImageSource")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrImageSource")
+                                .HasAnnotation("Relational:JsonPropertyName", "strImageSource");
+
                             b1.Property<string>("StrIngredient1")
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Drink_StrIngredient1")
                                 .HasAnnotation("Relational:JsonPropertyName", "strIngredient1");
+
+                            b1.Property<string>("StrIngredient10")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIngredient10")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIngredient10");
+
+                            b1.Property<string>("StrIngredient11")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIngredient11")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIngredient11");
+
+                            b1.Property<string>("StrIngredient12")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIngredient12")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIngredient12");
+
+                            b1.Property<string>("StrIngredient13")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIngredient13")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIngredient13");
+
+                            b1.Property<string>("StrIngredient14")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIngredient14")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIngredient14");
+
+                            b1.Property<string>("StrIngredient15")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIngredient15")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIngredient15");
 
                             b1.Property<string>("StrIngredient2")
                                 .HasColumnType("nvarchar(max)")
@@ -178,15 +243,90 @@ namespace CocktailDebacle.API.Migrations
                                 .HasColumnName("Drink_StrIngredient6")
                                 .HasAnnotation("Relational:JsonPropertyName", "strIngredient6");
 
+                            b1.Property<string>("StrIngredient7")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIngredient7")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIngredient7");
+
+                            b1.Property<string>("StrIngredient8")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIngredient8")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIngredient8");
+
+                            b1.Property<string>("StrIngredient9")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrIngredient9")
+                                .HasAnnotation("Relational:JsonPropertyName", "strIngredient9");
+
                             b1.Property<string>("StrInstructions")
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Drink_StrInstructions")
                                 .HasAnnotation("Relational:JsonPropertyName", "strInstructions");
 
+                            b1.Property<string>("StrInstructionsDE")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrInstructionsDE")
+                                .HasAnnotation("Relational:JsonPropertyName", "strInstructionsDE");
+
+                            b1.Property<string>("StrInstructionsES")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrInstructionsES")
+                                .HasAnnotation("Relational:JsonPropertyName", "strInstructionsES");
+
+                            b1.Property<string>("StrInstructionsFR")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrInstructionsFR")
+                                .HasAnnotation("Relational:JsonPropertyName", "strInstructionsFR");
+
+                            b1.Property<string>("StrInstructionsIT")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrInstructionsIT")
+                                .HasAnnotation("Relational:JsonPropertyName", "strInstructionsIT");
+
+                            b1.Property<string>("StrInstructionsZH_HANS")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrInstructionsZH_HANS")
+                                .HasAnnotation("Relational:JsonPropertyName", "strInstructionsZH-HANS");
+
+                            b1.Property<string>("StrInstructionsZH_HANT")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrInstructionsZH_HANT")
+                                .HasAnnotation("Relational:JsonPropertyName", "strInstructionsZH-HANT");
+
                             b1.Property<string>("StrMeasure1")
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Drink_StrMeasure1")
                                 .HasAnnotation("Relational:JsonPropertyName", "strMeasure1");
+
+                            b1.Property<string>("StrMeasure10")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrMeasure10")
+                                .HasAnnotation("Relational:JsonPropertyName", "strMeasure10");
+
+                            b1.Property<string>("StrMeasure11")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrMeasure11")
+                                .HasAnnotation("Relational:JsonPropertyName", "strMeasure11");
+
+                            b1.Property<string>("StrMeasure12")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrMeasure12")
+                                .HasAnnotation("Relational:JsonPropertyName", "strMeasure12");
+
+                            b1.Property<string>("StrMeasure13")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrMeasure13")
+                                .HasAnnotation("Relational:JsonPropertyName", "strMeasure13");
+
+                            b1.Property<string>("StrMeasure14")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrMeasure14")
+                                .HasAnnotation("Relational:JsonPropertyName", "strMeasure14");
+
+                            b1.Property<string>("StrMeasure15")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrMeasure15")
+                                .HasAnnotation("Relational:JsonPropertyName", "strMeasure15");
 
                             b1.Property<string>("StrMeasure2")
                                 .HasColumnType("nvarchar(max)")
@@ -212,6 +352,31 @@ namespace CocktailDebacle.API.Migrations
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Drink_StrMeasure6")
                                 .HasAnnotation("Relational:JsonPropertyName", "strMeasure6");
+
+                            b1.Property<string>("StrMeasure7")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrMeasure7")
+                                .HasAnnotation("Relational:JsonPropertyName", "strMeasure7");
+
+                            b1.Property<string>("StrMeasure8")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrMeasure8")
+                                .HasAnnotation("Relational:JsonPropertyName", "strMeasure8");
+
+                            b1.Property<string>("StrMeasure9")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrMeasure9")
+                                .HasAnnotation("Relational:JsonPropertyName", "strMeasure9");
+
+                            b1.Property<string>("StrTags")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrTags")
+                                .HasAnnotation("Relational:JsonPropertyName", "strTags");
+
+                            b1.Property<string>("StrVideo")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Drink_StrVideo")
+                                .HasAnnotation("Relational:JsonPropertyName", "strVideo");
 
                             b1.HasKey("CocktailId");
 
