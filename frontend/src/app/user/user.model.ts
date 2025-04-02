@@ -1,12 +1,14 @@
 export class User {
-    name = '';
-    username = '';
-    password = '';
-    email = '';
-    birthDate = '';
-    address = '';
-    city = '';
-    accept = false;
-    astemi = false;
-    imgUrl: string | ArrayBuffer | null | undefined = null;
+    Name = '';
+    Username = '';
+    Password = '';
+    Email = '';
+    BirthDate = '';
+    City = '';
+    Country = '';
+    ImgUrl: string | ArrayBuffer | null | undefined = null;
+    FavoriteCocktails: any = null;
+    CreatedCocktails: any = null;
+    CanDrinkAlcohol = false; 
+    AppPermissions = false;  
   }

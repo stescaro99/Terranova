@@ -5169,31 +5169,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\98gor\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\mp20t\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\98gor\\Desktop\\Terranova\\backend\\CocktailDebacle.API\\CocktailDebacle.API.csproj",
+      "projectUniqueName": "C:\\Users\\mp20t\\Desktop\\newt\\backend\\CocktailDebacle.API\\CocktailDebacle.API.csproj",
       "projectName": "CocktailDebacle.API",
-      "projectPath": "C:\\Users\\98gor\\Desktop\\Terranova\\backend\\CocktailDebacle.API\\CocktailDebacle.API.csproj",
-      "packagesPath": "C:\\Users\\98gor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\98gor\\Desktop\\Terranova\\backend\\CocktailDebacle.API\\obj\\",
+      "projectPath": "C:\\Users\\mp20t\\Desktop\\newt\\backend\\CocktailDebacle.API\\CocktailDebacle.API.csproj",
+      "packagesPath": "C:\\Users\\mp20t\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mp20t\\Desktop\\newt\\backend\\CocktailDebacle.API\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\98gor\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\mp20t\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

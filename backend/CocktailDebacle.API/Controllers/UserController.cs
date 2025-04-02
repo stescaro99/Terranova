@@ -60,10 +60,11 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddUser([FromBody] User newUser)
     {
+        Console.WriteLine($"Dati ricevuti: {System.Text.Json.JsonSerializer.Serialize(newUser)}");
         if (newUser == null)
             return BadRequest("Invalid user data");
-        if (newUser.BirthDate == default)
-        return BadRequest("Invalid BirthDate format. Use 'YYYY-MM-DD'.");
+        // if (newUser.BirthDate == default)
+        //     return BadRequest("Invalid BirthDate format. Use 'YYYY-MM-DD'.");
 
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();

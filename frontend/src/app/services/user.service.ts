@@ -4,17 +4,17 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../user/user.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
   export class UserService {
 
-    private apiUrl = `${environment.baseUrl}user`; // URL per il backend
+    private apiUrl = `${environment.baseUrl}user`;
     constructor(private http: HttpClient) {}
   
-    // Funzione per inviare i dati del form al backend
     createUser(user: User): Observable<User> {
-      const url = `${this.apiUrl}`; // Usa l'endpoint base per creare un utente
+      const url = `${this.apiUrl}`;
       return this.http.post<User>(url, user);
     }
     registerUser(user: User): Observable<any> {

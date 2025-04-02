@@ -7,7 +7,7 @@ import { UserService } from '../user.service';
   imports: [],
   template: `
       <h3>HOME PAGE</h3>
-      <h4>Welcome to the Aper project! {{user.username}}</h4>
+      <h4>Welcome to the Aper project! {{user.Username}}</h4>
       <br>
       <h1>list of cocktails of the day</h1>
       <br>

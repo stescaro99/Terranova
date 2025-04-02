@@ -38,7 +38,7 @@ export class LoginComponent {
   }
   notRegister() {
     const guestUser = new User();
-    guestUser.username = 'Guest';
+    guestUser.Username = 'Guest';
     this.userService.setUser(guestUser);
     sessionStorage.setItem('username', 'Guest');
     sessionStorage.setItem('authToken', 'true');
