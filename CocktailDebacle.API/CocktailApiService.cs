@@ -7,7 +7,6 @@ using System.IO;
 public class CocktailApiService
 {
     private readonly HttpClient _httpClient;
-    private readonly string _logFilePath = "cocktail_api_log.txt";
 
     public CocktailApiService(HttpClient httpClient)
     {
@@ -26,24 +25,64 @@ public class CocktailApiService
 
         if (apiResponse?.Drinks == null)
         {
-            int asciiValue = (int)letter;
-            await LogToFile($"No drinks found for the letter: {letter} in int {asciiValue}\n");
             return new List<Cocktail>();
         }
 
         return apiResponse.Drinks.Select(drink => new Cocktail
-            {
-                Drink = drink
-            })
-            .ToList();
+        {
+            Drink = drink
+        })
+        .ToList();
     }
 
-    private async Task LogToFile(string message)
+    public async Task<Cocktail?> FetchCocktailsFromApiId(int id)
     {
-        using (var writer = new StreamWriter(_logFilePath, append: true))
+        string url = $"https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={id}";
+        var response = await _httpClient.GetAsync(url);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        var apiResponse = JsonSerializer.Deserialize<CocktailApiResponse>(json);
+
+        if (apiResponse?.Drinks == null || apiResponse.Drinks.Count != 1)
         {
-            await writer.WriteLineAsync($"{DateTime.Now}: {message}");
+            return null;
         }
+
+        return new Cocktail
+        {
+            Drink = apiResponse.Drinks.First()
+        };
+    }
+
+    public async Task<List<int>> GetNewCocktailsIds() // premium API only
+    {
+        string url = "https://www.thecocktaildb.com/api/json/v1/1/latest.php";
+        var response = await _httpClient.GetAsync(url);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        var ids = new List<int>();
+        
+        using (JsonDocument document = JsonDocument.Parse(json))
+        {
+            var root = document.RootElement;
+            if (root.TryGetProperty("drinks", out JsonElement drinksElement))
+            {
+                if (drinksElement.ValueKind == JsonValueKind.Object)
+                {
+                    if (drinksElement.TryGetProperty("idDrink", out JsonElement idDrinkElement) &&
+                        int.TryParse(idDrinkElement.GetString(), out int id))
+                    {
+                        ids.Add(id);
+                    }
+                }
+            }
+        }
+
+        return ids;
     }
 }
 
