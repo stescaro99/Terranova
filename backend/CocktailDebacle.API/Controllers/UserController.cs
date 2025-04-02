@@ -31,21 +31,21 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetUserById(int id)
-    {
-        var user = await _context.Users
-            .Include(u => u.FavoriteCocktails)
-            .ThenInclude(c => c.Drink)
-            .Include(u => u.CreatedCocktails)
-            .ThenInclude(c => c.Drink)
-            .FirstOrDefaultAsync(u => u.Id == id);
+    // [HttpGet("{id}")]
+    // public async Task<IActionResult> GetUserById(int id)
+    // {
+    //     var user = await _context.Users
+    //         .Include(u => u.FavoriteCocktails)
+    //         .ThenInclude(c => c.Drink)
+    //         .Include(u => u.CreatedCocktails)
+    //         .ThenInclude(c => c.Drink)
+    //         .FirstOrDefaultAsync(u => u.Id == id);
 
-        if (user == null)
-            return NotFound($"User with ID {id} not found");
+    //     if (user == null)
+    //         return NotFound($"User with ID {id} not found");
 
-        return Ok(user);
-    }
+    //     return Ok(user);
+    // }
 
     [HttpGet("{Username}")]
     public async Task<IActionResult> GetUserByName(string username)
@@ -74,7 +74,7 @@ public class UserController : ControllerBase
 
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetUserById), new { id = newUser.Id }, newUser);
+        return CreatedAtAction(nameof(GetUserByName), new { id = newUser.Id }, newUser);
     }
 
     [HttpPut("{id}")]

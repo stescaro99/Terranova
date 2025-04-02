@@ -1,20 +1,26 @@
 import { Routes } from '@angular/router';
-import { DetailsComponent } from './details/details.component';
 import { LoginComponent } from './login/login.component';
-import { SiginComponent } from './sigin/sigin.component'; // Assicurati che questo componente esista
+import { SiginComponent } from './sigin/sigin.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { authGuard } from './auth.guard';
 
 export const routeConfig: Routes = [
   {
     path: '',
-    component: LoginComponent,
-    title: 'homePage',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   {
-    path: 'details/:id',
-    component: DetailsComponent, // Aggiungi il componente associato alla rotta
+    path: 'home',
+    component: HomePageComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'login',
+    component: LoginComponent, 
   },
   {
     path: 'sigIn',
-    component: SiginComponent, // Assicurati che SigninComponent esista
+    component: SiginComponent, 
   }
 ];

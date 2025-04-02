@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
   template: `
     <header class="brand-name">
       <div class="red-band">
-        <img src="assets/logo_apex.jpeg" alt="Logo" />
+        <img src="assets/aper_logo_left.png" alt="Logo" class="logo-left" />
+        <img src="assets/Aper.png" alt="Logo Centrale" class="logo-center" />
       </div>
     </header>
   `,

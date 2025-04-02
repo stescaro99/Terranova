@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router';
+import { User } from '../user/user.model';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,19 +16,32 @@ import { Router } from '@angular/router';
     <br>
     <br>
     <br>
-      <button (click)="sigInButton()">sig-in</button>
+      <button (click)="sigInButton()">iscriviti</button>
+    <br>
+    <br>
+    <br>
+      <button (click)="notRegister()">accedi enza accedere</button>
   `,
   styles: ``
 })
 export class LoginComponent {
   username = '';
   password = '';
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
+  user: User = new User();
   
   loginRoute() {
     console.log(this.username, this.password);
   }
   sigInButton() {
     this.router.navigate(['/sigIn']);
+  }
+  notRegister() {
+    const guestUser = new User();
+    guestUser.username = 'Guest';
+    this.userService.setUser(guestUser);
+    sessionStorage.setItem('username', 'Guest');
+    sessionStorage.setItem('authToken', 'true');
+    this.router.navigate(['/home']);
   }
 }
