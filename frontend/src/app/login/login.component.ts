@@ -20,7 +20,7 @@ import { UserService } from '../user.service';
     <br>
     <br>
     <br>
-      <button (click)="notRegister()">accedi enza accedere</button>
+      <button (click)="notRegister()">continua enza accedere</button>
   `,
   styles: ``
 })
