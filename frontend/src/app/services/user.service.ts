@@ -9,10 +9,17 @@ import { User } from '../user/user.model';
   providedIn: 'root'
 })
   export class UserService {
-
+    private currentUser: User = new User();
     private apiUrl = `${environment.baseUrl}user`;
     constructor(private http: HttpClient) {}
-  
+
+    getUser(): User {
+      return this.currentUser;
+    }
+    
+    setUser(user: User): void {
+      this.currentUser = user;
+    }
     createUser(user: User): Observable<User> {
       const url = `${this.apiUrl}`;
       return this.http.post<User>(url, user);

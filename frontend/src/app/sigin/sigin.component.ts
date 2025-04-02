@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../user/user.model';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; 
 
 
 @Component({
@@ -30,10 +31,32 @@ import { CommonModule } from '@angular/common';
         </span>
       </p>
       <p>Password*: <input type="password" [(ngModel)]="user.Password" name="password" required></p>
-      <p>Email*: <input type="email" [(ngModel)]="user.Email" name="email" required></p>
+      <p>
+        Email*: 
+        <input 
+          type="email" 
+          placeholder="Inserisci la tua email" 
+          [(ngModel)]="user.Email" 
+          name="email" 
+          required 
+          #emailInput="ngModel" 
+        />
+        <span *ngIf="emailInput.invalid && emailInput.touched" style="color: red;">
+          Inserisci un'email valida.
+        </span>
+      </p>
       <p>
         Data di nascita*:  
-        <input type="date" [(ngModel)]="user.BirthDate" name="birthDate" (change)="calculateAge()" required />
+        <input 
+          type="date" 
+          [(ngModel)]="user.BirthDate" 
+          name="birthDate" 
+          (change)="calculateAge()" 
+          required 
+        />
+        <span *ngIf="dateErrorMessage" style="color: red;">
+          {{ dateErrorMessage }}
+        </span>
       </p>
       <p>Nazione: <input type="text" [(ngModel)]="user.Country" name="address"></p>
       <p>Città: <input type="text" [(ngModel)]="user.City" name="city"></p>
@@ -58,26 +81,39 @@ export class SiginComponent {
   birthDate: string = '';
   age: number | null = null;
   message: string = '';
-
   usernameMessage: string = '';
   usernameAvailable: boolean = false;
-
-  constructor(private userService: UserService) {}
-
+  dateErrorMessage: string = '';
+  
+  constructor(private userService: UserService, private router: Router) {
+  }
+  
   calculateAge() {
-    if (this.birthDate) {
+    if (this.user.BirthDate) {
       const today = new Date();
-      const birthDateObj = new Date(this.birthDate);
+      const birthDateObj = new Date(this.user.BirthDate);
+  
+      // Calcola la data di ieri
+      const yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+  
+      if (birthDateObj > yesterday) {
+        this.dateErrorMessage = 'La data di nascita non può essere futura o il giorno corrente.';
+        this.age = null;
+        return;
+      } else {
+        this.dateErrorMessage = ''; 
+      }
+  
       let age = today.getFullYear() - birthDateObj.getFullYear();
-      
-      // Controlla se il compleanno è già passato quest'anno
+  
       if (
         today.getMonth() < birthDateObj.getMonth() ||
         (today.getMonth() === birthDateObj.getMonth() && today.getDate() < birthDateObj.getDate())
       ) {
         age--;
       }
-      
+  
       this.age = age;
     }
   }
@@ -109,11 +145,15 @@ export class SiginComponent {
 
   submitForm() {
       if (this.usernameAvailable) {
-          console.log('Dati inviati al backend:', JSON.stringify(this.user)); // Log dei dati
           this.userService.createUser(this.user).subscribe(
               (response: User) => {
                   console.log('Utente creato con successo:', response);
                   alert('Utente creato con successo!');
+                  sessionStorage.setItem('username', this.user.Username);
+                  sessionStorage.setItem('authToken', 'true');
+                  sessionStorage.setItem('user', JSON.stringify(this.user));
+                  this.userService.setUser(this.user);
+                  this.router.navigate(['/home']);
               },
               (error: HttpErrorResponse) => {
                   console.error('Errore durante la creazione dell\'utente:', error);
@@ -126,14 +166,16 @@ export class SiginComponent {
   }
 
   formValid(): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return (
-      !!this.user.Name && // Verifica che sia una stringa non vuota
-      !!this.user.Username && // Verifica che sia una stringa non vuota
-      !!this.user.Password && // Verifica che sia una stringa non vuota
-      !!this.user.Email && // Verifica che sia una stringa non vuota
-      !!this.user.BirthDate && // Verifica che sia una stringa non vuota
-      this.user.AppPermissions && // Deve essere true
-      this.usernameAvailable // Deve essere true
+      !!this.user.Name && 
+      !!this.user.Username && 
+      !!this.user.Password && 
+      !!this.user.Email &&
+      emailRegex.test(this.user.Email) &&
+      !!this.user.BirthDate &&
+      this.user.AppPermissions && 
+      this.usernameAvailable 
     );
   }
   
