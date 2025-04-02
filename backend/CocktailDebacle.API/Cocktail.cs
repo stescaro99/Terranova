@@ -36,9 +36,6 @@ public class CocktailApiDrink
     [JsonPropertyName("strVideo")]
     public string? StrVideo { get; set; }
 
-    [JsonPropertyName("strGlass")]
-    public string? StrGlass { get; set; }
-
     [JsonPropertyName("strCategory")]
     public string? StrCategory { get; set; }
 
@@ -47,6 +44,9 @@ public class CocktailApiDrink
 
     [JsonPropertyName("strAlcoholic")]
     public string? StrAlcoholic { get; set; }
+
+    [JsonPropertyName("strGlass")]
+    public string? StrGlass { get; set; }
 
     [JsonPropertyName("strInstructions")]
     public string? StrInstructions { get; set; }

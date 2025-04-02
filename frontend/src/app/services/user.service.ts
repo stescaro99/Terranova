@@ -21,7 +21,7 @@ import { User } from '../user/user.model';
       return this.http.post<any>(this.apiUrl, user);
     }
     getUserByUsername(username: string): Observable<any> {
-      const url = `${this.apiUrl}/${username}`; // Usa l'endpoint corretto
+      const url = `${this.apiUrl}/CheckUsername?username=${encodeURIComponent(username)}`;
       console.log('URL chiamato:', url)
       return this.http.get<any>(url);
     }

@@ -331,8 +331,8 @@ C:\Users\mp20t\Desktop\Terranova\CocktailDebacle.API\obj\Debug\net9.0\refint\Coc
 C:\Users\mp20t\Desktop\Terranova\CocktailDebacle.API\obj\Debug\net9.0\CocktailDebacle.API.pdb
 C:\Users\mp20t\Desktop\Terranova\CocktailDebacle.API\obj\Debug\net9.0\CocktailDebacle.API.genruntimeconfig.cache
 C:\Users\mp20t\Desktop\Terranova\CocktailDebacle.API\obj\Debug\net9.0\ref\CocktailDebacle.API.dll
-C:\Users\98gor\Desktop\Terranova\backend\CocktailDebacle.API\bin\Debug\net9.0\appsettings.json
 C:\Users\98gor\Desktop\Terranova\backend\CocktailDebacle.API\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\98gor\Desktop\Terranova\backend\CocktailDebacle.API\bin\Debug\net9.0\appsettings.json
 C:\Users\98gor\Desktop\Terranova\backend\CocktailDebacle.API\bin\Debug\net9.0\CocktailDebacle.API.staticwebassets.endpoints.json
 C:\Users\98gor\Desktop\Terranova\backend\CocktailDebacle.API\bin\Debug\net9.0\CocktailDebacle.API.exe
 C:\Users\98gor\Desktop\Terranova\backend\CocktailDebacle.API\bin\Debug\net9.0\CocktailDebacle.API.deps.json

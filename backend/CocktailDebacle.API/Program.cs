@@ -11,7 +11,6 @@ builder.Services.AddHttpClient<CocktailApiService>();
 builder.Services.AddDbContext<CocktailDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -41,8 +40,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseCors("AllowAllOrigins");
-app.UseAuthorization();
 app.MapControllers();
 app.Run();

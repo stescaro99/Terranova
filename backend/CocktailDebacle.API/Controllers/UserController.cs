@@ -12,6 +12,16 @@ public class UserController : ControllerBase
         _context = context;
     }
 
+    [HttpGet("CheckUsername")]
+    public async Task<IActionResult> CheckUsername([FromQuery]string username)
+    {
+        if (string.IsNullOrEmpty(username))
+            return BadRequest("Username cannot be null or empty");
+
+        var userExists = await _context.Users.AnyAsync(u => u.Username == username);
+        return Ok(!userExists);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {
@@ -31,35 +41,18 @@ public class UserController : ControllerBase
         }
     }
 
-    // [HttpGet("{id}")]
-    // public async Task<IActionResult> GetUserById(int id)
-    // {
-    //     var user = await _context.Users
-    //         .Include(u => u.FavoriteCocktails)
-    //         .ThenInclude(c => c.Drink)
-    //         .Include(u => u.CreatedCocktails)
-    //         .ThenInclude(c => c.Drink)
-    //         .FirstOrDefaultAsync(u => u.Id == id);
-
-    //     if (user == null)
-    //         return NotFound($"User with ID {id} not found");
-
-    //     return Ok(user);
-    // }
-
-    [HttpGet("{Username}")]
-    public async Task<IActionResult> GetUserByName(string username)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetUserById(int id)
     {
-         Console.WriteLine($"Ricevuto parametro username: {username}");
         var user = await _context.Users
             .Include(u => u.FavoriteCocktails)
             .ThenInclude(c => c.Drink)
             .Include(u => u.CreatedCocktails)
             .ThenInclude(c => c.Drink)
-            .FirstOrDefaultAsync(u => u.Username == username);
+            .FirstOrDefaultAsync(u => u.Id == id);
 
         if (user == null)
-            return NotFound($"User with name {username} not found");
+            return NotFound($"User with ID {id} not found");
 
         return Ok(user);
     }
@@ -74,7 +67,7 @@ public class UserController : ControllerBase
 
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetUserByName), new { id = newUser.Id }, newUser);
+        return CreatedAtAction(nameof(GetUserById), new { id = newUser.Id }, newUser);
     }
 
     [HttpPut("{id}")]
