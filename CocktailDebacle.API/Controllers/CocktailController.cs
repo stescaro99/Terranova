@@ -120,7 +120,7 @@ public class CocktailController : ControllerBase
         }
     }
 
-    [HttpPost("UpdateCocktail")] // premium API only
+    [HttpPost("UpdateCocktail (Premium)")]
     public async Task<IActionResult> UpdateDatabase([FromServices] CocktailApiService apiService)
     {
         int count = 0;
