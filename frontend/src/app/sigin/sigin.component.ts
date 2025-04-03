@@ -5,12 +5,14 @@ import { User } from '../user/user.model';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
+import { CountryComponent } from '../country/country.component';
 
 
 @Component({
   selector: 'app-sigin',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, CountryComponent],
+  standalone: true,
   providers: [],
   template: `
     <h2>Sign In</h2>
@@ -33,16 +35,20 @@ import { Router } from '@angular/router';
       <p>Password*: <input type="password" [(ngModel)]="user.Password" name="password" required></p>
       <p>
         Email*: 
-        <input 
+       <input 
           type="email" 
           placeholder="Inserisci la tua email" 
           [(ngModel)]="user.Email" 
           name="email" 
           required 
+          (input)="validateEmail()" 
           #emailInput="ngModel" 
         />
         <span *ngIf="emailInput.invalid && emailInput.touched" style="color: red;">
           Inserisci un'email valida.
+        </span>
+        <span *ngIf="emailErrorMessage" style="color: red;">
+          {{ emailErrorMessage }}
         </span>
       </p>
       <p>
@@ -58,7 +64,7 @@ import { Router } from '@angular/router';
           {{ dateErrorMessage }}
         </span>
       </p>
-      <p>Nazione: <input type="text" [(ngModel)]="user.Country" name="address"></p>
+      <app-country (countrySelected)="user.Country = $event"></app-country>
       <p>Città: <input type="text" [(ngModel)]="user.City" name="city"></p>
       
       <label for="imgUpload">Upload Image:</label>
@@ -82,12 +88,18 @@ export class SiginComponent {
   age: number | null = null;
   message: string = '';
   usernameMessage: string = '';
+  emailErrorMessage: string = '';
   usernameAvailable: boolean = false;
   dateErrorMessage: string = '';
-  
+   
   constructor(private userService: UserService, private router: Router) {
   }
   
+  logCountry(selectedCountry: string) {
+    console.log('Nazione selezionata:', selectedCountry);
+    this.user.Country = selectedCountry;
+  }
+
   calculateAge() {
     if (this.user.BirthDate) {
       const today = new Date();
@@ -141,6 +153,16 @@ export class SiginComponent {
           this.usernameAvailable = false;
         }
       );
+  }
+  validateEmail() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex per validare l'email
+    if (!this.user.Email) {
+      this.emailErrorMessage = 'Il campo email è obbligatorio.';
+    } else if (!emailRegex.test(this.user.Email)) {
+      this.emailErrorMessage = 'Inserisci un\'email valida (esempio@email.com).';
+    } else {
+      this.emailErrorMessage = ''; // Nessun errore
+    }
   }
 
   submitForm() {
