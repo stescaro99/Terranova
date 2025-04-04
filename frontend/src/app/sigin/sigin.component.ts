@@ -53,6 +53,7 @@ import { AgeComponent } from '../age/age.component';
       </p>
       <app-age (DateSelected)="user.BirthDate = $event"></app-age>
       <app-country (countrySelected)="user.Country = $event"></app-country>
+      <p>country selected: {{ user.Country }}</p>
       <p>Città: <input type="text" [(ngModel)]="user.City" name="city"></p>
       
       <label for="imgUpload">Upload Image:</label>
@@ -142,12 +143,12 @@ export class SiginComponent {
 
   formValid(): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    console.log(this.user);
     return (
       !!this.user.Name && 
       !!this.user.Username && 
       !!this.user.Password && 
       !!this.user.Email &&
-      emailRegex.test(this.user.Email) &&
       !!this.user.BirthDate &&
       this.user.AppPermissions && 
       this.usernameAvailable 

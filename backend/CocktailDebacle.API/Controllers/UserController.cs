@@ -26,7 +26,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Login([FromQuery]string username, [FromQuery]string password)
     {
         var user = await _context.Users
-            .FirstOrDefaultAsync(u => u.Username);
+            .FirstOrDefaultAsync(u => u.Username == username);
         if (user == null)
             user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Email == username);

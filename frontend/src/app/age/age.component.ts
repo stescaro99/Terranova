@@ -26,11 +26,9 @@ export class AgeComponent {
         this.dateErrorMessage = 'La data di nascita non può essere futura o il giorno corrente.';
         return;
       } else {
-        this.dateErrorMessage = ''; 
+        this.dateErrorMessage = '';
+        this.DateSelected.emit(this.birthDate);
       }
     }
-  }
-  onDateChange() {
-    this.DateSelected.emit(this.birthDate);
   }
 }

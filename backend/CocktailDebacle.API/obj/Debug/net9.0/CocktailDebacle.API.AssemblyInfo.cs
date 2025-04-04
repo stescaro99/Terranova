@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CocktailDebacle.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82a6c46f84f9a6ea23d33e5df44f2a7f1f3aeeaa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+207a4c65dec15b94cb45dcbd3882f341416f2489")]
 [assembly: System.Reflection.AssemblyProductAttribute("CocktailDebacle.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CocktailDebacle.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
