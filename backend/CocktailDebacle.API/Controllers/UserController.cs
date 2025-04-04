@@ -22,6 +22,21 @@ public class UserController : ControllerBase
         return Ok(!userExists);
     }
 
+    [HttpGet("login")]
+    public async Task<IActionResult> Login([FromQuery]string username, [FromQuery]string password)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Username);
+        if (user == null)
+            user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == username);
+        if (user == null)
+            return NotFound($"User with username/email {username} not found");
+        if (user.Password != password)
+            return Unauthorized("Invalid password");
+        return Ok(user);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {

@@ -32,8 +32,8 @@ import { User } from '../user/user.model';
       console.log('URL chiamato:', url)
       return this.http.get<any>(url);
     }
-    isUserEgistered(username: string, password: string): Observable<any> {
-      const url = `${this.apiUrl}/CheckUser?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+    isUserRegistered(username: string, password: string): Observable<any> {
+      const url = `${this.apiUrl}/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
       return this.http.get<any>(url);
     }
   }

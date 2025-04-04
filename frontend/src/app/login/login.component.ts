@@ -19,7 +19,7 @@ export class LoginComponent {
   
   loginRoute() {
     console.log(this.username, this.password);
-    this.userService.isUserEgistered(this.username, this.password).subscribe(
+    this.userService.isUserRegistered(this.username, this.password).subscribe(
       (response: User | null) => {
         if (response) {
           console.log('Login effettuato con successo!');
