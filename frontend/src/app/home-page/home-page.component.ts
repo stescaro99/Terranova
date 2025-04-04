@@ -3,10 +3,11 @@ import { User } from '../user/user.model';
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { BackgroundComponent } from '../background/background.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [CommonModule],
+  imports: [CommonModule, BackgroundComponent],
   templateUrl: './home-page.component.html',
   styles: ``
 })

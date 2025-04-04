@@ -4,10 +4,12 @@ import { Router } from '@angular/router';
 import { User } from '../user/user.model';
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
+import { BackgroundComponent } from '../background/background.component';
+
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, BackgroundComponent],
   templateUrl: './login.component.html',
   styles: ``
 })

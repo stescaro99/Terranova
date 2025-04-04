@@ -1,0 +1,17 @@
+<div class="background">
+    <div
+      *ngFor="let cube of cubes"
+      class="ice-cube-wrapper"
+      [style.top]="cube.top"
+      [style.left]="cube.left"
+      [style.animationDelay]="cube.animationDelay">
+      <div class="ice-cube">
+        <div class="front"></div>
+        <div class="back"></div>
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="top"></div>
+        <div class="bottom"></div>
+      </div>
+    </div>
+  </div>

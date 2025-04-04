@@ -1,0 +1,62 @@
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    perspective: 1000px;
+    z-index: -1;
+  }
+  
+  .ice-cube-wrapper {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    transform-style: preserve-3d;
+    border-radius: 10px;
+    animation: float 8s infinite ease-in-out, float-and-drift 10s infinite linear;
+  }
+  
+  .ice-cube {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+  }
+  
+  .ice-cube div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    outline: 2px solid rgba(255, 255, 255, 0.1); /* Ombra interna per simulare lo spessore */
+}
+
+    .ice-cube .front  { transform: translateZ(35px); }
+    .ice-cube .back   { transform: rotateY(180deg) translateZ(35px); }
+    .ice-cube .left   { transform: rotateY(-90deg) translateZ(35px); }
+    .ice-cube .right  { transform: rotateY(90deg) translateZ(35px); }
+    .ice-cube .top    { transform: rotateX(90deg) translateZ(35px); }
+    .ice-cube .bottom { transform: rotateX(-90deg) translateZ(35px); }
+  
+  
+    @keyframes float-and-drift {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(15px, -20px); /* Sposta leggermente in diagonale */
+  }
+  50% {
+    transform: translate(30px, 0); /* Sposta orizzontalmente */
+  }
+  75% {
+    transform: translate(15px, 20px); /* Sposta leggermente in diagonale opposta */
+  }
+  100% {
+    transform: translate(0, 0); /* Torna alla posizione originale */
+  }
+}
