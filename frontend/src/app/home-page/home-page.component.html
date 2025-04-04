@@ -1,0 +1,27 @@
+
+<div class="header">
+    <button class="user-photo-button" (click)="onUserPhotoClick()">
+    <img 
+      *ngIf="user.ImgUrl; else defaultImage" 
+      [src]="user.ImgUrl" 
+      alt="User Photo" 
+      class="user-photo" 
+    />
+    <ng-template #defaultImage>
+      <div class="default-photo"></div>
+    </ng-template>
+    </button>
+    <div class="dropdown-menu" *ngIf="isDropdownOpen">
+        <ul>
+          <button (click)="goToSettings()">Impostazioni</button>
+          <button (click)="logout()">Logout</button>
+        </ul>
+      </div>
+</div>
+
+<h3>HOME PAGE</h3>
+<h4>Welcome to the Aper project! {{user.Username}}</h4>
+<br>
+<h1>list of cocktails of the day</h1>
+<br>
+<h2>list of your favorite cocktails</h2>

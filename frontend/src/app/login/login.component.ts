@@ -7,31 +7,37 @@ import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-login',
   imports: [FormsModule],
-  template: `
-    <h1> login</h1>
-    <br>
-      <input type="text" placeholder="username"  [(ngModel)]="username"/>
-      <input type="password" placeholder="password" [(ngModel)]="password" />
-      <button (click)="loginRoute()">login</button>
-    <br>
-    <br>
-    <br>
-      <button (click)="sigInButton()">iscriviti</button>
-    <br>
-    <br>
-    <br>
-      <button (click)="notRegister()">continua enza accedere</button>
-  `,
+  templateUrl: './login.component.html',
   styles: ``
 })
 export class LoginComponent {
   username = '';
   password = '';
+  errorMessage = '';
   constructor(private router: Router, private userService: UserService) {}
   user: User = new User();
   
   loginRoute() {
     console.log(this.username, this.password);
+    this.userService.isUserEgistered(this.username, this.password).subscribe(
+      (response: User | null) => {
+        if (response) {
+          console.log('Login effettuato con successo!');
+          this.user = response;
+          sessionStorage.setItem('user', JSON.stringify(this.user));
+          sessionStorage.setItem('authToken', 'true');
+          this.router.navigate(['/home']);
+        } else {
+          console.log('Username o password errati!');
+          this.errorMessage = 'Username o password errati!';
+        }
+      },
+      (error) => {
+        console.error('Errore durante il login:', error);
+        this.errorMessage = 'Si è verificato un errore durante il login. Riprova più tardi.';
+      }
+    );
+
   }
   sigInButton() {
     this.router.navigate(['/sigIn']);

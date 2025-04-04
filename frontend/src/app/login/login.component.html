@@ -1,0 +1,14 @@
+<h1> login</h1>
+<br>
+  <input type="text" placeholder="username"  [(ngModel)]="username"/>
+  <input type="password" placeholder="password" [(ngModel)]="password" />
+  <button (click)="loginRoute()">login</button>
+  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+<br>
+<br>
+<br>
+  <button (click)="sigInButton()">iscriviti</button>
+<br>
+<br>
+<br>
+  <button (click)="notRegister()">continua enza accedere</button>

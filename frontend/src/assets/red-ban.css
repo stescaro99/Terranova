@@ -30,9 +30,43 @@
   object-fit: contain; /* Adatta l'immagine senza tagliarla */
 }
   
-  /*@media (max-width: 480px) {
-    .red-band img {
-      width: 20%;  /* Riduce ulteriormente la larghezza per schermi molto piccoli 
-      height: auto;  Mantiene le proporzioni dell'immagine 
-    }
-  }*/
+.header {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+}
+
+.user-photo-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-block;
+  width: 75px; 
+  height: 75px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 85px; /* Posiziona il menu sotto il bottone */
+  right: 10px; /* Allinea il menu al lato destro */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  z-index: 1000;
+}
+
+.user-photo ,
+.default-photo {
+  
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background-color: #ccc;
+  border: 4px solid #aaa;
+  display: inline-block; 
+}

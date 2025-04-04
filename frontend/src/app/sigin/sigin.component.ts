@@ -7,11 +7,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CountryComponent } from '../country/country.component';
-
+import { AgeComponent } from '../age/age.component';
 
 @Component({
   selector: 'app-sigin',
-  imports: [FormsModule, CommonModule, CountryComponent],
+  imports: [FormsModule, CommonModule, CountryComponent, AgeComponent],
   standalone: true,
   providers: [],
   template: `
@@ -51,19 +51,7 @@ import { CountryComponent } from '../country/country.component';
           {{ emailErrorMessage }}
         </span>
       </p>
-      <p>
-        Data di nascita*:  
-        <input 
-          type="date" 
-          [(ngModel)]="user.BirthDate" 
-          name="birthDate" 
-          (change)="calculateAge()" 
-          required 
-        />
-        <span *ngIf="dateErrorMessage" style="color: red;">
-          {{ dateErrorMessage }}
-        </span>
-      </p>
+      <app-age (DateSelected)="user.BirthDate = $event"></app-age>
       <app-country (countrySelected)="user.Country = $event"></app-country>
       <p>Città: <input type="text" [(ngModel)]="user.City" name="city"></p>
       
@@ -90,46 +78,11 @@ export class SiginComponent {
   usernameMessage: string = '';
   emailErrorMessage: string = '';
   usernameAvailable: boolean = false;
-  dateErrorMessage: string = '';
    
   constructor(private userService: UserService, private router: Router) {
   }
-  
-  logCountry(selectedCountry: string) {
-    console.log('Nazione selezionata:', selectedCountry);
-    this.user.Country = selectedCountry;
-  }
 
-  calculateAge() {
-    if (this.user.BirthDate) {
-      const today = new Date();
-      const birthDateObj = new Date(this.user.BirthDate);
   
-      // Calcola la data di ieri
-      const yesterday = new Date();
-      yesterday.setDate(today.getDate() - 1);
-  
-      if (birthDateObj > yesterday) {
-        this.dateErrorMessage = 'La data di nascita non può essere futura o il giorno corrente.';
-        this.age = null;
-        return;
-      } else {
-        this.dateErrorMessage = ''; 
-      }
-  
-      let age = today.getFullYear() - birthDateObj.getFullYear();
-  
-      if (
-        today.getMonth() < birthDateObj.getMonth() ||
-        (today.getMonth() === birthDateObj.getMonth() && today.getDate() < birthDateObj.getDate())
-      ) {
-        age--;
-      }
-  
-      this.age = age;
-    }
-  }
-
   checkUsername() {
       if (!this.user.Username) {
         this.usernameMessage = 'Username non può essere vuoto.';
