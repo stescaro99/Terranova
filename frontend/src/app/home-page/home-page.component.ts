@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { BackgroundComponent } from '../background/background.component';
+import { CocktailService } from '../services/cocktail.service';
 
 @Component({
   selector: 'app-home-page',
@@ -16,13 +17,23 @@ export class HomePageComponent {
   isAuthenticated: boolean;
   isDropdownOpen: boolean = false;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private cocktailService: CocktailService) {
     this.user = this.userService.getUser();
     console.log('Valore di user.ImgUrl:', this.user.ImgUrl);
     this.isAuthenticated = !!sessionStorage.getItem('authToken');
     if (!this.user.ImgUrl) {
       console.log('Nessuna immagine trovata, verrà mostrato il cerchio grigio.');
     }
+  }
+
+  takeCocktail() {
+    this.cocktailService.takeCocktailOfDay().subscribe(
+      (response: any) => {
+        if(response)
+        {
+
+        }
+      });
   }
 
   onUserPhotoClick() {

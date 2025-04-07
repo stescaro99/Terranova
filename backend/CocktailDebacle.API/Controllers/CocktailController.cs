@@ -111,6 +111,25 @@ public class CocktailController : ControllerBase
         }
     }
 
+    [HttpGet("RandomCocktails")]
+    public async Task<IActionResult> GetRandomCocktails(int number, bool alcohol)
+    {
+        if (number < 1)
+            return BadRequest("Invalid number of cocktails requested.");
+        var cocktails = await _context.Cocktails
+            .Include(c => c.Drink)
+            .ToListAsync();
+        string? cda = alcohol ? null : "Alcoholic";
+        var randomCocktails = cocktails
+            .Where(c => c.Drink.StrAlcoholic != cda)
+            .OrderBy(c => Guid.NewGuid())
+            .Take(number)
+            .ToList();
+        if (randomCocktails.Count == 0)
+            return NotFound("No cocktails found matching the criteria.");
+        return Ok(randomCocktails);
+    }
+
     private async Task LogToFile(string message)
     {
         string logFilePath = "cocktail_log.txt";

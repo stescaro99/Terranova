@@ -27,8 +27,8 @@ export class LoginComponent {
         if (response) {
           console.log('Login effettuato con successo!');
           this.user = response;
-          sessionStorage.setItem('user', JSON.stringify(this.user));
-          sessionStorage.setItem('authToken', 'true');
+          localStorage.setItem('user', JSON.stringify(this.user));
+          localStorage.setItem('authToken', 'true');
           this.router.navigate(['/home']);
         } else {
           console.log('Username o password errati!');
@@ -49,8 +49,10 @@ export class LoginComponent {
     const guestUser = new User();
     guestUser.Username = 'Guest';
     this.userService.setUser(guestUser);
-    sessionStorage.setItem('username', 'Guest');
-    sessionStorage.setItem('authToken', 'true');
+    localStorage.setItem('username', 'Guest');
+    localStorage.setItem('authToken', 'true');
+    localStorage.setItem('guestToken', 'true');
+    console.log('Accesso come ospite effettuato con successo!');
     this.router.navigate(['/home']);
   }
 }
