@@ -1,69 +1,69 @@
 export class Cocktail {
-    id: number;
+    Id: number;
     drink: CocktailApiDrink;
-    createdByUserId?: number;
-    favoriteByUsers: string[]; // Array di ID o nomi degli utenti che hanno aggiunto il cocktail ai preferiti
+    CreatedByUserId?: number;
+    FavoriteByUsers: string[]; // Array di ID o nomi degli utenti che hanno aggiunto il cocktail ai preferiti
   
     constructor(init?: Partial<Cocktail>) {
-      this.id = init?.id || 0;
+      this.Id = init?.Id || 0;
       this.drink = init?.drink || new CocktailApiDrink();
-      this.createdByUserId = init?.createdByUserId;
-      this.favoriteByUsers = init?.favoriteByUsers || [];
+      this.CreatedByUserId = init?.CreatedByUserId;
+      this.FavoriteByUsers = init?.FavoriteByUsers || [];
     }
   }
   
   export class CocktailApiDrink {
-    idDrink?: string;
-    strDrink?: string;
-    strDrinkAlternate?: string;
-    strTags?: string;
-    strVideo?: string;
-    strCategory?: string;
-    strIBA?: string;
-    strAlcoholic?: string;
-    strGlass?: string;
-    strInstructions?: string;
-    strInstructionsES?: string;
-    strInstructionsDE?: string;
-    strInstructionsFR?: string;
-    strInstructionsIT?: string;
-    strInstructionsZH_HANS?: string;
-    strInstructionsZH_HANT?: string;
-    strDrinkThumb?: string;
-    strIngredient1?: string;
-    strIngredient2?: string;
-    strIngredient3?: string;
-    strIngredient4?: string;
-    strIngredient5?: string;
-    strIngredient6?: string;
-    strIngredient7?: string;
-    strIngredient8?: string;
-    strIngredient9?: string;
-    strIngredient10?: string;
-    strIngredient11?: string;
-    strIngredient12?: string;
-    strIngredient13?: string;
-    strIngredient14?: string;
-    strIngredient15?: string;
-    strMeasure1?: string;
-    strMeasure2?: string;
-    strMeasure3?: string;
-    strMeasure4?: string;
-    strMeasure5?: string;
-    strMeasure6?: string;
-    strMeasure7?: string;
-    strMeasure8?: string;
-    strMeasure9?: string;
-    strMeasure10?: string;
-    strMeasure11?: string;
-    strMeasure12?: string;
-    strMeasure13?: string;
-    strMeasure14?: string;
-    strMeasure15?: string;
-    strImageSource?: string;
-    strImageAttribution?: string;
-    strCreativeCommonsConfirmed?: string;
-    dateModified?: string;
+    IdDrink?: string;
+    StrDrink?: string;
+    StrDrinkAlternate?: string;
+    StrTags?: string;
+    StrVideo?: string;
+    StrCategory?: string;
+    StrIBA?: string;
+    StrAlcoholic?: string;
+    StrGlass?: string;
+    StrInstructions?: string;
+    StrInstructionsES?: string;
+    StrInstructionsDE?: string;
+    StrInstructionsFR?: string;
+    StrInstructionsIT?: string;
+    StrInstructionsZH_HANS?: string;
+    StrInstructionsZH_HANT?: string;
+    StrDrinkThumb?: string;
+    StrIngredient1?: string;
+    StrIngredient2?: string;
+    StrIngredient3?: string;
+    StrIngredient4?: string;
+    StrIngredient5?: string;
+    StrIngredient6?: string;
+    StrIngredient7?: string;
+    StrIngredient8?: string;
+    StrIngredient9?: string;
+    StrIngredient10?: string;
+    StrIngredient11?: string;
+    StrIngredient12?: string;
+    StrIngredient13?: string;
+    StrIngredient14?: string;
+    StrIngredient15?: string;
+    StrMeasure1?: string;
+    StrMeasure2?: string;
+    StrMeasure3?: string;
+    StrMeasure4?: string;
+    StrMeasure5?: string;
+    StrMeasure6?: string;
+    StrMeasure7?: string;
+    StrMeasure8?: string;
+    StrMeasure9?: string;
+    StrMeasure10?: string;
+    StrMeasure11?: string;
+    StrMeasure12?: string;
+    StrMeasure13?: string;
+    StrMeasure14?: string;
+    StrMeasure15?: string;
+    StrImageSource?: string;
+    StrImageAttribution?: string;
+    StrCreativeCommonsConfirmed?: string;
+    DateModified?: string;
   
     constructor(init?: Partial<CocktailApiDrink>) {
       Object.assign(this, init);

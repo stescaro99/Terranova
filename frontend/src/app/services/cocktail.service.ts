@@ -10,8 +10,9 @@ export class CocktailService {
   private apiUrl = `${environment.baseUrl}cocktail`;
   constructor(private http: HttpClient) { }
 
-  takeCocktailOfDay(): Observable<any> {
-    const url = `${this.apiUrl}/RandomCocktails`;
+  takeCocktailOfDay(num: number , alcool: boolean): Observable<any> {
+    const url = `${this.apiUrl}/RandomCocktails?number=${num}&alcohol=${alcool}`;
+    console.log('URL chiamato:', url);
     return this.http.get<any>(url);
   }
 

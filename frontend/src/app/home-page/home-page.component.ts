@@ -5,20 +5,21 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { BackgroundComponent } from '../background/background.component';
 import { CocktailService } from '../services/cocktail.service';
-import { Cocktail } from '../models/cocktail';
-import { error } from 'console';
+import { Cocktail, CocktailApiDrink } from '../models/cocktail';
+
 
 @Component({
   selector: 'app-home-page',
   imports: [CommonModule, BackgroundComponent],
   templateUrl: './home-page.component.html',
-  styles: ``
+  styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
   user: User;
   isAuthenticated: boolean;
   isDropdownOpen: boolean = false;
-  cocktail: Cocktail | null = null;
+  
+  cocktail: CocktailApiDrink | null = null; 
   
   constructor(private userService: UserService, private router: Router, private cocktailService: CocktailService) {
     this.user = this.userService.getUser();
@@ -29,15 +30,21 @@ export class HomePageComponent {
     }
   }
 
+  ngOnInit(): void {
+    this.takeCocktail(); 
+  }
+
   takeCocktail() {
-    this.cocktailService.takeCocktailOfDay().subscribe(
-      (response: Cocktail) => {
-        if(response) {
-          console.log('Cocktail del giorno:', response); 
-          this.cocktail = response;
+    this.cocktailService.takeCocktailOfDay(1, true).subscribe(
+      (response: any) => {
+        if (response && response[0].drink) {
+          this.cocktail = response[0].drink;
+          console.log('Cocktail del giorno:', this.cocktail);
+        } else {
+          console.error('La proprietà "drink" non è presente nella risposta:', response);
         }
       },
-    (error) => {
+      (error) => {
         console.error('Errore durante il recupero del cocktail del giorno:', error);
       }
     );
