@@ -1,0 +1,20 @@
+.cocktail {
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .cocktail-image {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .cocktail-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }

@@ -24,5 +24,10 @@
 <h1>Benvenuto {{ user.Name }} {{ user.Username }}</h1>
 <p>Questa è la tua home page.</p> 
 <p>cocktail del giorno: </p>
-<p>sei a {{user.Country}}, {{user.City}}</p>
-<p>la tua email è {{user.Email}}</p>
+<div class="cocktail" *ngFor="let cocktail of cocktails">
+  <h3>{{ cocktail.name }}</h3>
+  <p>{{ cocktail.instructions }}</p>
+  <div *ngIf="cocktail.imageUrl" class="cocktail-image">
+    <img [src]="cocktail.imageUrl" alt="{{ cocktail.name }}" />
+  </div>
+</div>
