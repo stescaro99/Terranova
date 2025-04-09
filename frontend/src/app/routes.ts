@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { SiginComponent } from './sigin/sigin.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { authGuard } from './auth.guard';
+import { CocktailComponent } from './cocktail/cocktail.component';
 
 export const routeConfig: Routes = [
   {
@@ -22,5 +23,9 @@ export const routeConfig: Routes = [
   {
     path: 'sigIn',
     component: SiginComponent, 
+  },
+  {
+    path: 'cocktail/:id',
+    component: CocktailComponent,
   }
 ];

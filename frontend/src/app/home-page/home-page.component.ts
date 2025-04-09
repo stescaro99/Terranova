@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { BackgroundComponent } from '../background/background.component';
 import { CocktailService } from '../services/cocktail.service';
 import { Cocktail, CocktailApiDrink } from '../models/cocktail';
+import { ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -19,9 +21,9 @@ export class HomePageComponent {
   isAuthenticated: boolean;
   isDropdownOpen: boolean = false;
   
-  cocktail: CocktailApiDrink | null = null; 
+  cocktails: CocktailApiDrink[] = []; 
   
-  constructor(private userService: UserService, private router: Router, private cocktailService: CocktailService) {
+  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router, private cocktailService: CocktailService, private cdr: ChangeDetectorRef) {
     this.user = this.userService.getUser();
     console.log('Valore di user.ImgUrl:', this.user.ImgUrl);
     this.isAuthenticated = !!sessionStorage.getItem('authToken');
@@ -30,16 +32,22 @@ export class HomePageComponent {
     }
   }
 
-  ngOnInit(): void {
-    this.takeCocktail(); 
+  onCocktailClick(cocktail: CocktailApiDrink) {
+    console.log('Cocktail selezionato:', cocktail);
+  this.router.navigate(['/cocktail', cocktail.idDrink], { queryParams: { id: cocktail.idDrink } });
   }
 
-  takeCocktail() {
-    this.cocktailService.takeCocktailOfDay(1, true).subscribe(
+  ngOnInit(): void {
+    this.takeCocktails(); 
+  }
+
+  takeCocktails() {
+    this.cocktailService.takeCocktailOfDay(10, true).subscribe(
       (response: any) => {
-        if (response && response[0].drink) {
-          this.cocktail = response[0].drink;
-          console.log('Cocktail del giorno:', this.cocktail);
+        if (response && response.length > 0) {
+          this.cocktails = response.map((item: any)=> item.drink);
+          console.log('Cocktail del giorno:', this.cocktails);
+          this.cdr.detectChanges();
         } else {
           console.error('La proprietà "drink" non è presente nella risposta:', response);
         }

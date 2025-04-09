@@ -22,12 +22,14 @@
 
 <h3>HOME PAGE</h3>
 <h1>Benvenuto {{ user.Name }} {{ user.Username }}</h1>
-<p>Questa è la tua home page.</p> 
-<p>cocktail del giorno: </p>
-<div *ngIf="cocktail" (ngInit)="takeCocktail()">
-  <h3>{{ cocktail.StrDrink }}</h3>
-  <p>{{ cocktail.StrInstructions }}</p>
-  <div *ngIf="cocktail.StrImageSource" class="cocktail-image">
-    <img [src]="cocktail.StrImageSource" alt="{{ cocktail.StrDrink }}" />
-  </div>
+<h3>cocktail del giorno: </h3>
+<div *ngIf="cocktails.length > 0">
+  <ul class="cocktail-list">
+    <li *ngFor="let cocktail of cocktails" class="cocktail-item">
+      <div *ngIf="cocktail.strDrinkThumb" class="cocktail-image">
+        <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" (click)="onCocktailClick(cocktail)" class="clickable-image"/>
+      </div>
+      <h3>{{ cocktail.strDrink }}</h3>
+    </li>
+  </ul>
 </div>
