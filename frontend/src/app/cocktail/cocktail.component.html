@@ -1,2 +1,25 @@
-
-<h1>{{cocktail.strDrink}} </h1>
+<app-background></app-background>
+<div class="cocktail-container" (ngOnInit)="ngOnInit()">
+    <img [src]="cocktail?.strDrinkThumb" alt="Cocktail Image" class="cocktail-image">
+    <div class="cocktail-info">
+        <h2>{{cocktail?.strDrink}}</h2>
+        <p>Category: {{cocktail?.strCategory}}</p>
+        <p>{{cocktail?.strAlcoholic}}</p>
+        <p>Glass: {{cocktail?.strGlass}}</p>
+    </div>
+    <div class="cocktail-ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+            <li *ngFor="let ingredient of ingredients">{{ingredient}}</li>
+        </ul>
+    </div>
+    <br>
+    <div class="cocktail-instructions">
+        <h3>Instructions:</h3>
+        <p>{{cocktail?.strInstructions}}</p>
+        <br>
+        <div>aggiungi ai preferiti 
+            <input type="checkbox" id="star" class="starButton" (change)="addFavorite"/>
+            <label for="star" class="starLabel">★</label>
+        </div>
+</div>

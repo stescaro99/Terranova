@@ -1,23 +1,4 @@
 
-<div class="header">
-    <button class="user-photo-button" (click)="onUserPhotoClick()">
-    <img 
-      *ngIf="user.ImgUrl; else defaultImage" 
-      [src]="user.ImgUrl" 
-      alt="User Photo" 
-      class="user-photo" 
-    />
-    <ng-template #defaultImage>
-      <div class="default-photo"></div>
-    </ng-template>
-    </button>
-    <div class="dropdown-menu" *ngIf="isDropdownOpen">
-        <ul>
-          <button (click)="goToSettings()">Impostazioni</button>
-          <button (click)="logout()">Logout</button>
-        </ul>
-      </div>
-</div>
 <app-background></app-background>
 
 <h3>HOME PAGE</h3>

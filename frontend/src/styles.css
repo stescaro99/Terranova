@@ -24,43 +24,6 @@ body {
   z-index: -1;
 }
 
-ice-cube {
-  --ice-cube-color: #641641;
-  --ice-cube-border-color: #1c0e5e;
-  --ice-cube-border-radius: 8px;
-  --ice-cube-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-ice-cube::part(cube) {
-  background-color: var(--ice-cube-color);
-  border: 1px solid var(--ice-cube-border-color);
-  border-radius: var(--ice-cube-border-radius);
-  box-shadow: var(--ice-cube-shadow);
-}
-
-ice-cube:nth-child(1) {
-  top: 10%;
-  left: 20%;
-}
-
-ice-cube:nth-child(2) {
-  top: 50%;
-  left: 40%;
-}
-
-ice-cube:nth-child(3) {
-  top: 80%;
-  left: 70%;
-}
-
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
 
 :root {
   --primary-color: #605DC8;

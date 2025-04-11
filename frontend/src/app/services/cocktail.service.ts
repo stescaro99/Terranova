@@ -16,4 +16,9 @@ export class CocktailService {
     return this.http.get<any>(url);
   }
 
+  takeCocktailById(id: string): Observable<any> {
+  const url = `${this.apiUrl}/${id}`;
+  return this.http.get<any>(url);
+  }
+
 }

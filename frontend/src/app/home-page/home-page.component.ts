@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
+  standalone: true,
   imports: [CommonModule, BackgroundComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
@@ -58,20 +59,5 @@ export class HomePageComponent {
     );
   }
 
-  onUserPhotoClick() {
-    console.log('User photo clicked!');
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-  goToSettings() {
-    console.log('Navigazione alle impostazioni...');
-    this.router.navigate(['/settings']);
-  }
-
-  logout() {  
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('authToken');
-    this.userService.setUser(new User());
-    window.location.reload();
-  }
-
+  
 }

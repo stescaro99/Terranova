@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { User } from '../user/user.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-background',
@@ -11,9 +14,11 @@ import { CommonModule } from '@angular/common';
 export class BackgroundComponent {
   images: { src: string; top: string; left: string; animationDelay: string; size: string; rotation: string }[] = [];
   isPopupVisible: boolean = false; // Proprietà per controllare la visibilità del pop-up
+  user: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : new User();
+  isDropdownOpen: boolean = false;
 
-  constructor() {
-    this.generateImages(20); // Genera 10 immagini dinamiche
+  constructor(private userService: UserService, private router: Router) {
+    this.generateImages(20); 
   }
 
   generateImages(count: number) {
@@ -39,6 +44,23 @@ export class BackgroundComponent {
   }
 
   togglePopup() {
-    this.isPopupVisible = !this.isPopupVisible; // Alterna la visibilità del pop-up
+    this.isPopupVisible = !this.isPopupVisible; 
   }
+
+  onUserPhotoClick() {
+    console.log('User photo clicked!');
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+  goToSettings() {
+    console.log('Navigazione alle impostazioni...');
+    this.router.navigate(['/settings']);
+  }
+
+  logout() {  
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('authToken');
+    this.userService.setUser(new User());
+    window.location.reload();
+  }
+
 }
