@@ -33,6 +33,27 @@ public class CocktailController : ControllerBase
         return Ok(cocktail);
     }
 
+    [HttpSet("favorite")]
+    public async Task<IActionResult> SetFavorite(User user, Cocktail cocktail)
+    {
+        if (user == null || cocktail == null)
+            return BadRequest("User or cocktail cannot be null");
+        if (user.favoriteCocktails.Contains(cocktail))
+        {
+            user.favoriteCocktails.Remove(cocktail);
+            cocktail.FavoriteByUsers.Remove(user.Username);
+        }
+        else
+        {
+            user.favoriteCocktails.Add(cocktail);
+            cocktail.FavoriteByUsers.Add(user.Username);
+        }
+        _context.Users.Update(user);
+        _context.Cocktails.Update(cocktail);
+        await _context.SaveChangesAsync();
+        return Ok(user);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCocktailById(string id)
     {

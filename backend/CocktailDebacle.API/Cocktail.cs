@@ -11,12 +11,12 @@ public class Cocktail
     [Required]
     public CocktailApiDrink Drink { get; set; } = new();
 
-    [ForeignKey("CreatedByUserId")]
-    public User? CreatedByUser { get; set; }
-    public int? CreatedByUserId { get; set; }
+    [ForeignKey("CreatedByUser")] //username dell'utente che ha creato il cocktail
+    public string? CreatedByUser { get; set; } = string.Empty;
 
-    [InverseProperty("FavoriteCocktails")]
-    public ICollection<User> FavoriteByUsers { get; set; } = new List<User>();
+    [InverseProperty("FavoriteCocktails")] //username degli utenti che hanno messo il cocktail tra i preferiti
+    [JsonIgnore]
+    public ICollection<string> FavoriteByUsers { get; set; } = new List<string>();
 }
 
 public class CocktailApiDrink
