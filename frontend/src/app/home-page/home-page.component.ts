@@ -8,12 +8,12 @@ import { CocktailService } from '../services/cocktail.service';
 import { Cocktail, CocktailApiDrink } from '../models/cocktail';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, BackgroundComponent],
+  imports: [CommonModule, BackgroundComponent, SearchComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
@@ -39,7 +39,9 @@ export class HomePageComponent {
   }
 
   ngOnInit(): void {
-    this.takeCocktails(); 
+    this.takeCocktails();
+    console.log(localStorage.getItem('guestToken'));
+    console.log('user :', localStorage.getItem('user'));
   }
 
   takeCocktails() {

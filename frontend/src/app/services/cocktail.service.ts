@@ -20,5 +20,8 @@ export class CocktailService {
   const url = `${this.apiUrl}/${id}`;
   return this.http.get<any>(url);
   }
-
+  searchCocktailByName(name: string): Observable<any> {
+  const url = `${this.apiUrl}/Search?str=${name}`;
+  return this.http.get<any>(url);
+  }
 }

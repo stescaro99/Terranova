@@ -36,7 +36,6 @@
   </p>
   <app-age (DateSelected)="user.BirthDate = $event"></app-age>
   <app-country (countrySelected)="user.Country = $event"></app-country>
-  <p>country selected: {{ user.Country }}</p>
   <p>Città: <input type="text" [(ngModel)]="user.City" name="city"></p>
   
   <label for="imgUpload">Upload Image:</label>

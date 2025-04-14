@@ -170,7 +170,7 @@ public class CocktailController : ControllerBase
                     _context.Cocktails.Add(cocktail);
                 }
                 i++;
-                await Task.Delay(150);
+                await Task.Delay(200);
                 await _context.SaveChangesAsync();
             }
             return Ok($"Database populated with {count} cocktails.");

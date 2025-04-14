@@ -29,6 +29,7 @@ export class LoginComponent {
           this.user = response;
           localStorage.setItem('user', JSON.stringify(this.user));
           localStorage.setItem('authToken', 'true');
+          localStorage.setItem('guestToken', 'false');
           this.router.navigate(['/home']);
         } else {
           console.log('Username o password errati!');
@@ -49,7 +50,7 @@ export class LoginComponent {
     const guestUser = new User();
     guestUser.Username = 'Guest';
     this.userService.setUser(guestUser);
-    localStorage.setItem('username', 'Guest');
+    localStorage.setItem('user', JSON.stringify(guestUser));
     localStorage.setItem('authToken', 'true');
     localStorage.setItem('guestToken', 'true');
     console.log('Accesso come ospite effettuato con successo!');

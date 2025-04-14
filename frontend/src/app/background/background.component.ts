@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, LOCALE_ID } from '@angular/core';
 import { User } from '../user/user.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -57,8 +57,9 @@ export class BackgroundComponent {
   }
 
   logout() {  
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('guestToken');
+    localStorage.removeItem('authToken');
     this.userService.setUser(new User());
     window.location.reload();
   }

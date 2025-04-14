@@ -3,6 +3,8 @@
 
 <h3>HOME PAGE</h3>
 <h1>Benvenuto {{ user.Name }} {{ user.Username }}</h1>
+<h3>search cocktail: </h3>
+<app-search></app-search>
 <h3>cocktail del giorno: </h3>
 <div *ngIf="cocktails.length > 0">
   <ul class="cocktail-list">
