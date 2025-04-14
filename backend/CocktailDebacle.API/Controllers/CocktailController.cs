@@ -21,6 +21,18 @@ public class CocktailController : ControllerBase
         return Ok(cocktails);
     }
 
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchCocktails(string str)
+    {
+        var cocktail = await _context.Cocktails
+            .Include(c => c.Drink)
+            .Where(c => c.Drink.StrDrink.StartsWith(str))
+            .ToListAsync();
+        if (cocktail == null || cocktail.Count == 0)
+            return NotFound($"No cocktails found starting with '{str}'");
+        return Ok(cocktail);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCocktailById(string id)
     {
@@ -130,14 +142,14 @@ public class CocktailController : ControllerBase
         return Ok(randomCocktails);
     }
 
-    private async Task LogToFile(string message)
+    /*private async Task LogToFile(string message)
     {
         string logFilePath = "cocktail_log.txt";
         using (var writer = new StreamWriter(logFilePath, append: true))
         {
             await writer.WriteLineAsync($"{DateTime.Now}: {message}");
         }
-    }
+    }*/
 
     [HttpPost("UpdateCocktail (Premium)")]
     public async Task<IActionResult> UpdateDatabase([FromServices] CocktailApiService apiService)
