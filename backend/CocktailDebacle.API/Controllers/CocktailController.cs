@@ -20,8 +20,8 @@ public class CocktailController : ControllerBase
             {
                 c.Id,
                 c.Drink,
-                CreatedByUser = c.CreatedByUser, // Username dell'utente creatore
-                FavoriteByUsers = c.FavoriteByUsers // Solo username
+                CreatedByUser = c.CreatedByUser,
+                FavoriteByUsers = c.FavoriteByUsers
             })
             .ToListAsync();
 

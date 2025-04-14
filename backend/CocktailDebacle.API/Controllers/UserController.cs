@@ -54,8 +54,8 @@ public class UserController : ControllerBase
                     u.CanDrinkAlcohol,
                     u.AppPermissions,
                     u.ImageUrl,
-                    FavoriteCocktails = u.FavoriteCocktails, // Solo ID
-                    CreatedCocktails = u.CreatedCocktails  // Solo ID
+                    FavoriteCocktails = u.FavoriteCocktails,
+                    CreatedCocktails = u.CreatedCocktails
                 })
                 .ToListAsync();
 
@@ -83,8 +83,8 @@ public class UserController : ControllerBase
                 u.CanDrinkAlcohol,
                 u.AppPermissions,
                 u.ImageUrl,
-                FavoriteCocktails = u.FavoriteCocktails, // Solo ID
-                CreatedCocktails = u.CreatedCocktails  // Solo ID
+                FavoriteCocktails = u.FavoriteCocktails,
+                CreatedCocktails = u.CreatedCocktails
             })
             .FirstOrDefaultAsync();
 
@@ -100,8 +100,6 @@ public class UserController : ControllerBase
         Console.WriteLine($"Dati ricevuti: {System.Text.Json.JsonSerializer.Serialize(newUser)}");
         if (newUser == null)
             return BadRequest("Invalid user data");
-        // if (newUser.BirthDate == default)
-        //     return BadRequest("Invalid BirthDate format. Use 'YYYY-MM-DD'.");
 
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
