@@ -66,14 +66,14 @@ public class CocktailDbContext : DbContext
             });
 
         modelBuilder.Entity<Cocktail>()
-            .HasOne(c => c.CreatedByUser)
-            .WithMany(u => u.CreatedCocktails)
-            .HasForeignKey(c => c.CreatedByUserId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .Property(c => c.CreatedByUser)
+            .HasColumnName("CreatedByUser");
 
         modelBuilder.Entity<Cocktail>()
-            .HasMany(c => c.FavoriteByUsers)
-            .WithMany(u => u.FavoriteCocktails)
-            .UsingEntity(j => j.ToTable("UserFavoriteCocktails"));
+            .Ignore(c => c.FavoriteByUsers);
+
+        modelBuilder.Entity<User>()
+            .Ignore(u => u.FavoriteCocktails)
+            .Ignore(u => u.CreatedCocktails);
     }
 }

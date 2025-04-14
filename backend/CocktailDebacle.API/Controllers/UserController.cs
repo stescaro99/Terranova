@@ -43,11 +43,22 @@ public class UserController : ControllerBase
         try
         {
             var users = await _context.Users
-                .Include(u => u.FavoriteCocktails)
-                .ThenInclude(c => c.Drink)
-                .Include(u => u.CreatedCocktails)
-                .ThenInclude(c => c.Drink)
+                .Select(u => new
+                {
+                    u.Id,
+                    u.Name,
+                    u.Username,
+                    u.Email,
+                    u.Country,
+                    u.City,
+                    u.CanDrinkAlcohol,
+                    u.AppPermissions,
+                    u.ImageUrl,
+                    FavoriteCocktails = u.FavoriteCocktails, // Solo ID
+                    CreatedCocktails = u.CreatedCocktails  // Solo ID
+                })
                 .ToListAsync();
+
             return Ok(users);
         }
         catch (Exception ex)
@@ -60,11 +71,22 @@ public class UserController : ControllerBase
     public async Task<IActionResult> GetUserById(int id)
     {
         var user = await _context.Users
-            .Include(u => u.FavoriteCocktails)
-            .ThenInclude(c => c.Drink)
-            .Include(u => u.CreatedCocktails)
-            .ThenInclude(c => c.Drink)
-            .FirstOrDefaultAsync(u => u.Id == id);
+            .Where(u => u.Id == id)
+            .Select(u => new
+            {
+                u.Id,
+                u.Name,
+                u.Username,
+                u.Email,
+                u.Country,
+                u.City,
+                u.CanDrinkAlcohol,
+                u.AppPermissions,
+                u.ImageUrl,
+                FavoriteCocktails = u.FavoriteCocktails, // Solo ID
+                CreatedCocktails = u.CreatedCocktails  // Solo ID
+            })
+            .FirstOrDefaultAsync();
 
         if (user == null)
             return NotFound($"User with ID {id} not found");

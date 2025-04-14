@@ -5,33 +5,11 @@
 namespace CocktailDebacle.API.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateCocktailApiDrink : Migration
+    public partial class Samu : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    City = table.Column<string>(type: "nvarchar(58)", maxLength: 58, nullable: false),
-                    CanDrinkAlcohol = table.Column<bool>(type: "bit", nullable: false),
-                    AppPermissions = table.Column<bool>(type: "bit", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Cocktails",
                 columns: table => new
@@ -43,10 +21,10 @@ namespace CocktailDebacle.API.Migrations
                     Drink_StrDrinkAlternate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrTags = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrVideo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Drink_StrGlass = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrIBA = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrAlcoholic = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drink_StrGlass = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrInstructions = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrInstructionsES = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrInstructionsDE = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -89,60 +67,39 @@ namespace CocktailDebacle.API.Migrations
                     Drink_StrImageAttribution = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrCreativeCommonsConfirmed = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_DateModified = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedByUserId = table.Column<int>(type: "int", nullable: true)
+                    CreatedByUser = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cocktails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cocktails_Users_CreatedByUserId",
-                        column: x => x.CreatedByUserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserFavoriteCocktails",
+                name: "Users",
                 columns: table => new
                 {
-                    FavoriteByUsersId = table.Column<int>(type: "int", nullable: false),
-                    FavoriteCocktailsId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    City = table.Column<string>(type: "nvarchar(58)", maxLength: 58, nullable: true),
+                    CanDrinkAlcohol = table.Column<bool>(type: "bit", nullable: false),
+                    AppPermissions = table.Column<bool>(type: "bit", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserFavoriteCocktails", x => new { x.FavoriteByUsersId, x.FavoriteCocktailsId });
-                    table.ForeignKey(
-                        name: "FK_UserFavoriteCocktails_Cocktails_FavoriteCocktailsId",
-                        column: x => x.FavoriteCocktailsId,
-                        principalTable: "Cocktails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserFavoriteCocktails_Users_FavoriteByUsersId",
-                        column: x => x.FavoriteByUsersId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cocktails_CreatedByUserId",
-                table: "Cocktails",
-                column: "CreatedByUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserFavoriteCocktails_FavoriteCocktailsId",
-                table: "UserFavoriteCocktails",
-                column: "FavoriteCocktailsId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "UserFavoriteCocktails");
-
             migrationBuilder.DropTable(
                 name: "Cocktails");
 

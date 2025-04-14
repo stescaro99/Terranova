@@ -28,29 +28,13 @@ namespace CocktailDebacle.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CreatedByUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedByUser")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("CreatedByUser");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedByUserId");
-
                     b.ToTable("Cocktails");
-                });
-
-            modelBuilder.Entity("CocktailUser", b =>
-                {
-                    b.Property<int>("FavoriteByUsersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FavoriteCocktailsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FavoriteByUsersId", "FavoriteCocktailsId");
-
-                    b.HasIndex("FavoriteCocktailsId");
-
-                    b.ToTable("UserFavoriteCocktails", (string)null);
                 });
 
             modelBuilder.Entity("User", b =>
@@ -107,11 +91,6 @@ namespace CocktailDebacle.API.Migrations
 
             modelBuilder.Entity("Cocktail", b =>
                 {
-                    b.HasOne("User", "CreatedByUser")
-                        .WithMany("CreatedCocktails")
-                        .HasForeignKey("CreatedByUserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.OwnsOne("CocktailApiDrink", "Drink", b1 =>
                         {
                             b1.Property<int>("CocktailId")
@@ -380,30 +359,8 @@ namespace CocktailDebacle.API.Migrations
                                 .HasForeignKey("CocktailId");
                         });
 
-                    b.Navigation("CreatedByUser");
-
                     b.Navigation("Drink")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CocktailUser", b =>
-                {
-                    b.HasOne("User", null)
-                        .WithMany()
-                        .HasForeignKey("FavoriteByUsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cocktail", null)
-                        .WithMany()
-                        .HasForeignKey("FavoriteCocktailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("User", b =>
-                {
-                    b.Navigation("CreatedCocktails");
                 });
 #pragma warning restore 612, 618
         }
