@@ -67,6 +67,29 @@ public class UserController : ControllerBase
         }
     }
 
+    [HttpGet("GetUserFavorites")]
+    public async Task<IActionResult> ListFavourite([FromQuery] int userId)
+    {
+        var user = await _context.Users
+            .Include(u => u.FavoriteCocktails)
+            .FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null)
+            return NotFound($"User with ID {userId} not found");
+
+        var ListFavouriteIds = user.FavoriteCocktails;
+        ICollection<Cocktail> ListCocktails = new List<Cocktail>();
+        foreach (var id in ListFavouriteIds)
+        {
+            var cocktail = await _context.Cocktails.searchCocktailById(id);
+            if (cocktail != null)
+            {
+                ListCocktails.Add(cocktail);
+            }
+        }
+        return Ok(ListCocktails);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(int id)
     {
