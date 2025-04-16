@@ -22,26 +22,34 @@ export class HomePageComponent {
   isAuthenticated: boolean;
   isDropdownOpen: boolean = false;
   
-  cocktails: CocktailApiDrink[] = []; 
+  cocktails: CocktailApiDrink[] = [];
+  favoriteCocktails: CocktailApiDrink[] = [];
   
   constructor(private userService: UserService, private route: ActivatedRoute, private router: Router, private cocktailService: CocktailService, private cdr: ChangeDetectorRef) {
-    this.user = this.userService.getUser();
-    console.log('Valore di user.ImgUrl:', this.user.ImgUrl);
+    this.user = userService.getUser() || new User();
+    
+    console.log('Valore di user.ImgUrl:', this.user.imgUrl);
     this.isAuthenticated = !!sessionStorage.getItem('authToken');
-    if (!this.user.ImgUrl) {
+    if (!this.user.imgUrl) {
       console.log('Nessuna immagine trovata, verrà mostrato il cerchio grigio.');
     }
   }
-
+  
   onCocktailClick(cocktail: CocktailApiDrink) {
     console.log('Cocktail selezionato:', cocktail);
-  this.router.navigate(['/cocktail', cocktail.idDrink], { queryParams: { id: cocktail.idDrink } });
+    this.router.navigate(['/cocktail', cocktail.idDrink], { queryParams: { id: cocktail.idDrink } });
   }
-
+  
   ngOnInit(): void {
     this.takeCocktails();
-    console.log(localStorage.getItem('guestToken'));
-    console.log('user :', localStorage.getItem('user'));
+    console.log('user :', this.user);
+    this.userService.getCocktailsFavorite(this.user.username).subscribe(
+      (response: any) => {
+        for(let i = 0; i < response.length; i++) {
+          this.favoriteCocktails.push(response[i].drink);
+        }
+        console.log('Cocktail preferiti:', this.favoriteCocktails);
+      });
   }
 
   takeCocktails() {

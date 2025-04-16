@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../user/user.model';
 
@@ -10,16 +11,27 @@ import { User } from '../user/user.model';
 })
   export class UserService {
     private currentUser: User = new User();
+    private user: User | null = null;
+    private userSubject = new BehaviorSubject<User | null>(null);
+
     private apiUrl = `${environment.baseUrl}user`;
     constructor(private http: HttpClient) {}
 
-    getUser(): User {
-      return this.currentUser;
+    getUser(): User | null  {
+      if (!this.user) {
+        const userData = localStorage.getItem('user');
+        this.user = userData ? JSON.parse(userData) as User : null;
+      }
+      return this.user;
     }
-    
     setUser(user: User): void {
-      this.currentUser = user;
+      this.userSubject.next(user);
+      localStorage.setItem('user', JSON.stringify(user));
     }
+    getUserObservable() {
+      return this.userSubject.asObservable();
+    }
+
     createUser(user: User): Observable<User> {
       const url = `${this.apiUrl}`;
       return this.http.post<User>(url, user);
@@ -36,4 +48,10 @@ import { User } from '../user/user.model';
       const url = `${this.apiUrl}/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
       return this.http.get<any>(url);
     }
+
+    getCocktailsFavorite(username: string): Observable<any> {
+      const url = `${this.apiUrl}/GetUserFavorites?username=${encodeURIComponent(username)}`;
+      return this.http.get<any>(url);
+    }
+
   }

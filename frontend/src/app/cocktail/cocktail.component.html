@@ -1,4 +1,5 @@
 <app-background></app-background>
+<br>
 <div class="cocktail-container" (ngOnInit)="ngOnInit()">
     <img [src]="cocktail?.strDrinkThumb" alt="Cocktail Image" class="cocktail-image">
     <div class="cocktail-info">
@@ -18,8 +19,14 @@
         <h3>Instructions:</h3>
         <p>{{cocktail?.strInstructions}}</p>
         <br>
-        <div *ngIf="isGuestUser">aggiungi ai preferiti 
-            <input type="checkbox" id="star" class="starButton" (change)="addFavorite"/>
-            <label for="star" class="starLabel">★</label>
+        <div *ngIf="isGuestUser" >aggiungi ai preferiti 
+            <label for="star" class="starLabel">
+                <input type="checkbox"
+                id="star"
+                class="starButton"
+                [checked]="isFavorite()"
+                (change)="toggleFavorite()"/>
+            ★
+            </label>
         </div>
 </div>

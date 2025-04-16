@@ -68,17 +68,17 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("GetUserFavorites")]
-    public async Task<IActionResult> ListFavourite([FromQuery] int userId)
+    public async Task<IActionResult> ListFavourite([FromQuery] string username)
     {
         var user = await _context.Users
             .Include(u => u.FavoriteCocktails)
-            .FirstOrDefaultAsync(u => u.Id == userId);
+            .FirstOrDefaultAsync(u => u.Username == username);
 
         if (user == null)
-            return NotFound($"User with ID {userId} not found");
+            return NotFound($"User with ID {username} not found");
 
         if (user.FavoriteCocktails == null || !user.FavoriteCocktails.Any())
-            return NotFound($"User with ID {userId} has no favorite cocktails");
+            return NotFound($"User with ID {username} has no favorite cocktails");
 
         ICollection<Cocktail> ListCocktails = new List<Cocktail>();
         foreach (var id in user.FavoriteCocktails)

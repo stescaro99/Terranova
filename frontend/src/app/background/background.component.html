@@ -2,8 +2,8 @@
 <div class="header">
   <button class="user-photo-button" (click)="onUserPhotoClick()">
   <img 
-    *ngIf="user.ImgUrl; else defaultImage" 
-    [src]="user.ImgUrl" 
+    *ngIf="user.imgUrl; else defaultImage" 
+    [src]="user.imgUrl" 
     alt="User Photo" 
     class="user-photo" 
   />

@@ -33,19 +33,19 @@ export class SiginComponent {
 
   
   checkUsername() {
-      if (!this.user.Username) {
+      if (!this.user.username) {
         this.usernameMessage = 'Username non può essere vuoto.';
         this.usernameAvailable = false;
         return;
       }
 
-      this.userService.getUserByUsername(this.user.Username).subscribe(
+      this.userService.getUserByUsername(this.user.username).subscribe(
         (isAvailable: boolean) => {
           if (isAvailable) {
-            this.usernameMessage = `L'username "${this.user.Username}" è disponibile.`;
+            this.usernameMessage = `L'username "${this.user.username}" è disponibile.`;
             this.usernameAvailable = true;
           } else {
-            this.usernameMessage = `L'username "${this.user.Username}" è già utilizzato.`;
+            this.usernameMessage = `L'username "${this.user.username}" è già utilizzato.`;
             this.usernameAvailable = false;
           }
         },
@@ -58,9 +58,9 @@ export class SiginComponent {
   }
   validateEmail() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex per validare l'email
-    if (!this.user.Email) {
+    if (!this.user.email) {
       this.emailErrorMessage = 'Il campo email è obbligatorio.';
-    } else if (!emailRegex.test(this.user.Email)) {
+    } else if (!emailRegex.test(this.user.email)) {
       this.emailErrorMessage = 'Inserisci un\'email valida (esempio@email.com).';
     } else {
       this.emailErrorMessage = ''; // Nessun errore
@@ -73,7 +73,7 @@ export class SiginComponent {
               (response: User) => {
                   console.log('Utente creato con successo:', response);
                   alert('Utente creato con successo!');
-                  sessionStorage.setItem('username', this.user.Username);
+                  sessionStorage.setItem('username', this.user.username);
                   sessionStorage.setItem('authToken', 'true');
                   sessionStorage.setItem('user', JSON.stringify(this.user));
                   this.userService.setUser(this.user);
@@ -93,12 +93,12 @@ export class SiginComponent {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     console.log(this.user);
     return (
-      !!this.user.Name && 
-      !!this.user.Username && 
-      !!this.user.Password && 
-      !!this.user.Email &&
-      !!this.user.BirthDate &&
-      this.user.AppPermissions && 
+      !!this.user.name && 
+      !!this.user.username && 
+      !!this.user.password && 
+      !!this.user.email &&
+      !!this.user.birthDate &&
+      this.user.appPermissions && 
       this.usernameAvailable 
     );
   }
@@ -110,7 +110,7 @@ export class SiginComponent {
       const reader = new FileReader();
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.user.ImgUrl = e.target?.result;  // Salva l'URL dell'immagine nel modello
+        this.user.imgUrl = e.target?.result;  // Salva l'URL dell'immagine nel modello
       };
 
       reader.readAsDataURL(file); // Legge il file come URL base64

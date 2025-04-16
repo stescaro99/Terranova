@@ -2,13 +2,24 @@
 <app-background></app-background>
 
 <h3>HOME PAGE</h3>
-<h1>Benvenuto {{ user.Name }} {{ user.Username }}</h1>
+<h1>Benvenuto {{ user.name }} {{ user.username }}</h1>
 <h3>search cocktail: </h3>
 <app-search></app-search>
 <h3>cocktail del giorno: </h3>
 <div *ngIf="cocktails.length > 0">
   <ul class="cocktail-list">
     <li *ngFor="let cocktail of cocktails" class="cocktail-item">
+      <div *ngIf="cocktail.strDrinkThumb" class="cocktail-image">
+        <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" (click)="onCocktailClick(cocktail)" class="clickable-image"/>
+      </div>
+      <h3>{{ cocktail.strDrink }}</h3>
+    </li>
+  </ul>
+</div>
+<h3>Cocktail preferiti: </h3>
+<div *ngIf="favoriteCocktails.length > 0">
+  <ul class="cocktail-list">
+    <li *ngFor="let cocktail of favoriteCocktails" class="cocktail-item">
       <div *ngIf="cocktail.strDrinkThumb" class="cocktail-image">
         <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" (click)="onCocktailClick(cocktail)" class="clickable-image"/>
       </div>

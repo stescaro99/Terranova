@@ -30,6 +30,7 @@ export class LoginComponent {
           localStorage.setItem('user', JSON.stringify(this.user));
           localStorage.setItem('authToken', 'true');
           localStorage.setItem('guestToken', 'false');
+          this.userService.setUser(this.user);
           this.router.navigate(['/home']);
         } else {
           console.log('Username o password errati!');
@@ -48,7 +49,7 @@ export class LoginComponent {
   }
   notRegister() {
     const guestUser = new User();
-    guestUser.Username = 'Guest';
+    guestUser.username = 'Guest';
     this.userService.setUser(guestUser);
     localStorage.setItem('user', JSON.stringify(guestUser));
     localStorage.setItem('authToken', 'true');

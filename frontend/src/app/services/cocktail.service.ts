@@ -24,4 +24,10 @@ export class CocktailService {
   const url = `${this.apiUrl}/Search?str=${name}`;
   return this.http.get<any>(url);
   }
+
+  setFavorite(request: { Username: string; CocktailId: string }) {
+    const url = `${this.apiUrl}/favorite`;
+    return this.http.post(url, request);
+  }
+
 }
