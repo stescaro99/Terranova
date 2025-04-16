@@ -1,0 +1,18 @@
+
+<div class="search-container">
+    <input 
+      type="text" 
+      [formControl]="searchControl" 
+      placeholder="Search for a cocktail..." 
+      class="search-input"
+    />
+    <ul *ngIf="searchResults.length > 0" class="dropdown-list">
+      <li 
+        *ngFor="let cocktail of searchResults" 
+        (click)="onCocktailSelect(cocktail)" 
+        class="dropdown-item"
+      >
+        {{ cocktail.strDrink }}
+      </li>
+    </ul>
+  </div>

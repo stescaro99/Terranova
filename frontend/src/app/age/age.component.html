@@ -1,0 +1,13 @@
+<p>
+    Data di nascita*:  
+    <input 
+      type="date" 
+      [(ngModel)]="birthDate" 
+      name="birthDate" 
+      (change)="calculateAge()" 
+      required 
+    />
+    <span *ngIf="dateErrorMessage" style="color: red;">
+      {{ dateErrorMessage }}
+    </span>
+</p>

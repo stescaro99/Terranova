@@ -1,0 +1,74 @@
+.cocktail-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffffcc;
+    text-align: center;
+}
+
+.cocktail-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.cocktail-info {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.cocktail-info h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.cocktail-info p {
+    font-size: 16px;
+    margin: 4px 0;
+}
+
+.cocktail-ingredients {
+    margin-top: 16px;
+    text-align: left;
+}
+
+.cocktail-ingredients h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.cocktail-ingredients ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.cocktail-ingredients li {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+
+.starButton {
+    display: none;
+}
+
+
+.starLabel {
+    font-size: 32px;
+    color: #695d5d; 
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+
+.starButton:checked + .starLabel {
+    color: #f39c12; 
+}
+
+.starLabel:hover {
+    color: #e67e22;
+}

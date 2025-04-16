@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "6FgEa32UpC19w7JKTcasSxbDQzPbq3UaWWOI1iNtkok=",
+  "Source": "CocktailDebacle.API",
+  "BasePath": "_content/CocktailDebacle.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
