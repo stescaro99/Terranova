@@ -77,11 +77,13 @@ public class UserController : ControllerBase
         if (user == null)
             return NotFound($"User with ID {userId} not found");
 
-        var ListFavouriteIds = user.FavoriteCocktails;
+        if (user.FavoriteCocktails == null || !user.FavoriteCocktails.Any())
+            return NotFound($"User with ID {userId} has no favorite cocktails");
+
         ICollection<Cocktail> ListCocktails = new List<Cocktail>();
-        foreach (var id in ListFavouriteIds)
+        foreach (var id in user.FavoriteCocktails)
         {
-            var cocktail = await _context.Cocktails.searchCocktailById(id);
+            var cocktail = await _context.Cocktails.FirstOrDefaultAsync(c => c.Drink.IdDrink == id.ToString());
             if (cocktail != null)
             {
                 ListCocktails.Add(cocktail);
