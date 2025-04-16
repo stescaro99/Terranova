@@ -19,6 +19,8 @@ export class CocktailComponent {
   constructor(private route: ActivatedRoute, private cocktailService: CocktailService) {}
 
   ngOnInit(): void {
+    console.log('utente', localStorage.getItem('user'));
+    console.log('token', localStorage.getItem('guestToken'));
     this.cocktailId = this.route.snapshot.paramMap.get('id');
     if (this.cocktailId) {
       console.log(this.cocktailId);
@@ -51,5 +53,12 @@ export class CocktailComponent {
   
   addFavorite(cocktail: CocktailApiDrink): void {
     console.log('ciao');
+  }
+  isGuestUser(): boolean {
+      if (localStorage.getItem('guestToken') === 'true') {
+        return true;
+    }
+    else
+    return false;
   }
 }
