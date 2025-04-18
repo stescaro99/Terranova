@@ -34,8 +34,8 @@ public class User
 	public string? ImageUrl { get; set; } = string.Empty;
 
 	[InverseProperty("FavoriteByUsers")] //id dei cocktail preferiti
-	public ICollection<int>? FavoriteCocktails { get; set; } = null;
+	public ICollection<int>? FavoriteCocktails { get; set; } = new List<int>();
 
 	[InverseProperty("CreatedByUser")] //id dei cocktail creati
-	public ICollection<int>? CreatedCocktails { get; set; } = null;
+	public ICollection<int>? CreatedCocktails { get; set; } = new List<int>();
 }

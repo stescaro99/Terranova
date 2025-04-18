@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 public class CocktailDbContext : DbContext
 {
@@ -72,8 +73,20 @@ public class CocktailDbContext : DbContext
         modelBuilder.Entity<Cocktail>()
             .Ignore(c => c.FavoriteByUsers);
 
+        var intListComparer = new ValueComparer<ICollection<int>>(
+            (c1, c2) => (c1 ?? Enumerable.Empty<int>()).SequenceEqual(c2 ?? Enumerable.Empty<int>()),
+            c => (c ?? Enumerable.Empty<int>()).Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+            c => (c ?? Enumerable.Empty<int>()).ToList()
+        );
+
         modelBuilder.Entity<User>()
-            .Ignore(u => u.FavoriteCocktails)
-            .Ignore(u => u.CreatedCocktails);
+            .Property(u => u.FavoriteCocktails)
+            .HasConversion(
+                v => string.Join(',', v ?? Enumerable.Empty<int>()),
+                v => (v ?? string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()
+            )
+            .Metadata.SetValueComparer(intListComparer);
+
+        base.OnModelCreating(modelBuilder);
     }
 }

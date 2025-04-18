@@ -27,7 +27,7 @@ export class CocktailService {
 
   setFavorite(request: { Username: string; CocktailId: string }) {
     const url = `${this.apiUrl}/favorite`;
-    return this.http.post(url, request);
+    return this.http.patch(url, request);
   }
 
 }

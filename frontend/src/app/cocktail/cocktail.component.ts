@@ -6,10 +6,11 @@ import { CocktailService } from '../services/cocktail.service';
 import { BackgroundComponent } from '../background/background.component';
 import { User } from '../user/user.model';
 import { UserService } from '../services/user.service';
+import { StarButtonComponent } from '../star-button/star-button.component';
 
 @Component({
   selector: 'app-cocktail',
-  imports: [CommonModule, BackgroundComponent],
+  imports: [CommonModule, BackgroundComponent, StarButtonComponent],
   templateUrl: './cocktail.component.html',
   styleUrl: './cocktail.component.scss'
 })
@@ -20,7 +21,7 @@ export class CocktailComponent {
   name: string = '';
   ingredients: string[] = [];
 
-  constructor(private route: ActivatedRoute, private cocktailService: CocktailService, userService: UserService) {
+  constructor(private route: ActivatedRoute, private cocktailService: CocktailService, private userService: UserService) {
     this.user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : new User();
   }
   
@@ -34,7 +35,6 @@ export class CocktailComponent {
       this.cocktailService.takeCocktailById(this.cocktailId).subscribe(
         (response) => {
           this.cocktail = response.drink;
-          console.log(this.cocktail);
           this.takeIngredients(this.cocktail);
         }
       );
@@ -57,44 +57,6 @@ export class CocktailComponent {
       }
       j++;
     }
-  }
-
-  isFavorite(): boolean {
-    if (this.user?.favoriteCocktails.find((id: string) => id === this.cocktailId)) {
-      return this.user.favoriteCocktails.includes(this.cocktailId || '');
-    } else {
-      return false;
-    }
-  }
-  
-  toggleFavorite(): void {
-    console.log('CocktailId:', this.cocktailId);
-    console.log('Username:', this.name);
-    if (!this.user?.username || !this.cocktailId) {
-      console.error('Username o CocktailId non disponibile.');
-      return;
-    }
-    const request = {
-      Username: this.user.username,
-      CocktailId: this.cocktailId
-    };
-  
-    this.cocktailService.setFavorite(request).subscribe(
-      (response: any) => {
-        console.log(response.Message);
-  
-        if (this.user?.favoriteCocktails.includes(this.cocktailId)) {
-          this.user.favoriteCocktails = this.user.favoriteCocktails.filter(
-            (id: string) => id !== this.cocktailId
-          );
-        } else {
-          this.user?.favoriteCocktails.push(this.cocktailId);
-        }
-      },
-      (error) => {
-        console.error('Errore durante l\'aggiornamento dei preferiti:', error);
-      }
-    );
   }
 
   isGuestUser(): boolean {

@@ -7,8 +7,8 @@ export class User {
     city = '';
     country = '';
     imgUrl: string | ArrayBuffer | null | undefined = null;
-    favoriteCocktails: any = null;
-    createdCocktails: any = null;
+    favoriteCocktails: string[] = [];
+    createdCocktails: string[] = [];
     canDrinkAlcohol = false; 
     appPermissions = false;  
   }
@@ -24,6 +24,6 @@ export class User {
     canDrinkAlcohol: boolean;
     appPermissions: boolean;
     imageUrl: string;
-    favoriteCocktails: string[];
+    favoriteCocktails: number[];
     createdCocktails: string[];
   }

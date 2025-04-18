@@ -5,7 +5,7 @@
 namespace CocktailDebacle.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Samu : Migration
+    public partial class Francesco : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -89,7 +89,9 @@ namespace CocktailDebacle.API.Migrations
                     City = table.Column<string>(type: "nvarchar(58)", maxLength: 58, nullable: true),
                     CanDrinkAlcohol = table.Column<bool>(type: "bit", nullable: false),
                     AppPermissions = table.Column<bool>(type: "bit", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FavoriteCocktails = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedCocktails = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

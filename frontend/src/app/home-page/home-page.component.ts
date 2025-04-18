@@ -9,11 +9,12 @@ import { Cocktail, CocktailApiDrink } from '../models/cocktail';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
+import { StarButtonComponent } from '../star-button/star-button.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, BackgroundComponent, SearchComponent],
+  imports: [CommonModule, BackgroundComponent, SearchComponent, StarButtonComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
@@ -50,6 +51,16 @@ export class HomePageComponent {
         }
         console.log('Cocktail preferiti:', this.favoriteCocktails);
       });
+      this.userService.getUserbyUsername(this.user.username).subscribe(
+        (user: User) => {
+          this.userService.setUser(user);
+          localStorage.removeItem('user');
+          localStorage.setItem('user', JSON.stringify(user));
+        },
+        (error) => {
+          console.error('Errore durante il recupero dell\'utente:', error);
+        }
+      );
   }
 
   takeCocktails() {
@@ -69,5 +80,24 @@ export class HomePageComponent {
     );
   }
 
+  onFavoriteChanged() {
+    console.log('Lo stato dei preferiti è cambiato.');
+
+  // Aggiorna i cocktail preferiti
+  this.favoriteCocktails = [];
+  this.userService.getCocktailsFavorite(this.user.username).subscribe(
+    (response: any) => {
+      for (let i = 0; i < response.length; i++) {
+        this.favoriteCocktails.push(response[i].drink);
+      }
+      console.log('Cocktail preferiti aggiornati:', this.favoriteCocktails);
+    },
+    (error) => {
+      console.error('Errore durante l\'aggiornamento dei cocktail preferiti:', error);
+    }
+  );
+
+        
+  }
   
 }

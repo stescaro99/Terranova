@@ -60,6 +60,9 @@ public class CocktailController : ControllerBase
 
         user.FavoriteCocktails ??= new List<int>();
 
+        _context.Attach(user);
+        _context.Attach(cocktail);
+
         if (int.TryParse(request.CocktailId, out int cocktailId))
         {
             if (user.FavoriteCocktails.Contains(cocktailId))
@@ -73,9 +76,12 @@ public class CocktailController : ControllerBase
                 cocktail.FavoriteByUsers.Add(user.Username);
             }
 
+            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(cocktail).State = EntityState.Modified;
             _context.Users.Update(user);
             _context.Cocktails.Update(cocktail);
             await _context.SaveChangesAsync();
+            Console.WriteLine("Changes saved to the database.");
 
             return Ok(new { Message = "Favorite status updated successfully.", User = user });
         }

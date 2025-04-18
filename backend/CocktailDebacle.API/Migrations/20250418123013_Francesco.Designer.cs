@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CocktailDebacle.API.Migrations
 {
     [DbContext(typeof(CocktailDbContext))]
-    [Migration("20250414123643_Francesco")]
+    [Migration("20250418123013_Francesco")]
     partial class Francesco
     {
         /// <inheritdoc />
@@ -66,8 +66,14 @@ namespace CocktailDebacle.API.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.PrimitiveCollection<string>("CreatedCocktails")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FavoriteCocktails")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")

@@ -20,13 +20,6 @@
         <p>{{cocktail?.strInstructions}}</p>
         <br>
         <div *ngIf="isGuestUser" >aggiungi ai preferiti 
-            <label for="star" class="starLabel">
-                <input type="checkbox"
-                id="star"
-                class="starButton"
-                [checked]="isFavorite()"
-                (change)="toggleFavorite()"/>
-            ★
-            </label>
+           <app-star-button  [cocktailId]="cocktailId" [user]="user"></app-star-button>
         </div>
 </div>

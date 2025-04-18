@@ -73,9 +73,9 @@ export class SiginComponent {
               (response: User) => {
                   console.log('Utente creato con successo:', response);
                   alert('Utente creato con successo!');
-                  sessionStorage.setItem('username', this.user.username);
-                  sessionStorage.setItem('authToken', 'true');
-                  sessionStorage.setItem('user', JSON.stringify(this.user));
+                  localStorage.setItem('username', this.user.username);
+                  localStorage.setItem('authToken', 'true');
+                  localStorage.setItem('user', JSON.stringify(this.user));
                   this.userService.setUser(this.user);
                   this.router.navigate(['/home']);
               },

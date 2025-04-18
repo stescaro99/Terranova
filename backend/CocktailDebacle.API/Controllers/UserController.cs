@@ -71,7 +71,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> ListFavourite([FromQuery] string username)
     {
         var user = await _context.Users
-            .Include(u => u.FavoriteCocktails)
             .FirstOrDefaultAsync(u => u.Username == username);
 
         if (user == null)
@@ -90,6 +89,33 @@ public class UserController : ControllerBase
             }
         }
         return Ok(ListCocktails);
+    }
+
+    [HttpGet("byusername")]
+    public async Task<IActionResult> GetUserByUsername(string username)
+    {
+        var user = await _context.Users
+            .Where(u => u.Username == username)
+            .Select(u => new
+            {
+                u.Id,
+                u.Name,
+                u.Username,
+                u.Email,
+                u.Country,
+                u.City,
+                u.CanDrinkAlcohol,
+                u.AppPermissions,
+                u.ImageUrl,
+                FavoriteCocktails = u.FavoriteCocktails,
+                CreatedCocktails = u.CreatedCocktails
+            })
+            .FirstOrDefaultAsync();
+
+        if (user == null)
+            return NotFound($"User with Username {username} not found");
+
+        return Ok(user);
     }
 
     [HttpGet("{id}")]

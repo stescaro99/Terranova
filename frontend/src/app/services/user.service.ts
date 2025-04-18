@@ -51,7 +51,13 @@ import { User } from '../user/user.model';
 
     getCocktailsFavorite(username: string): Observable<any> {
       const url = `${this.apiUrl}/GetUserFavorites?username=${encodeURIComponent(username)}`;
+      console.log('URL chiamato:', url);
       return this.http.get<any>(url);
+    }
+
+    getUserbyUsername(username: string): Observable<any> {
+    const url = `${this.apiUrl}/byusername?username=${encodeURIComponent(username)}`;
+    return this.http.get<any>(url);
     }
 
   }

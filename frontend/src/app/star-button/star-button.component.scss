@@ -1,0 +1,29 @@
+
+.starButton {
+    display: none;
+}
+
+
+.starLabel {
+    font-size: 32px;
+    color: #695d5d; 
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+
+.starButton:checked + .starLabel {
+    color: #f39c12; 
+}
+
+.starLabel:hover {
+    color: #e67e22;
+}
+
+.favorite {
+    color: #f39c12;
+}
+
+.not-favorite {
+    color: gray;
+}

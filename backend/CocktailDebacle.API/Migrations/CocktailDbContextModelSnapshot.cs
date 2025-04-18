@@ -63,8 +63,14 @@ namespace CocktailDebacle.API.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.PrimitiveCollection<string>("CreatedCocktails")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FavoriteCocktails")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")

@@ -13,6 +13,7 @@
         <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" (click)="onCocktailClick(cocktail)" class="clickable-image"/>
       </div>
       <h3>{{ cocktail.strDrink }}</h3>
+      <app-star-button [cocktailId]="cocktail?.idDrink ?? null" [user]="user" (favoriteChanged)="onFavoriteChanged()"></app-star-button>
     </li>
   </ul>
 </div>
