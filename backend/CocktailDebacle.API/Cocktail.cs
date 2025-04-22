@@ -17,6 +17,8 @@ public class Cocktail
     [InverseProperty("FavoriteCocktails")] //username degli utenti che hanno messo il cocktail tra i preferiti
     [JsonIgnore]
     public ICollection<string> FavoriteByUsers { get; set; } = new List<string>();
+
+    public bool isPrivate { get; set; } = false;
 }
 
 public class CocktailApiDrink

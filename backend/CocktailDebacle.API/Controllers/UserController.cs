@@ -185,6 +185,20 @@ public class UserController : ControllerBase
         if (user == null)
             return NotFound($"User with ID {id} not found");
 
+        foreach (var id in user.CreatedCocktails)
+        {
+            var cocktail = await _context.Cocktails.FirstOrDefaultAsync(c => c.Drink.IdDrink == id.ToString());
+            if (cocktail.isPrivate == true)
+            {
+                _context.Cocktails.Remove(cocktail);
+            }
+            else
+            {
+                cocktail.CreatedByUser = "Unvailable";
+                _context.Cocktails.Update(cocktail);
+            }
+        }
+    
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
         return NoContent();
