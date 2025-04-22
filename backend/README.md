@@ -28,46 +28,46 @@ Preparare una documentazione iniziale con le specifiche tecniche e funzionali.
 
 
 2.2 Creazione del progetto
-Avviare un nuovo progetto ASP.NET Core Web API.
-Strutturare il progetto in modo modulare:
-Models: Definire le entità (User, Cocktail, Ingredient).
-DTOs: Creare i Data Transfer Objects per evitare esposizione diretta delle entità.
-Controllers: Implementare i controller API (AuthController, CocktailController, UserController).
-Services: Creare servizi per la business logic.
+~~Avviare un nuovo progetto ASP.NET Core Web API.~~
+~~Strutturare il progetto in modo modulare:~~
+~~Models: Definire le entità (User, Cocktail, Ingredient).~~
+~~DTOs: Creare i Data Transfer Objects per evitare esposizione diretta delle entità.~~
+~~Controllers: Implementare i controller API (AuthController, CocktailController, UserController).~~
+~~Services: Creare servizi per la business logic.~~
 
 
-Repositories: Implementare pattern Repository per la gestione del database.
+~~Repositories: Implementare pattern Repository per la gestione del database.~~
 
 
 2.3 Database e connessione
-Configurare Entity Framework Core con SQL Server.
-Creare il DbContext e le migrazioni (dotnet ef migrations add InitialCreate).
+~~Configurare Entity Framework Core con SQL Server.~~
+~~Creare il DbContext e le migrazioni (dotnet ef migrations add InitialCreate).~~
 
 
 Definire le entità:
 
 
-User (Id, Email, PasswordHash, Preferenze)
-Cocktail (Id, Nome, Ingredienti, Categoria, Immagine)
-FavoriteCocktail (UserId, CocktailId)
+~~User (Id, Email, PasswordHash, Preferenze)~~
+~~Cocktail (Id, Nome, Ingredienti, Categoria, Immagine)~~
+~~FavoriteCocktail (UserId, CocktailId)~~
 
 
 2.4 Implementazione API
 
 
-Autenticazione JWT per la gestione degli utenti (login, registrazione, token JWT).
+~~Autenticazione JWT per la gestione degli utenti (login, registrazione, token JWT).~~
 
 
 Gestione cocktail:
 
 
-Ottenere cocktail tramite TheCocktailDB API.
+~~Ottenere cocktail tramite TheCocktailDB API.~~
 
 
-Salvare cocktail nei preferiti dell’utente.
+~~Salvare cocktail nei preferiti dell’utente.~~
 
 
-Ricerca cocktail per nome, ingredienti, tipo.
+~~Ricerca cocktail per nome,~~ ingredienti, tipo.
 
 
 Gestione utenti:
@@ -88,10 +88,10 @@ Consensi GDPR.
 Stampare nel terminale:
 
 
-Log di avvio del backend.
+~~Log di avvio del backend.~~
 
 
-Richieste ricevute ed errori.
+~~Richieste ricevute ed errori.~~
 
 
 Utilizzare Serilog per log strutturati.
@@ -100,13 +100,10 @@ Utilizzare Serilog per log strutturati.
 2.6 Test e documentazione API
 
 
-Scrivere test unitari con xUnit.
+~~Testare le API con Postman.~~
 
 
-Testare le API con Postman.
-
-
-Generare documentazione API con Swagger.
+~~Generare documentazione API con Swagger.~~
 
 
 
