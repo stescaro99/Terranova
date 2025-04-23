@@ -1,11 +1,10 @@
 
 <app-background></app-background>
 
-<h3>HOME PAGE</h3>
-<h1>Benvenuto {{ user.name }} {{ user.username }}</h1>
+<h1>{{translatedText[0]}}</h1>
 <h3>search cocktail: </h3>
 <app-search></app-search>
-<h3>cocktail del giorno: </h3>
+<h3>{{translatedText[1]}}: </h3>
 <div *ngIf="cocktails.length > 0">
   <ul class="cocktail-list">
     <li *ngFor="let cocktail of cocktails" class="cocktail-item">
@@ -17,7 +16,7 @@
     </li>
   </ul>
 </div>
-<h3>Cocktail preferiti: </h3>
+<h3>{{translatedText[2]}}: </h3>
 <div *ngIf="favoriteCocktails.length > 0">
   <ul class="cocktail-list">
     <li *ngFor="let cocktail of favoriteCocktails" class="cocktail-item">
@@ -27,4 +26,7 @@
       <h3>{{ cocktail.strDrink }}</h3>
     </li>
   </ul>
+</div>
+<div *ngIf="favoriteCocktails.length === 0">
+  <p>{{translatedText[3]}}</p>
 </div>

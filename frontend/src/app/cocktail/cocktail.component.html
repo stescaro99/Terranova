@@ -19,7 +19,7 @@
         <h3>Instructions:</h3>
         <p>{{cocktail?.strInstructions}}</p>
         <br>
-        <div *ngIf="isGuestUser" >aggiungi ai preferiti 
+        <div *ngIf="!isGuestUser()" >aggiungi ai preferiti 
            <app-star-button  [cocktailId]="cocktailId" [user]="user"></app-star-button>
         </div>
 </div>

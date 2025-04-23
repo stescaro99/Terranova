@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../user/user.model';
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,9 @@ import { Cocktail, CocktailApiDrink } from '../models/cocktail';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
-import { StarButtonComponent } from '../star-button/star-button.component';
+import { StarButtonComponent } from '../button/star-button/star-button.component';
+import { TranslateService } from '../services/translate.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
@@ -18,7 +20,7 @@ import { StarButtonComponent } from '../star-button/star-button.component';
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit, OnDestroy{
   user: User;
   isAuthenticated: boolean;
   isDropdownOpen: boolean = false;
@@ -26,8 +28,20 @@ export class HomePageComponent {
   cocktails: CocktailApiDrink[] = [];
   favoriteCocktails: CocktailApiDrink[] = [];
   
-  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router, private cocktailService: CocktailService, private cdr: ChangeDetectorRef) {
+  stringsToTranslate: string[] = [
+    'Benvenuto nella Home Page',
+    'Cocktail del giorno',
+    'Cocktail preferiti',
+    'Non hai ancora aggiunto cocktail ai preferiti.'
+  ];
+  translatedText: string[] = [];
+  private languageChangeSubscription!: Subscription;
+
+  constructor(private userService: UserService, private translateService: TranslateService ,private route: ActivatedRoute, private router: Router, private cocktailService: CocktailService, private cdr: ChangeDetectorRef) {
     this.user = userService.getUser() || new User();
+    if (this.user.language === '') {
+      this.user.language = 'en';
+    }
     
     console.log('Valore di user.ImgUrl:', this.user.imgUrl);
     this.isAuthenticated = !!sessionStorage.getItem('authToken');
@@ -61,6 +75,22 @@ export class HomePageComponent {
           console.error('Errore durante il recupero dell\'utente:', error);
         }
       );
+
+      this.languageChangeSubscription = this.userService.getLanguageChangeObservable().subscribe((language) => {
+        this.updateTranslations(language);
+      });
+      const currentLanguage = this.userService.getUser()?.language || 'en';
+      this.updateTranslations(currentLanguage);
+      // this.stringsToTranslate.forEach((text, index) => {
+      //   this.translateService.translateText(text, this.user.language).subscribe(
+      //     (response) => {
+      //       this.translatedText[index] = response.translatedText;
+      //     },
+      //     (error) => {
+      //     }
+      //   );
+      // });
+      // console.log('GuestToken:', localStorage.getItem('guestToken'));
   }
 
   takeCocktails() {
@@ -90,14 +120,28 @@ export class HomePageComponent {
       for (let i = 0; i < response.length; i++) {
         this.favoriteCocktails.push(response[i].drink);
       }
-      console.log('Cocktail preferiti aggiornati:', this.favoriteCocktails);
     },
     (error) => {
-      console.error('Errore durante l\'aggiornamento dei cocktail preferiti:', error);
     }
-  );
-
-        
+  );    
   }
-  
+  updateTranslations(language: string): void {
+    this.translatedText = []; // Resetta le traduzioni
+    this.stringsToTranslate.forEach((text, index) => {
+      this.translateService.translateText(text, language).subscribe(
+        (response) => {
+          this.translatedText[index] = response.translatedText;
+          this.cdr.detectChanges(); // Forza il change detection
+        },
+        (error) => {
+          console.error(`Errore durante la traduzione di "${text}":`, error);
+        }
+      );
+    });
+  }
+  ngOnDestroy(): void {
+    if (this.languageChangeSubscription) {
+      this.languageChangeSubscription.unsubscribe();
+    }
+  }
 }

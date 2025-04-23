@@ -3,10 +3,11 @@ import { User } from '../user/user.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { LanguageButtonComponent } from '../button/language-button/language-button.component';
 
 @Component({
   selector: 'app-background',
-  imports: [CommonModule],
+  imports: [CommonModule, LanguageButtonComponent],
   templateUrl: './background.component.html',
   styleUrl: './background.component.scss'
 })

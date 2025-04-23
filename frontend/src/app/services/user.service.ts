@@ -10,9 +10,9 @@ import { User } from '../user/user.model';
   providedIn: 'root'
 })
   export class UserService {
-    private currentUser: User = new User();
     private user: User | null = null;
     private userSubject = new BehaviorSubject<User | null>(null);
+    private languageChangeSubject = new BehaviorSubject<string>('en');
 
     private apiUrl = `${environment.baseUrl}user`;
     constructor(private http: HttpClient) {}
@@ -27,7 +27,12 @@ import { User } from '../user/user.model';
     setUser(user: User): void {
       this.userSubject.next(user);
       localStorage.setItem('user', JSON.stringify(user));
+      this.languageChangeSubject.next(user.language);
     }
+    getLanguageChangeObservable() {
+      return this.languageChangeSubject.asObservable();
+    }
+
     getUserObservable() {
       return this.userSubject.asObservable();
     }
