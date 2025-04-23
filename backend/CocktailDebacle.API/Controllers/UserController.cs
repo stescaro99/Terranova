@@ -120,6 +120,67 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
+    /*[HttpGet("RecommendedCocktails")]
+    public async Task<IActionResult> GetRecommendedCocktails([FromQuery] string username)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Username == username);
+
+        if (user == null)
+            return NotFound($"User with ID {username} not found");
+
+        var recommendedCocktails = await apiService.RecommendedCocktails(user);
+        return Ok(recommendedCocktails);
+    }*/
+
+    [HttpGet("TopCocktails")]
+    public async Task<IActionResult> GetTopCocktails([FromQuery] string username, int top, int ret)
+    {
+        if (ret > top)
+            return BadRequest("The number of cocktails to return cannot be greater than the total number of cocktails requested.");
+
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Username == username);
+
+        if (user == null)
+            return NotFound($"User with username {username} not found");
+
+        var cocksdictionary = new Dictionary<string, int>();
+        var cocktails = await _context.Cocktails.ToListAsync();
+
+        foreach (var cocktail in cocktails)
+        {
+            if (!string.IsNullOrEmpty(cocktail.Drink?.IdDrink) &&
+                user.FavoriteCocktails != null &&
+                !user.FavoriteCocktails.Contains(int.Parse(cocktail.Drink.IdDrink)) &&
+                (user.CanDrinkAlcohol == true || cocktail.Drink.StrCategory != "Alcoholic"))
+            {
+                cocksdictionary.Add(cocktail.Drink.IdDrink, cocktail.FavoriteByUsers.Count);
+            }
+        }
+
+        var topCocktails = cocksdictionary
+            .OrderByDescending(x => x.Value)
+            .Take(top)
+            .ToList();
+
+        var returns = topCocktails
+            .OrderBy(c => Guid.NewGuid())
+            .Take(ret)
+            .ToList();
+
+        var cocksret = new List<Cocktail>();
+        foreach (var cocktail in cocktails)
+        {
+            if (returns.Any(x => x.Key == cocktail.Drink.IdDrink))
+            {
+                cocksret.Add(cocktail);
+            }
+        }
+
+        return Ok(cocksret);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(int id)
     {
