@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore;
 public class UserController : ControllerBase
 {
     private readonly CocktailDbContext _context;
+    private readonly IDeepSeekService _deepSeekService;
 
-    public UserController(CocktailDbContext context)
+    public UserController(CocktailDbContext context, IDeepSeekService deepSeekService)
     {
         _context = context;
+        _deepSeekService = deepSeekService;
     }
 
     [HttpGet("CheckUsername")]
@@ -185,9 +187,11 @@ public class UserController : ControllerBase
         if (user == null)
             return NotFound($"User with ID {id} not found");
 
-        foreach (var id in user.CreatedCocktails)
+        foreach (var cocktailId in user.CreatedCocktails ?? new List<int>())
         {
-            var cocktail = await _context.Cocktails.FirstOrDefaultAsync(c => c.Drink.IdDrink == id.ToString());
+            var cocktail = await _context.Cocktails.FirstOrDefaultAsync(c => c.Drink.IdDrink == cocktailId.ToString());
+            if (cocktail == null)
+                continue;
             if (cocktail.isPrivate == true)
             {
                 _context.Cocktails.Remove(cocktail);

@@ -11,6 +11,8 @@ builder.Services.AddHttpClient<CocktailApiService>();
 builder.Services.AddDbContext<CocktailDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddHttpClient<IDeepSeekService, DeepSeekService>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

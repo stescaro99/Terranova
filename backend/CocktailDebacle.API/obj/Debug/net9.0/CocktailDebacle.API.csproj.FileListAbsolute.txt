@@ -999,3 +999,4 @@ C:\Users\98gor\Desktop\two\backend\CocktailDebacle.API\obj\Debug\net9.0\refint\C
 C:\Users\98gor\Desktop\two\backend\CocktailDebacle.API\obj\Debug\net9.0\CocktailDebacle.API.pdb
 C:\Users\98gor\Desktop\two\backend\CocktailDebacle.API\obj\Debug\net9.0\CocktailDebacle.API.genruntimeconfig.cache
 C:\Users\98gor\Desktop\two\backend\CocktailDebacle.API\obj\Debug\net9.0\ref\CocktailDebacle.API.dll
+C:\Users\mp20t\Desktop\Terranova\backend\CocktailDebacle.API\bin\Debug\net9.0\Newtonsoft.Json.dll

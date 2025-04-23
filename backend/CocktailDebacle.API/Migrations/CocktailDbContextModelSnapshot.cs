@@ -32,6 +32,9 @@ namespace CocktailDebacle.API.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("CreatedByUser");
 
+                    b.Property<bool>("isPrivate")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cocktails");
@@ -74,6 +77,10 @@ namespace CocktailDebacle.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lenguage")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

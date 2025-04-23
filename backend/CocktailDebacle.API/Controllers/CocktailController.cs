@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 [Route("api/[controller]")]
 public class CocktailController : ControllerBase
 {
+    private readonly IDeepSeekService _deepSeekService;
     private readonly CocktailDbContext _context;
 
-    public CocktailController(CocktailDbContext context)
+    public CocktailController(CocktailDbContext context, IDeepSeekService deepSeekService)
     {
         _context = context;
+        _deepSeekService = deepSeekService;
     }
 
     [HttpGet]
@@ -33,7 +35,7 @@ public class CocktailController : ControllerBase
     {
         var cocktail = await _context.Cocktails
             .Include(c => c.Drink)
-            .Where(c => c.Drink != null && c.Drink.StrDrink != null && c.Drink.StrDrink.StartsWith(str))
+            .Where(c => c.Drink != null && c.Drink.StrDrink != null && c.Drink.StrDrink.StartsWith(str) && c.isPrivate == false)
             .ToListAsync();
         if (cocktail == null || cocktail.Count == 0)
             return NotFound($"No cocktails found starting with '{str}'");
@@ -197,7 +199,7 @@ public class CocktailController : ControllerBase
             .ToListAsync();
         string? cda = alcohol ? null : "Alcoholic";
         var randomCocktails = cocktails
-            .Where(c => c.Drink.StrAlcoholic != cda)
+            .Where(c => c.Drink.StrAlcoholic != cda && c.isPrivate == false)
             .OrderBy(c => Guid.NewGuid())
             .Take(number)
             .ToList();
@@ -206,14 +208,27 @@ public class CocktailController : ControllerBase
         return Ok(randomCocktails);
     }
 
-    /*private async Task LogToFile(string message)
+    [HttpGet("Price")]
+    public async Task<IActionResult> GetCocktailPrice(string cocktail, string username)
     {
-        string logFilePath = "cocktail_log.txt";
-        using (var writer = new StreamWriter(logFilePath, append: true))
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Username == username);
+        if (user == null)
+            return NotFound($"User '{username}' not found.");
+        string country = user.Country ?? "USA";
+        string city = user.City ?? "New York";
+
+        string prompt = $"How much does a {cocktail} cost in {city}, {country} on average?Give me just a value with the currency, no other text.";
+        try
         {
-            await writer.WriteLineAsync($"{DateTime.Now}: {message}");
+            string response = await _deepSeekService.GetResponseAsync(prompt);
+            return Ok(new { Cocktail = cocktail, Price = response });
         }
-    }*/
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error retrieving cocktail price: {ex.Message}");
+        }
+    }
 
     [HttpPost("UpdateCocktail (Premium)")]
     public async Task<IActionResult> UpdateDatabase([FromServices] CocktailApiService apiService)

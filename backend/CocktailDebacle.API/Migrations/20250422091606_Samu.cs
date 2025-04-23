@@ -5,7 +5,7 @@
 namespace CocktailDebacle.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Francesco : Migration
+    public partial class Samu : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,7 +67,8 @@ namespace CocktailDebacle.API.Migrations
                     Drink_StrImageAttribution = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_StrCreativeCommonsConfirmed = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Drink_DateModified = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedByUser = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CreatedByUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    isPrivate = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,7 +92,8 @@ namespace CocktailDebacle.API.Migrations
                     AppPermissions = table.Column<bool>(type: "bit", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FavoriteCocktails = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedCocktails = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CreatedCocktails = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Lenguage = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
