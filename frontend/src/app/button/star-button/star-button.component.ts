@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CocktailService } from '../services/cocktail.service';
-import { UserService } from '../services/user.service';
-import { User } from '../user/user.model';
+import { CocktailService } from '../../services/cocktail.service';
+import { UserService } from '../../services/user.service';
+import { User } from '../../user/user.model';
 
 @Component({
   selector: 'app-star-button',
@@ -68,6 +68,13 @@ export class StarButtonComponent {
         }
       );
     }
-  
+    
+    isGuestUser(): boolean {
+      if (localStorage.getItem('guestToken') === 'true') {
+        return true;
+    }
+    else
+    return false;
+    }
 
 }

@@ -6,7 +6,8 @@ import { CocktailService } from '../services/cocktail.service';
 import { BackgroundComponent } from '../background/background.component';
 import { User } from '../user/user.model';
 import { UserService } from '../services/user.service';
-import { StarButtonComponent } from '../star-button/star-button.component';
+import { StarButtonComponent } from '../button/star-button/star-button.component';
+import { TranslateService } from './../services/translate.service';
 
 @Component({
   selector: 'app-cocktail',
@@ -21,10 +22,19 @@ export class CocktailComponent {
   name: string = '';
   ingredients: string[] = [];
 
-  constructor(private route: ActivatedRoute, private cocktailService: CocktailService, private userService: UserService) {
-    this.user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : new User();
+  constructor(private route: ActivatedRoute, private translateService: TranslateService ,private cocktailService: CocktailService, private userService: UserService) {
+    this.user =  this.userService.getUser()|| new User();
   }
   
+  originalString: string [] = [
+    'Cocktail',
+    'Category',
+    'Glass',
+    'Ingredients',
+    'Instructions',
+    'Alcoholic',
+  ]
+
   ngOnInit(): void {
     console.log('user', this.user);
     this.name = this.user.username;

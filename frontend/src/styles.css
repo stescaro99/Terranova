@@ -6,12 +6,13 @@
 }
 
 body {
-  font-family: 'Be Vietnam Pro', sans-serif;
+  font-family: 'Segoe UI Emoji', sans-serif;
   background: linear-gradient(to bottom, #f3f70f, #db1f1f);
   background-size: 100% 100%;
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: #333;
+
 }
 
 .background {

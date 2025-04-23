@@ -1,0 +1,41 @@
+
+.language-button {
+    position: relative;
+    display: inline-block;
+  
+    .current-language {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  
+    .language-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      z-index: 1000;
+  
+      li {
+        padding: 8px 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+  
+        &:hover {
+          background: #f0f0f0;
+        }
+  
+        .flag {
+          margin-right: 8px;
+          font-size: 18px;
+        }
+      }
+    }
+  }
