@@ -83,7 +83,6 @@ public class CocktailController : ControllerBase
             _context.Users.Update(user);
             _context.Cocktails.Update(cocktail);
             await _context.SaveChangesAsync();
-            Console.WriteLine("Changes saved to the database.");
 
             return Ok(new { Message = "Favorite status updated successfully.", User = user });
         }
