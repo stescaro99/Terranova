@@ -30,9 +30,9 @@ public class UserController : ControllerBase
         if (request == null)
             return BadRequest("Invalid request data");
 
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.Id);
         if (user == null)
-            return NotFound($"User with username {username} not found");
+            return NotFound($"User with Id {request.Id} not found");
 
         _context.Attach(user);
         var field = request.Field;
