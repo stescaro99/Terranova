@@ -71,8 +71,8 @@ public class UserController : ControllerBase
             case "imageurl":
                 user.ImageUrl = value;
                 break;
-            case "lenguage":
-                user.Lenguage = value;
+            case "language":
+                user.Language = value;
                 break;
             default:
                 return BadRequest($"Field {field} is not valid");

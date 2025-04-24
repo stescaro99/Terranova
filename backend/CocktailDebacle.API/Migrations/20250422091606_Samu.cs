@@ -93,7 +93,7 @@ namespace CocktailDebacle.API.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FavoriteCocktails = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedCocktails = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Lenguage = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Language = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
