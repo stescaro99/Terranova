@@ -4,22 +4,22 @@
     <img [src]="cocktail?.strDrinkThumb" alt="Cocktail Image" class="cocktail-image">
     <div class="cocktail-info">
         <h2>{{cocktail?.strDrink}}</h2>
-        <p>Category: {{cocktail?.strCategory}}</p>
+        <p>{{ translatedString[1] || originalString[1] }}: {{ cocktail?.strCategory}}</p>
         <p>{{cocktail?.strAlcoholic}}</p>
-        <p>Glass: {{cocktail?.strGlass}}</p>
+        <p>{{ translatedString[2] || originalString[2] }}: {{ cocktail?.strGlass}}</p>
     </div>
     <div class="cocktail-ingredients">
-        <h3>Ingredients:</h3>
+        <h3>{{ translatedString[3] || originalString[3] }}:</h3>
         <ul>
             <li *ngFor="let ingredient of ingredients">{{ingredient}}</li>
         </ul>
     </div>
     <br>
     <div class="cocktail-instructions">
-        <h3>Instructions:</h3>
-        <p>{{cocktail?.strInstructions}}</p>
+        <h3>{{ translatedString[4] || originalString[4] }}:</h3>
+        <p>{{ cocktail?.strInstructions}}</p>
         <br>
-        <div *ngIf="!isGuestUser()" >aggiungi ai preferiti 
+        <div *ngIf="!isGuestUser()" >{{ translatedString[5] || originalString[5] }} 
            <app-star-button  [cocktailId]="cocktailId" [user]="user"></app-star-button>
         </div>
 </div>

@@ -33,6 +33,11 @@ import { User } from '../user/user.model';
       return this.languageChangeSubject.asObservable();
     }
 
+    isUserValid(): boolean {
+      const user = this.getUser();
+      return !!user && !!user.username;
+    }
+
     getUserObservable() {
       return this.userSubject.asObservable();
     }

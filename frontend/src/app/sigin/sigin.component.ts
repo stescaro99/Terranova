@@ -69,6 +69,7 @@ export class SiginComponent {
 
   submitForm() {
       if (this.usernameAvailable) {
+        this.user.language = 'en';
           this.userService.createUser(this.user).subscribe(
               (response: User) => {
                   console.log('Utente creato con successo:', response);
@@ -110,10 +111,10 @@ export class SiginComponent {
       const reader = new FileReader();
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.user.imgUrl = e.target?.result;  // Salva l'URL dell'immagine nel modello
+        this.user.imgUrl = e.target?.result;
       };
 
-      reader.readAsDataURL(file); // Legge il file come URL base64
+      reader.readAsDataURL(file);
     }
   }
   

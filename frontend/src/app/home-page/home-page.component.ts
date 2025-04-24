@@ -39,12 +39,10 @@ export class HomePageComponent implements OnInit, OnDestroy{
 
   constructor(private userService: UserService, private translateService: TranslateService ,private route: ActivatedRoute, private router: Router, private cocktailService: CocktailService, private cdr: ChangeDetectorRef) {
     this.user = userService.getUser() || new User();
-    if (this.user.language === '') {
-      this.user.language = 'en';
-    }
     
     console.log('Valore di user.ImgUrl:', this.user.imgUrl);
-    this.isAuthenticated = !!sessionStorage.getItem('authToken');
+    console.log('authToken:', localStorage.getItem('authToken'));
+    this.isAuthenticated = !!localStorage.getItem('authToken');
     if (!this.user.imgUrl) {
       console.log('Nessuna immagine trovata, verrà mostrato il cerchio grigio.');
     }
@@ -81,16 +79,6 @@ export class HomePageComponent implements OnInit, OnDestroy{
       });
       const currentLanguage = this.userService.getUser()?.language || 'en';
       this.updateTranslations(currentLanguage);
-      // this.stringsToTranslate.forEach((text, index) => {
-      //   this.translateService.translateText(text, this.user.language).subscribe(
-      //     (response) => {
-      //       this.translatedText[index] = response.translatedText;
-      //     },
-      //     (error) => {
-      //     }
-      //   );
-      // });
-      // console.log('GuestToken:', localStorage.getItem('guestToken'));
   }
 
   takeCocktails() {
@@ -126,22 +114,22 @@ export class HomePageComponent implements OnInit, OnDestroy{
   );    
   }
   updateTranslations(language: string): void {
-    this.translatedText = []; // Resetta le traduzioni
-    this.stringsToTranslate.forEach((text, index) => {
-      this.translateService.translateText(text, language).subscribe(
-        (response) => {
-          this.translatedText[index] = response.translatedText;
-          this.cdr.detectChanges(); // Forza il change detection
-        },
-        (error) => {
-          console.error(`Errore durante la traduzione di "${text}":`, error);
-        }
-      );
-    });
+    if (this.user.language !== 'it') {
+        
+      this.translatedText = [];
+      this.stringsToTranslate.forEach((text, index) => {
+        this.translateService.translateText(text, language).subscribe(
+          (response) => {
+            this.translatedText[index] = response.translatedText;
+            this.cdr.detectChanges(); // Forza il change detection
+          },
+          (error) => {
+            console.error(`Errore durante la traduzione di "${text}":`, error);
+          }
+        );
+      });
+    }
   }
   ngOnDestroy(): void {
-    if (this.languageChangeSubscription) {
-      this.languageChangeSubscription.unsubscribe();
-    }
   }
 }

@@ -1,10 +1,10 @@
 
 <app-background></app-background>
 
-<h1>{{translatedText[0]}}</h1>
+<h1>{{translatedText[0] || stringsToTranslate[0]}}</h1>
 <h3>search cocktail: </h3>
 <app-search></app-search>
-<h3>{{translatedText[1]}}: </h3>
+<h3>{{translatedText[1] || stringsToTranslate[1]}}: </h3>
 <div *ngIf="cocktails.length > 0">
   <ul class="cocktail-list">
     <li *ngFor="let cocktail of cocktails" class="cocktail-item">
@@ -16,7 +16,7 @@
     </li>
   </ul>
 </div>
-<h3>{{translatedText[2]}}: </h3>
+<h3>{{translatedText[2] || stringsToTranslate[2]}}: </h3>
 <div *ngIf="favoriteCocktails.length > 0">
   <ul class="cocktail-list">
     <li *ngFor="let cocktail of favoriteCocktails" class="cocktail-item">
@@ -28,5 +28,5 @@
   </ul>
 </div>
 <div *ngIf="favoriteCocktails.length === 0">
-  <p>{{translatedText[3]}}</p>
+  <p>{{translatedText[3] || stringsToTranslate[3]}}</p>
 </div>

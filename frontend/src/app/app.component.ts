@@ -20,7 +20,6 @@ export class AppComponent {
   @HostListener('window:beforeunload', ['$event'])
   clearSessionStorage(event: Event) {
     if (sessionStorage.getItem('guestToken') || localStorage.getItem('guestToken')) {
-      // Rimuove solo i dati relativi all'ospite
       sessionStorage.removeItem('authToken');
       sessionStorage.removeItem('username');
       sessionStorage.removeItem('guestToken');
