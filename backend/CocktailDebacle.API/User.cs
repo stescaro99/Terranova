@@ -39,5 +39,5 @@ public class User
 	[InverseProperty("CreatedByUser")] //id dei cocktail creati
 	public ICollection<int>? CreatedCocktails { get; set; } = new List<int>();
 
-	public string Lenguage { get; set; } = "English";
+	public string Lenguage { get; set; } = "en";
 }
