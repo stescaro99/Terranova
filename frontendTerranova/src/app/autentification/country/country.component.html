@@ -1,0 +1,9 @@
+<p>
+	Nazione*: 
+	<select [(ngModel)]="selectedCountry" name="country" (change)="onCountryChange()" required>
+	  <option value="" disabled selected>Seleziona una nazione</option>
+	  <option *ngFor="let country of countries" [value]="country">
+		{{ country }}
+	  </option>
+	</select>
+  </p>
