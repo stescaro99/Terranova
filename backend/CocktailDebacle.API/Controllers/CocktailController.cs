@@ -144,12 +144,12 @@ public class CocktailController : ControllerBase
                             FavoriteByUsers = new List<string>()
                         });
                     }
-                    await Task.Delay(100);
                 }
                 await _context.SaveChangesAsync();
             }
             foreach (int id in ids)
             {
+                await Task.Delay(150);
                 var cocktail = await apiService.FetchCocktailsFromApiId(id);
                 if (cocktail != null && cocktail.Drink != null && 
                     int.TryParse(cocktail.Drink.IdDrink, out int cocktailId) &&
@@ -158,9 +158,9 @@ public class CocktailController : ControllerBase
                     count++;
                     _context.Cocktails.Add(cocktail);
                 }
-                await Task.Delay(100);
                 await _context.SaveChangesAsync();
             }
+
             return Ok($"Database populated with {count} cocktails.");
         }
         catch (Exception ex)
@@ -189,7 +189,7 @@ public class CocktailController : ControllerBase
         return Ok(randomCocktails);
     }
 
-    [HttpGet("Price (premium)")]
+    [HttpGet("Price(premium)")]
     public async Task<IActionResult> GetCocktailPrice(string cocktail, string username)
     {
         var user = await _context.Users
@@ -211,7 +211,7 @@ public class CocktailController : ControllerBase
         }
     }
 
-    [HttpPost("UpdateCocktail (Premium)")]
+    [HttpPost("UpdateCocktail(Premium)")]
     public async Task<IActionResult> UpdateDatabase([FromServices] CocktailApiService apiService)
     {
         int count = 0;
