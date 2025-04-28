@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CocktailDebacle.API.Migrations
 {
     [DbContext(typeof(CocktailDbContext))]
-    [Migration("20250423101403_newone")]
-    partial class newone
+    [Migration("20250428081604_Migr")]
+    partial class Migr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

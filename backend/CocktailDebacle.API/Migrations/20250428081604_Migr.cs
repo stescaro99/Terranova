@@ -5,7 +5,7 @@
 namespace CocktailDebacle.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Samu : Migration
+    public partial class Migr : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

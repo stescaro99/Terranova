@@ -130,7 +130,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("GetUserFavorites")]
-    public async Task<IActionResult> ListFavourite([FromQuery] string username)
+    public async Task<IActionResult> ListFavorite([FromQuery] string username)
     {
         var user = await _context.Users
             .FirstOrDefaultAsync(u => u.Username == username);
@@ -180,7 +180,7 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    /*[HttpGet("RecommendedCocktails")]
+    [HttpGet("RecommendedCocktails")]
     public async Task<IActionResult> GetRecommendedCocktails([FromQuery] string username)
     {
         var user = await _context.Users
@@ -189,9 +189,11 @@ public class UserController : ControllerBase
         if (user == null)
             return NotFound($"User with ID {username} not found");
 
-        var recommendedCocktails = await apiService.RecommendedCocktails(user);
+        var recommendationService = new RecommendationService(_context, new CocktailApiService(new HttpClient()));
+        var recommendedCocktails = await recommendationService.GetRecommendedCocktails(user);
+
         return Ok(recommendedCocktails);
-    }*/
+    }
 
     [HttpGet("TopCocktails")]
     public async Task<IActionResult> GetTopCocktails([FromQuery] string username, int top, int ret)
