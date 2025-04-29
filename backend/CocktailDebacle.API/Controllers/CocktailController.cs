@@ -35,12 +35,17 @@ public class CocktailController : ControllerBase
     [HttpGet("search")]
     public async Task<IActionResult> SearchCocktails(string str)
     {
+        if (string.IsNullOrEmpty(str))
+            return BadRequest("Search string cannot be null or empty.");
         var cocktail = await _context.Cocktails
             .Include(c => c.Drink)
-            .Where(c => c.Drink != null && c.Drink.StrDrink != null && c.Drink.StrDrink.StartsWith(str) && c.isPrivate == false)
+            .Where(c => c.Drink != null
+                        && c.Drink.StrDrink != null
+                        && c.Drink.StrDrink.Contains(str.ToLower())
+                        && c.isPrivate == false)
             .ToListAsync();
         if (cocktail == null || cocktail.Count == 0)
-            return NotFound($"No cocktails found starting with '{str}'");
+            return NotFound($"No cocktails found containing '{str}'");
         return Ok(cocktail);
     }
 
