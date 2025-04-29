@@ -6,7 +6,6 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { BackgroundComponent } from '../../background/background.component';
 
-
 @Component({
   selector: 'app-login',
   imports: [FormsModule, CommonModule, BackgroundComponent],

@@ -1,0 +1,13 @@
+<p>
+    Username*: 
+    <input 
+      type="text" 
+      [(ngModel)]="user.username" 
+      name="username" 
+      required 
+      (blur)="checkUsername()" 
+    />
+    <span *ngIf="usernameMessage" [style.color]="usernameAvailable ? 'green' : 'red'">
+      {{ usernameMessage }}
+    </span>
+  </p>

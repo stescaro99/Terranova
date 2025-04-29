@@ -2,19 +2,7 @@
 <br>
 <form (ngSubmit)="submitForm()">
   <p>Nome*: <input type="text" [(ngModel)]="user.name" name="name" required /></p>
-  <p>
-    Username*: 
-    <input 
-      type="text" 
-      [(ngModel)]="user.username" 
-      name="username" 
-      required 
-      (blur)="checkUsername()" 
-    />
-    <span *ngIf="usernameMessage" [style.color]="usernameAvailable ? 'green' : 'red'">
-      {{ usernameMessage }}
-    </span>
-  </p>
+<app-username [user]="user" (userSelected)="usernameAvailable = $event"></app-username>
   <p>Password*: <input type="password" [(ngModel)]="user.password" name="password" required></p>
   <p>
     Email*: 
@@ -43,8 +31,18 @@
   
   <img *ngIf="user.imgUrl" [src]="user.imgUrl" alt="Uploaded Image" />
   
-  <p><input type="checkbox" [(ngModel)]="user.appPermissions" name="accept"> Accetta Termini</p>
-  <p><input type="checkbox" [(ngModel)]="user.canDrinkAlcohol" name="astemi"> Modalità senza alcool</p>
+  <p>
+	<app-slide-button 
+	  [(isActive)]="user.appPermissions" >
+	</app-slide-button>
+	Accetta Termini
+  </p>
+  <p>
+	<app-slide-button 
+	  [(isActive)]="user.canDrinkAlcohol" >
+	</app-slide-button>
+	Modalità senza alcool
+  </p>
   
   <button type="submit" [disabled]="!formValid()">Invia</button>
 </form>

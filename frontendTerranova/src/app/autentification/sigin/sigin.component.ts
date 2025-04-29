@@ -8,10 +8,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CountryComponent } from '../country/country.component';
 import { AgeComponent } from '../age/age.component';
+import { UsernameComponent } from '../username/username.component';
+import { SlideButtonComponent } from '../../button/slide-button/slide-button.component';
 
 @Component({
   selector: 'app-sigin',
-  imports: [FormsModule, CommonModule, CountryComponent, AgeComponent],
+  imports: [FormsModule, CommonModule, CountryComponent, AgeComponent, UsernameComponent, SlideButtonComponent],
   standalone: true,
   providers: [],
   templateUrl: './sigin.component.html',
@@ -24,38 +26,12 @@ export class SiginComponent {
   birthDate: string = '';
   age: number | null = null;
   message: string = '';
-  usernameMessage: string = '';
   emailErrorMessage: string = '';
   usernameAvailable: boolean = false;
    
   constructor(private userService: UserService, private router: Router) {
   }
 
-  
-  checkUsername() {
-      if (!this.user.username) {
-        this.usernameMessage = 'Username non può essere vuoto.';
-        this.usernameAvailable = false;
-        return;
-      }
-
-      this.userService.getUserByUsername(this.user.username).subscribe(
-        (isAvailable: boolean) => {
-          if (isAvailable) {
-            this.usernameMessage = `L'username "${this.user.username}" è disponibile.`;
-            this.usernameAvailable = true;
-          } else {
-            this.usernameMessage = `L'username "${this.user.username}" è già utilizzato.`;
-            this.usernameAvailable = false;
-          }
-        },
-        (error: HttpErrorResponse) => {
-          console.error('Errore durante il controllo dell\'username:', error);
-          this.usernameMessage = 'Errore durante il controllo dell\'username.';
-          this.usernameAvailable = false;
-        }
-      );
-  }
   validateEmail() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex per validare l'email
     if (!this.user.email) {

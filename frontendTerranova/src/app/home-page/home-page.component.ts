@@ -12,6 +12,7 @@ import { SearchComponent } from '../search/search.component';
 import { StarButtonComponent } from '../button/star-button/star-button.component';
 import { TranslateService } from '../services/translate.service';
 import { Subscription } from 'rxjs';
+import { WindowService } from '../services/window.service';
 
 @Component({
   selector: 'app-home-page',
@@ -24,7 +25,7 @@ export class HomePageComponent implements OnInit, OnDestroy{
   user: User;
   isAuthenticated: boolean;
   isDropdownOpen: boolean = false;
-  
+  nuberOfDrink: number = 0;
   cocktails: CocktailApiDrink[] = [];
   favoriteCocktails: CocktailApiDrink[] = [];
   
@@ -37,7 +38,9 @@ export class HomePageComponent implements OnInit, OnDestroy{
   translatedText: string[] = [];
   private languageChangeSubscription!: Subscription;
 
-  constructor(private userService: UserService, private translateService: TranslateService ,private route: ActivatedRoute, private router: Router, private cocktailService: CocktailService, private cdr: ChangeDetectorRef) {
+  constructor(private userService: UserService, private translateService: TranslateService,
+		 private router: Router, private cocktailService: CocktailService, private cdr: ChangeDetectorRef,
+			private windowService: WindowService) {
     this.user = userService.getUser() || new User();
     
     console.log('Valore di user.ImgUrl:', this.user.imgUrl);
@@ -46,6 +49,7 @@ export class HomePageComponent implements OnInit, OnDestroy{
     if (!this.user.imgUrl) {
       console.log('Nessuna immagine trovata, verrà mostrato il cerchio grigio.');
     }
+	this.nuberOfDrink = windowService.getRecommendedDrinkCount();
   }
   
   onCocktailClick(cocktail: CocktailApiDrink) {
@@ -82,7 +86,7 @@ export class HomePageComponent implements OnInit, OnDestroy{
   }
 
   takeCocktails() {
-    this.cocktailService.takeCocktailOfDay(10, true).subscribe(
+    this.cocktailService.takeCocktailOfDay(this.nuberOfDrink, true).subscribe(
       (response: any) => {
         if (response && response.length > 0) {
           this.cocktails = response.map((item: any)=> item.drink);

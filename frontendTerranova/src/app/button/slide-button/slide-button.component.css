@@ -1,0 +1,28 @@
+.slide-button {
+	width: 50px;
+	height: 25px;
+	background-color: grey;
+	border-radius: 25px;
+	position: relative;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+  }
+  
+  .slide-button.active {
+	background-color: green;
+  }
+  
+  .slider {
+	width: 20px;
+	height: 20px;
+	background-color: white;
+	border-radius: 50%;
+	position: absolute;
+	top: 2.5px;
+	left: 2.5px;
+	transition: left 0.3s ease;
+  }
+  
+  .slide-button.active .slider {
+	left: 27.5px;
+  }
