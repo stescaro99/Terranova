@@ -13,11 +13,12 @@ import { StarButtonComponent } from '../button/star-button/star-button.component
 import { TranslateService } from '../services/translate.service';
 import { Subscription } from 'rxjs';
 import { WindowService } from '../services/window.service';
+import { InteractiveListComponent } from '../interactive-list/interactive-list.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, BackgroundComponent, SearchComponent, StarButtonComponent],
+  imports: [CommonModule, SearchComponent, InteractiveListComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
@@ -25,13 +26,15 @@ export class HomePageComponent implements OnInit, OnDestroy{
   user: User;
   isAuthenticated: boolean;
   isDropdownOpen: boolean = false;
+  isListVisible: boolean = true;
+  isGuest: boolean = false;
   nuberOfDrink: number = 0;
   cocktails: CocktailApiDrink[] = [];
   favoriteCocktails: CocktailApiDrink[] = [];
   
   stringsToTranslate: string[] = [
     'Benvenuto nella Home Page',
-    'Cocktail del giorno',
+    'Cocktail',
     'Cocktail preferiti',
     'Non hai ancora aggiunto cocktail ai preferiti.'
   ];
@@ -52,12 +55,16 @@ export class HomePageComponent implements OnInit, OnDestroy{
 	this.nuberOfDrink = windowService.getRecommendedDrinkCount();
   }
   
-  onCocktailClick(cocktail: CocktailApiDrink) {
+  onCocktailClick(cocktail: CocktailApiDrink): void {
     console.log('Cocktail selezionato:', cocktail);
     this.router.navigate(['/cocktail', cocktail.idDrink], { queryParams: { id: cocktail.idDrink } });
   }
   
   ngOnInit(): void {
+    if (localStorage.getItem('guestToken') === 'true') {
+      this.isGuest = true;
+    }
+    this.isListVisible = this.windowService.getListVisibility();
     this.takeCocktails();
     console.log('user :', this.user);
     this.userService.getCocktailsFavorite(this.user.username).subscribe(
@@ -86,7 +93,7 @@ export class HomePageComponent implements OnInit, OnDestroy{
   }
 
   takeCocktails() {
-    this.cocktailService.takeCocktailOfDay(this.nuberOfDrink, true).subscribe(
+    this.cocktailService.takeCocktailOfDay(this.nuberOfDrink, !this.user.canDrinkAlcohol).subscribe(
       (response: any) => {
         if (response && response.length > 0) {
           this.cocktails = response.map((item: any)=> item.drink);
@@ -104,8 +111,6 @@ export class HomePageComponent implements OnInit, OnDestroy{
 
   onFavoriteChanged() {
     console.log('Lo stato dei preferiti è cambiato.');
-
-  // Aggiorna i cocktail preferiti
   this.favoriteCocktails = [];
   this.userService.getCocktailsFavorite(this.user.username).subscribe(
     (response: any) => {
@@ -128,7 +133,6 @@ export class HomePageComponent implements OnInit, OnDestroy{
             this.cdr.detectChanges(); // Forza il change detection
           },
           (error) => {
-            console.error(`Errore durante la traduzione di "${text}":`, error);
           }
         );
       });

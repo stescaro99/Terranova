@@ -1,0 +1,16 @@
+<button (click)="toggleListVisibility()" class="invisible-button">
+   <h3> {{ phrase }} </h3>
+  </button>
+  <div *ngIf="isListVisible">
+    <ul class="cocktail-list">
+      <li *ngFor="let cocktail of cocktails" class="cocktail-item">
+        <div *ngIf="cocktail.strDrinkThumb" class="cocktail-image">
+          <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" (click)="onCocktailClick(cocktail)" class="clickable-image" />
+        </div>
+        <h3>{{ cocktail.strDrink }}</h3>
+        <div *ngIf="canBeFavorite">
+            <app-star-button [cocktailId]="cocktail?.idDrink ?? null" [user]="user" (favoriteChanged)="onFavoriteChanged()"></app-star-button>
+        </div>
+    </li>
+    </ul>
+  </div>

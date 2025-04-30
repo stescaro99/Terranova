@@ -41,10 +41,13 @@ export class WindowService {
 			}
 		}
 	
-	getSerchLenth(): number {
-		if (this.isMobile)
-			return 10;
-		else
-			return 20;
+	getListVisibility(): boolean {
+		if (this.isMobile) {
+			return false;
+		} else if (this.isTablet) {
+			return true;
+		} else {
+			return true;
+		}
 	}
 }

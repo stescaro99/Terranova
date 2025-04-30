@@ -5,7 +5,7 @@ import { BackgroundComponent } from './background/background.component';
 
 @Component({
   selector: 'app-root',
-  imports: [ RouterModule, TitleComponent, BackgroundComponent],
+  imports: [ RouterModule, BackgroundComponent],
   template: `
   <main>
     <app-background></app-background>

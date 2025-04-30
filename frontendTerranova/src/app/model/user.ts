@@ -11,7 +11,7 @@ export class User {
     createdCocktails: string[] = [];
     canDrinkAlcohol = false; 
     appPermissions = false;  
-    language = ''; // Lingua predefinita
+    language = '';
   }
 
 export interface user {
@@ -27,4 +27,5 @@ export interface user {
     imageUrl: string;
     favoriteCocktails: number[];
     createdCocktails: string[];
+    language: string;
   }

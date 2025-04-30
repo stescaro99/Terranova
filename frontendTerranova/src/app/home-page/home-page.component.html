@@ -3,29 +3,22 @@
 <h1>{{translatedText[0] || stringsToTranslate[0]}}</h1>
 <h3>search cocktail: </h3>
 <app-search></app-search>
-<h3>{{translatedText[1] || stringsToTranslate[1]}}: </h3>
-<div *ngIf="cocktails.length > 0">
-  <ul class="cocktail-list">
-    <li *ngFor="let cocktail of cocktails" class="cocktail-item">
-      <div *ngIf="cocktail.strDrinkThumb" class="cocktail-image">
-        <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" (click)="onCocktailClick(cocktail)" class="clickable-image"/>
-      </div>
-      <h3>{{ cocktail.strDrink }}</h3>
-      <app-star-button [cocktailId]="cocktail?.idDrink ?? null" [user]="user" (favoriteChanged)="onFavoriteChanged()"></app-star-button>
-    </li>
-  </ul>
-</div>
-<h3>{{translatedText[2] || stringsToTranslate[2]}}: </h3>
-<div *ngIf="favoriteCocktails.length > 0">
-  <ul class="cocktail-list">
-    <li *ngFor="let cocktail of favoriteCocktails" class="cocktail-item">
-      <div *ngIf="cocktail.strDrinkThumb" class="cocktail-image">
-        <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" (click)="onCocktailClick(cocktail)" class="clickable-image"/>
-      </div>
-      <h3>{{ cocktail.strDrink }}</h3>
-    </li>
-  </ul>
-</div>
+<app-interactive-list
+  [phrase]="translatedText[1] || stringsToTranslate[1]"
+  [cocktails]="cocktails"
+  [isListVisible]="true"
+  [canBeFavorite]="!isGuest"
+  [user]="user"
+  (favoritChanged)="onFavoriteChanged()">
+</app-interactive-list>
+<app-interactive-list
+  [phrase]="translatedText[2] || stringsToTranslate[2]"
+  [cocktails]="favoriteCocktails"
+  [isListVisible]="true"
+  [canBeFavorite]="false"
+  [user]="user"
+  (favoritChanged)="onFavoriteChanged()">
+</app-interactive-list>
 <div *ngIf="favoriteCocktails.length === 0">
   <p>{{translatedText[3] || stringsToTranslate[3]}}</p>
 </div>

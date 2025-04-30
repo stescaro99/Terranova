@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Cocktail, CocktailApiDrink } from '../model/cocktail';
 import { CocktailService } from '../services/cocktail.service';
-import { BackgroundComponent } from '../background/background.component';
 import { User } from '../model/user';
 import { UserService } from '../services/user.service';
 import { StarButtonComponent } from '../button/star-button/star-button.component';
@@ -13,7 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-cocktail',
-  imports: [CommonModule, BackgroundComponent, StarButtonComponent],
+  imports: [CommonModule, StarButtonComponent],
   templateUrl: './cocktail.component.html',
   styleUrl: './cocktail.component.css'
 })

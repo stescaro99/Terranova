@@ -61,7 +61,7 @@
   gap: 10px; 
   padding: 0;
   margin: 0;
-  list-style: none; 
+  list-style: none;
 }
 
 .dropdown-menu button {
@@ -71,11 +71,12 @@
   border: 1px solid #f1ecec;
   border-radius: 4px;
   cursor: pointer;
-  text-align: left; /* Allinea il testo a sinistra */
+  text-align: left;
+  z-index: 1;
 }
 
 .dropdown-menu button:hover {
-  background-color: #e0e0e0; /* Cambia colore al passaggio del mouse */
+  background-color: #e0e0e0;
 }
 .user-photo ,
 .default-photo {
