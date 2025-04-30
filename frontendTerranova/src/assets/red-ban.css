@@ -1,33 +1,34 @@
 .red-band {
   width: 100%;
-  height: 12vh; /* Altezza relativa per la banda */
+  height: 12vh; 
+  min-height: 75px;
   position: relative;
-  background-color: rgb(20, 55, 48); /* Colore aggiornato */
+  background-color: rgb(20, 55, 48); 
   display: flex;
-  justify-content: space-between; /* Spaziatura tra gli elementi */
-  align-items: center; /* Allinea verticalmente al centro */
+  justify-content: flex-end; 
+  align-items: center; 
   overflow: hidden; 
 }
 
 .red-band .logo-left {
-  position: absolute; /* Posiziona l'immagine a sinistra */
-  left: -20px; /* Allinea l'immagine al bordo sinistro */
-  top: 50%; /* Centra verticalmente l'immagine */
-  transform: translateY(-50%) scaleX(-1); /* Centra l'immagine e la specchia orizzontalmente */
-  height: 140%; /* Immagine grande quanto la banda */
-  width: auto; /* Mantieni la proporzione */
-  object-fit: cover; /* Fa in modo che l'immagine riempia il contorno */
-  object-position: center; /* Centra l'immagine */
+  position: absolute; 
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%) scaleX(-1);
+  height: 140%;
+  width: auto;
+  object-fit: cover;
+  object-position: center; 
 }
 
 .red-band .logo-center {
-  position: absolute; /* Posiziona l'immagine al centro */
-  left: 50%; /* Sposta l'immagine al centro orizzontalmente */
-  top: 70%; /* Sposta l'immagine al centro verticalmente */
-  transform: translate(-50%, -50%); /* Centra esattamente l'immagine */
-  height: 190%; /* Dimensione dell'immagine centrale */
-  width: auto; /* Mantieni le proporzioni */
-  object-fit: contain; /* Adatta l'immagine senza tagliarla */
+  position: absolute; 
+  left: 50%; 
+  top: 70%; 
+  transform: translate(-50%, -50%); 
+  height: 190%; 
+  width: auto; 
+  object-fit: contain;
 }
   
 .header {
@@ -37,15 +38,20 @@
 }
 
 .user-photo-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: inline-block;
-  width: 75px; 
-  height: 75px;
-  border-radius: 50%;
-  overflow: hidden;
+	border: none;
+	margin-right: 10px;
+	padding: 0;
+	cursor: pointer;
+	flex-shrink: 0;
+	display: inline-block;
+	width: auto;
+	min-width: 50px;
+	height: calc(12vh * 0.8);
+	min-height: 50px; 
+	aspect-ratio: 1 / 1; 
+	border-radius: 50%;
+	overflow: hidden;
+
 }
 
 .dropdown-menu ul {

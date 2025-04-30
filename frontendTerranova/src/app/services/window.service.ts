@@ -30,14 +30,21 @@ export class WindowService {
 	  get isDesktop(): boolean {
 		return this.getWidth() > 1024;
 	  }
-	
+	  
 	  getRecommendedDrinkCount(): number {
-		if (this.isMobile) {
-		  return 6;
-		} else if (this.isTablet) {
-		  return 10;
-		} else {
-		  return 20;
+		  if (this.isMobile) {
+			  return 6;
+			} else if (this.isTablet) {
+				return 10;
+			} else {
+				return 20;
+			}
 		}
-	  }
+	
+	getSerchLenth(): number {
+		if (this.isMobile)
+			return 10;
+		else
+			return 20;
+	}
 }
