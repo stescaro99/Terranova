@@ -65,6 +65,7 @@ export class HomePageComponent implements OnInit, OnDestroy{
       this.isGuest = true;
     }
     this.isListVisible = this.windowService.getListVisibility();
+    console.log('isGuest', this.isGuest);
     this.takeCocktails();
     console.log('user :', this.user);
     this.userService.getCocktailsFavorite(this.user.username).subscribe(
