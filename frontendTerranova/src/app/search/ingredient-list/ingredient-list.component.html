@@ -1,0 +1,14 @@
+<div class="ingredient-selector">
+	<label for="ingredientInput">Seleziona un ingrediente:</label>
+	<input
+	  id="ingredientInput"
+	  list="availableIngredients"
+	  (input)="onIngredientSelect($event)"
+	  placeholder="Inserisci un ingrediente"
+	/>
+	<datalist id="availableIngredients">
+	  <option *ngFor="let ingredient of availableIngredients" [value]="ingredient">
+		{{ ingredient }}
+	  </option>
+	</datalist>
+  </div>

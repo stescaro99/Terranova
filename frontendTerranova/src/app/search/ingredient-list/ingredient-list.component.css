@@ -1,0 +1,17 @@
+.ingredient-selector {
+	margin: 10px 0;
+  }
+  
+  .ingredient-selector label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+  }
+  
+  .ingredient-selector input {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 14px;
+  }
