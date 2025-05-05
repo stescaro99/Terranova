@@ -42,6 +42,18 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<CocktailDbContext>();
+    var apiService = scope.ServiceProvider.GetRequiredService<CocktailApiService>();
+
+    if (!context.Cocktails.Any())
+    {
+        var controller = new CocktailController(context, scope.ServiceProvider.GetRequiredService<IDeepSeekService>());
+        await controller.FastPopulate(apiService);
+    }
+}
+
 app.UseHttpsRedirection();
 app.UseCors("AllowAllOrigins");
 app.MapControllers();
