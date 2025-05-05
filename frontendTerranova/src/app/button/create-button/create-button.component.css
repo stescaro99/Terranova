@@ -1,0 +1,30 @@
+button {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #4caf50; /* Verde */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  /* Effetto hover */
+  button:hover {
+    background-color: #45a049; /* Verde più scuro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+  }
+  
+  /* Effetto focus */
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5); /* Verde trasparente */
+  }
+  
+  /* Effetto attivo (click) */
+  button:active {
+    background-color: #3e8e41; /* Verde ancora più scuro */
+    transform: scale(0.98);
+  }

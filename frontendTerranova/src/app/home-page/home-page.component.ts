@@ -12,11 +12,12 @@ import { TranslateService } from '../services/translate.service';
 import { Subscription } from 'rxjs';
 import { WindowService } from '../services/window.service';
 import { InteractiveListComponent } from '../interactive-list/interactive-list.component';
+import { CreateButtonComponent } from '../button/create-button/create-button.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, SearchComponent, InteractiveListComponent],
+  imports: [CommonModule, SearchComponent, InteractiveListComponent, CreateButtonComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })

@@ -1,5 +1,175 @@
-.window{
-	background-color: white;
-	width: 80%;
-	border-radius: 10%;
-}
+
+div {
+	margin: 20px auto;
+	padding: 15px;
+	max-width: 600px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	background-color: #f9f9f9;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+.mode-buttons {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 15px;
+  }
+  
+  .mode-buttons button {
+	font-size: 1em;
+	font-weight: bold;
+	padding: 10px 20px;
+	color: #fff;
+	background-color: #007bff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .mode-buttons button:hover {
+	background-color: #0056b3;
+	transform: scale(1.05);
+  }
+  
+
+  .color-display {
+	position: relative; /* Posizionamento relativo per sovrapposizioni */
+	margin-bottom: 20px;
+	width: 100%;
+	height: 300px; /* Altezza totale del contenitore */
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	overflow: hidden; /* Assicurati che gli elementi figli siano visibili */
+  }
+  
+  /* Modalità Mix */
+  .mix-colors {
+	position: absolute; /* Posizionamento assoluto per sovrapposizioni */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+	z-index: 1; /* I colori devono essere sotto il bicchiere */
+  }
+  
+  
+  /* Modalità Shake */
+  .shake-color {
+	position: absolute; /* Posizionamento assoluto per sovrapposizioni */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+	z-index: 1; /* I colori devono essere sotto il bicchiere */
+  }
+  
+  /* Immagine del bicchiere */
+  .glass-overlay {
+	position: absolute; /* Posizionamento assoluto sopra i colori */
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%); /* Compensa il 50% della larghezza per centrarla */
+ 	 width: 50%; /* Imposta la larghezza desiderata (ad esempio, 50% del contenitore) */
+ 	 height: auto; /* Adatta l'immagine all'altezza del contenitore */
+	z-index: 2; /* Il bicchiere deve essere sopra i colori */
+	pointer-events: none; /* Rendi l'immagine non interattiva */
+  }
+  /* Titoli */
+  h3 {
+	font-size: 1.5em;
+	color: #333;
+	margin-bottom: 10px;
+	text-align: center;
+  }
+  
+  /* Lista degli ingredienti */
+  ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+  }
+  
+  li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	margin-bottom: 8px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #fff;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  li:hover {
+	transform: scale(1.02);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Testo degli ingredienti */
+  li span {
+	font-weight: bold;
+	font-size: 0.9em;
+  }
+  
+  /* Stile per il colore dell'ingrediente */
+  li span[style] {
+	padding: 5px 10px;
+	border-radius: 4px;
+	color: #fff;
+	font-size: 0.85em;
+  }
+  
+  /* Pulsanti o input */
+  button,
+  input {
+	font-size: 1em;
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background-color: #fff;
+	cursor: pointer;
+	transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  button:hover,
+  input:hover {
+	background-color: #f0f0f0;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Stile per il componente app-ingredient-list */
+  app-ingredient-list {
+	margin-bottom: 20px;
+  }
+
+  button {
+	display: block; /* Rendi il pulsante un elemento a blocco */
+	margin: 20px auto; /* Centra il pulsante orizzontalmente */
+	font-size: 1em;
+	font-weight: bold;
+	padding: 10px 20px;
+	color: #fff;
+	background-color: #007bff; /* Blu */
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  button:hover {
+	background-color: #0056b3; /* Blu più scuro */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transform: scale(1.05);
+  }
+  
+  button:disabled {
+	background-color: #ccc;
+	cursor: not-allowed;
+  }

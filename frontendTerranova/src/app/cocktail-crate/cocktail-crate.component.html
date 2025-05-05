@@ -1,2 +1,27 @@
-<div class="window">
-	
+<div>
+<div class="color-display" [ngClass]="mode">
+  <!-- Modalità Mix -->
+  <div *ngIf="mode === 'mix'" class="mix-colors" [style.background]="getGradient()"></div>
+
+  <!-- Modalità Shake -->
+  <div *ngIf="mode === 'shake'" class="shake-color" [style.background-color]="getMixedColor()"></div>
+
+  <!-- Immagine del bicchiere -->
+  <img src="assets/image-glass.png" alt="Glass" class="glass-overlay" />
+  
+</div>
+<div class="mode-buttons">
+  <button (click)="setMode('mix')">Mix</button>
+  <button (click)="setMode('shake')">Shake</button>
+</div>
+  <h3>Seleziona gli ingredienti:</h3>
+  <div *ngFor="let i of [].constructor(numberOfIngredients); let index = index">
+    <app-ingredient-list
+    [limitIngredients]="ingredients"
+    (ingredientSelected)="onIngredientSelected($event, index)">
+  </app-ingredient-list>
+</div>
+<button (click)="addIngredient()" [disabled]="numberOfIngredients >= 15">
+  Aggiungi Ingrediente
+</button>
+</div>

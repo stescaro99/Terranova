@@ -4,7 +4,7 @@
 	  id="ingredientInput"
 	  list="availableIngredients"
 	  (input)="onIngredientSelect($event)"
-	  placeholder="Inserisci un ingrediente"
+	  placeholder="Scrivi un ingrediente"
 	/>
 	<datalist id="availableIngredients">
 	  <option *ngFor="let ingredient of availableIngredients" [value]="ingredient">

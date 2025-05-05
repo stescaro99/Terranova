@@ -9,7 +9,8 @@
   }
   
   .ingredient-selector input {
-	width: 100%;
+	margin: 10px;
+	width: 80%;
 	padding: 8px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
