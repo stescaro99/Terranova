@@ -192,6 +192,9 @@ public class UserController : ControllerBase
         var recommendationService = new RecommendationService(_context, new CocktailApiService(new HttpClient()));
         var recommendedCocktails = await recommendationService.GetRecommendedCocktails(user);
 
+        if (recommendedCocktails == null || !recommendedCocktails.Any())
+            return GetTopCocktails(username, 10, 5);
+
         return Ok(recommendedCocktails);
     }
 
