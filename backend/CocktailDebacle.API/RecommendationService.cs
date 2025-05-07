@@ -84,7 +84,7 @@ public class RecommendationService
         if (string.IsNullOrEmpty(city))
             return sameCountryUsers.Where(x => x.Id != userId).ToList();
         var sameCityUsers = sameCountryUsers.Where(x => x.City == city).ToList();
-        if (sameCityUsers.Count == 0)
+        if (sameCityUsers.Count < 5)
             return sameCountryUsers.Where(x => x.Id != userId).ToList();
         return sameCityUsers.Where(x => x.Id != userId).ToList();
     }
