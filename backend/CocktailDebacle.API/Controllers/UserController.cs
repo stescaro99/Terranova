@@ -218,7 +218,7 @@ public class UserController : ControllerBase
             if (!string.IsNullOrEmpty(cocktail.Drink?.IdDrink) &&
                 user.FavoriteCocktails != null &&
                 !user.FavoriteCocktails.Contains(int.Parse(cocktail.Drink.IdDrink)) &&
-                (user.CanDrinkAlcohol == true || cocktail.Drink.StrCategory != "Alcoholic"))
+                (user.CanDrinkAlcohol == true || cocktail.Drink.StrAlcoholic != "Alcoholic"))
             {
                 cocksdictionary.Add(cocktail.Drink.IdDrink, cocktail.FavoriteByUsers.Count);
             }
