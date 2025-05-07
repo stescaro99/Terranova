@@ -117,6 +117,15 @@ public class RecommendationService
                     if (intersection.Count > 0)
                     {
                         dictionary[cocktail] += cocktailIngredients.Count * 50 / intersection.Count;
+                        Console.WriteLine("");
+                        Console.WriteLine("");
+                        Console.WriteLine("");
+                        Console.WriteLine("");
+                        Console.WriteLine($"Cocktail: {cocktail.Name}, dictionary value: {dictionary[cocktail]}");
+                        Console.WriteLine("");
+                        Console.WriteLine("");
+                        Console.WriteLine("");
+                        Console.WriteLine("");
                     }
                 }
             }
