@@ -89,7 +89,7 @@ public class RecommendationService
         return sameCityUsers.Where(x => x.Id != userId).ToList();
     }
 
-    public List<Cocktail> analyzeCocktails(List<int> favoriteCocktails, List<string> ingredients, List<User> similarUsers, List<User> sameZoneUsers)
+    public List<Cocktail> analyzeCocktails(List<int> favoriteCocktails, List<string> ingredients, List<User> similarUsers, List<User> sameZoneUsers, bool alcohol)
     {
         var cocktails = new List<Cocktail>();
         var dictionary = new Dictionary<Cocktail, float>();
@@ -98,7 +98,7 @@ public class RecommendationService
             if (cocktail != null)
             {
                 var drink = cocktail.Drink;
-                if (drink != null)
+                if (drink != null && (alcohol || drink.StrAlcoholic != "Alcoholic"))
                 {
                     var cocktailIngredients = new List<string>();
                     for (int i = 1; i <= 15; i++)
@@ -130,7 +130,7 @@ public class RecommendationService
             foreach (var cocktail in user.FavoriteCocktails)
             {
 				var ck = _context.Cocktails.FirstOrDefault(x => x.Id == cocktail);
-                if (ck == null || favoriteCocktails.Contains(cocktail))
+                if (ck == null || favoriteCocktails.Contains(cocktail) || (!alcohol && ck.Drink.StrAlcoholic == "Alcoholic"))
                     continue;
                 if (!dictionary.ContainsKey(ck))
                     dictionary[ck] = 0;
@@ -144,7 +144,7 @@ public class RecommendationService
             foreach (var cocktail in user.FavoriteCocktails)
             {
 				var ck = _context.Cocktails.FirstOrDefault(x => x.Id == cocktail);
-                if (ck == null || favoriteCocktails.Contains(cocktail))
+                if (ck == null || favoriteCocktails.Contains(cocktail) || (!alcohol && ck.Drink.StrAlcoholic == "Alcoholic"))
                     continue;
                 if (!dictionary.ContainsKey(ck))
                     dictionary[ck] = 0;
@@ -165,6 +165,6 @@ public class RecommendationService
         var usersWithSimilarPreferences = getSimilarUsers(favoriteCocktails, user.Id);
         var usersInSameZone = getUsersInSameZone(user.Country ?? string.Empty, user.City ?? string.Empty, user.Id);
 
-        return analyzeCocktails(favoriteCocktails, ingredients, usersWithSimilarPreferences, usersInSameZone);
+        return analyzeCocktails(favoriteCocktails, ingredients, usersWithSimilarPreferences, usersInSameZone, user.CanDrinkAlcohol);
     }
 }
