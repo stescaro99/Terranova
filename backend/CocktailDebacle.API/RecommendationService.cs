@@ -116,6 +116,8 @@ public class RecommendationService
                     var intersection = ingredients.Intersect(cocktailIngredients).ToList();
                     if (intersection.Count > 0)
                     {
+                        if (!dictionary.ContainsKey(cocktail))
+                            dictionary[cocktail] = 0;
                         dictionary[cocktail] += cocktailIngredients.Count * 50 / intersection.Count;
                     }
                 }
@@ -130,6 +132,8 @@ public class RecommendationService
 				var ck = _context.Cocktails.FirstOrDefault(x => x.Id == cocktail);
                 if (ck == null || favoriteCocktails.Contains(cocktail))
                     continue;
+                if (!dictionary.ContainsKey(ck))
+                    dictionary[ck] = 0;
                 dictionary[ck] += 40 / similarUsers.Count;
             }
         }
@@ -142,6 +146,8 @@ public class RecommendationService
 				var ck = _context.Cocktails.FirstOrDefault(x => x.Id == cocktail);
                 if (ck == null || favoriteCocktails.Contains(cocktail))
                     continue;
+                if (!dictionary.ContainsKey(ck))
+                    dictionary[ck] = 0;
                 dictionary[ck] += 10 / sameZoneUsers.Count;
             }
         }
@@ -155,6 +161,7 @@ public class RecommendationService
     {
         var favoriteCocktails = user.FavoriteCocktails?.ToList() ?? new List<int>();
         var ingredients = await getFavoriteIngredients(user);
+        Console.WriteLine("Favorite Ingredients: " + string.Join(", ", ingredients));
         var usersWithSimilarPreferences = getSimilarUsers(favoriteCocktails, user.Id);
         var usersInSameZone = getUsersInSameZone(user.Country ?? string.Empty, user.City ?? string.Empty, user.Id);
 
