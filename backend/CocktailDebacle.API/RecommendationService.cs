@@ -34,7 +34,7 @@ public class RecommendationService
                 var drink = cocktail.Drink;
                 for (int i = 1; i <= 15; i++)
                 {
-                    var ingredientProperty = typeof(CocktailApiDrink).GetProperty($"Ingredient{i}");
+                    var ingredientProperty = typeof(CocktailApiDrink).GetProperty($"StrIngredient{i}");
                     if (ingredientProperty != null)
                     {
                         var ingredient = ingredientProperty.GetValue(drink)?.ToString();
@@ -103,7 +103,7 @@ public class RecommendationService
                     var cocktailIngredients = new List<string>();
                     for (int i = 1; i <= 15; i++)
                     {
-                        var ingredientProperty = typeof(CocktailApiDrink).GetProperty($"Ingredient{i}");
+                        var ingredientProperty = typeof(CocktailApiDrink).GetProperty($"StrIngredient{i}");
                         if (ingredientProperty != null)
                         {
                             var ingredient = ingredientProperty.GetValue(drink)?.ToString();
@@ -117,15 +117,6 @@ public class RecommendationService
                     if (intersection.Count > 0)
                     {
                         dictionary[cocktail] += cocktailIngredients.Count * 50 / intersection.Count;
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                        Console.WriteLine($"Cocktail: {cocktail.Name}, dictionary value: {dictionary[cocktail]}");
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                        Console.WriteLine("");
                     }
                 }
             }
