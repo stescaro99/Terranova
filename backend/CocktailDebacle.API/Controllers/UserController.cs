@@ -193,7 +193,7 @@ public class UserController : ControllerBase
         var recommendedCocktails = await recommendationService.GetRecommendedCocktails(user);
 
         if (recommendedCocktails == null || !recommendedCocktails.Any())
-            return GetTopCocktails(username, 10, 5);
+            return await GetTopCocktails(username, 10, 5);
 
         return Ok(recommendedCocktails);
     }
