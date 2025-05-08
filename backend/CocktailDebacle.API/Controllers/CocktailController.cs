@@ -49,6 +49,21 @@ public class CocktailController : ControllerBase
         return Ok(cocktail);
     }
 
+    [HttpGet("CheckCocktailName")]
+    public async Task<IActionResult> CheckCocktailName([FromQuery]string name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return BadRequest("Cocktail name cannot be null or empty");
+
+        var CocktailExists = await _context.Cocktails
+            .AnyAsync(c => c.Drink != null && c.Drink.StrDrink != null && c.Drink.StrDrink.Equals(name, StringComparison.OrdinalIgnoreCase));
+        if (CocktailExists)
+            return Ok(new { Exists = true });
+        else
+            return Ok(new { Exists = false });
+    }
+
+
     [HttpPatch("favorite")]
     public async Task<IActionResult> SetFavorite([FromBody] FavoriteRequest request)
     {
