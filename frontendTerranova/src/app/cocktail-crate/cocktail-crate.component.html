@@ -1,4 +1,13 @@
+<br>
 <div class="cocktail-container">
+	<div class="mode-buttons">
+		<button (click)="setMode('mix')">public</button>
+		<button (click)="setMode('mix')">private</button>
+	  </div>
+	  <div class="mode-buttons">
+		<button (click)="setMode('mix')">use your phote</button>
+		<button (click)="setMode('mix')">use generate photo</button>
+	  </div>
 	<!-- Display del colore -->
 	<div class="color-display">
 	  <!-- Sfondo del colore -->
@@ -6,6 +15,7 @@
 	  <div *ngIf="mode === 'shake'" class="shake-color" [style.background-color]="getMixedColor()"></div>
   
 	  <!-- Immagine del bicchiere -->
+	   <br>
 	  <div class="glass-mask">
 		<img src="assets/image-glass.png" alt="Glass" class="glass-overlay" />
 	  </div>
@@ -32,4 +42,9 @@
 	<button class="add-ingredient-button" (click)="addIngredient()" [disabled]="numberOfIngredients >= 15">
 	  Aggiungi Ingrediente
 	</button>
+	<br>
+		<h3>
+			istruction:
+		</h3>
+		<textarea [(ngModel)]="newcocktail.drink.strInstructionsZH_HANS"></textarea>
   </div>

@@ -7,10 +7,11 @@ import { CocktailService } from '../services/cocktail.service';
 import { User } from '../model/user';
 import { IngredientListComponent } from '../search/ingredient-list/ingredient-list.component';
 import { ingredientColors } from '../model/ingredient';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cocktail-crate',
-  imports: [CommonModule, IngredientListComponent],
+  imports: [CommonModule, IngredientListComponent, FormsModule],
   templateUrl: './cocktail-crate.component.html',
   styleUrl: './cocktail-crate.component.css'
 })
