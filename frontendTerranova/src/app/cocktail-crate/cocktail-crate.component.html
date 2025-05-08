@@ -1,11 +1,13 @@
 <app-background></app-background>
+<br>
 <div class="cocktail-container">
-	<div *ngIf="open === true; else privateMode" class ="pubblicMode">
-		<button (click)="setOpen(open)">pubblico</button>
+	<br>
+	<div *ngIf="open === true; else privateMode" class="pubblicMode" (click)="setOpen(open)">
+		<span>pubblico</span>
 	</div>
 	<ng-template #privateMode>
-		<div class="privateMode">
-			<button (click)="setOpen(open)">privato</button>
+		<div class="privateMode" (click)="setOpen(open)">
+			<span>privato</span>
 		</div>
 	</ng-template>
 
