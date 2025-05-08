@@ -35,7 +35,7 @@ export class WindowService {
 		  if (this.isMobile) {
 			  return 6;
 			} else if (this.isTablet) {
-				return 10;
+				return 9;
 			} else {
 				return 20;
 			}

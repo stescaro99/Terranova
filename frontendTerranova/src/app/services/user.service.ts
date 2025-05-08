@@ -70,4 +70,9 @@ import { User } from '../model/user';
     return this.http.get<any>(url);
     }
 
+    getRecommendedtails(username: string): Observable<any> {
+    const url = `${this.apiUrl}/RecommendedCocktails?username=${encodeURIComponent(username)}`;
+    return this.http.get<any>(url);
+    }
+
   }

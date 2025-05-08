@@ -18,12 +18,21 @@
   }
   
   .cocktail-item {
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 10px;
-	background-color: #f5f5f5be;
-	width: 90px;
-	text-align: center;
+	  border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f5f5f5be;
+    text-align: center;
+    display: inline-block;
+    max-width: 200px;
+    word-wrap: break-word;
+  }
+  @media (max-width: 768px) {
+    .cocktail-item {
+      width: 100%; 
+      max-width: none; 
+      margin: 0 auto; 
+    }
   }
   
   .clickable-image {

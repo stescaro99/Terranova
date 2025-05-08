@@ -24,6 +24,16 @@
   <div *ngIf="favoriteCocktails.length === 0">
     <p>{{translatedText[3] || stringsToTranslate[3]}}</p>
   </div>
+  <div *ngIf="!isGuest">
+    <app-interactive-list
+    [phrase]="translatedText[4] || stringsToTranslate[4]"
+    [cocktails]="recommendedCocktails"
+    [isListVisible]="isListVisible"
+    [canBeFavorite]="true"
+    [user]="user"
+    (favoritChanged)="onFavoriteChanged()">
+  </app-interactive-list>
 </div>
+<br>
 <app-create-button></app-create-button>
 <br>
