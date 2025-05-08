@@ -10,3 +10,9 @@ public class UpdateUserRequest
     public required string Field;
     public required string Value;
 }
+
+public class ImageUploadRequest
+{
+    public required string FileName { get; set; }
+    public required IFormFile Image { get; set; }
+}

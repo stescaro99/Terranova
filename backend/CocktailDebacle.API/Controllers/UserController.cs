@@ -24,6 +24,33 @@ public class UserController : ControllerBase
         return Ok(!userExists);
     }
 
+    [HttpPost("UploadImage")]
+    public async Task<IActionResult> UploadImage([FromForm] ImageUploadRequest request)
+    {
+        if (request == null || request.Image == null)
+            return BadRequest("Invalid request data");
+
+        var DirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", ".images");
+        if (!Directory.Exists(DirectoryPath))
+            Directory.CreateDirectory(DirectoryPath);
+        var i = Directory.GetFiles(DirectoryPath)
+                 .Select(file => Path.GetFileNameWithoutExtension(file))
+                 .Where(name => int.TryParse(name, out _))
+                 .Select(int.Parse)
+                 .DefaultIfEmpty(0)
+                 .Max() + 1;
+        if (i == -1)
+            return BadRequest("Error in getting index");
+        string extension = Path.GetExtension(request.Image.FileName);
+        string filePath = Path.Combine(DirectoryPath, $"{i}{extension}");
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await request.Image.CopyToAsync(stream);
+        }
+        var url = $"blob:http://localhost:4200/.images/{i}{extension}";
+        return Ok(new { Url = url });
+    }
+
     [HttpGet("UpdateUser")]
     public async Task<IActionResult> UpdateUser([FromQuery] UpdateUserRequest request)
     {

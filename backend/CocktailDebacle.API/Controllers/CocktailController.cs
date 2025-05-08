@@ -63,7 +63,6 @@ public class CocktailController : ControllerBase
             return Ok(new { Exists = false });
     }
 
-
     [HttpPatch("favorite")]
     public async Task<IActionResult> SetFavorite([FromBody] FavoriteRequest request)
     {
