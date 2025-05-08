@@ -10,14 +10,15 @@ import { CountryComponent } from '../country/country.component';
 import { AgeComponent } from '../age/age.component';
 import { UsernameComponent } from '../username/username.component';
 import { SlideButtonComponent } from '../../button/slide-button/slide-button.component';
+import { BackgroundComponent } from '../../background/background.component';
 
 @Component({
   selector: 'app-sigin',
-  imports: [FormsModule, CommonModule, CountryComponent, AgeComponent, UsernameComponent, SlideButtonComponent],
+  imports: [FormsModule, CommonModule, CountryComponent, AgeComponent, UsernameComponent, BackgroundComponent ,SlideButtonComponent],
   standalone: true,
   providers: [],
   templateUrl: './sigin.component.html',
-  styles: [``]
+  styleUrl: './sigin.component.css',
 
 })
 export class SiginComponent {
@@ -46,6 +47,8 @@ export class SiginComponent {
   submitForm() {
       if (this.usernameAvailable) {
         this.user.language = 'en';
+        console.log('UtenteaaaaaaaaaaaaaaaAAAAAAAAAAAA :', this.user);
+
           this.userService.createUser(this.user).subscribe(
               (response: User) => {
                   console.log('Utente creato con successo:', response);
@@ -80,18 +83,29 @@ export class SiginComponent {
     );
   }
   
-  onFileSelected(event: Event): void {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput?.files?.length) {
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.user.imgUrl = e.target?.result;
-      };
-
-      reader.readAsDataURL(file);
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.user.imageUrl = URL.createObjectURL(file); // Converte il file in un URL temporaneo
+      console.log('URL immagine generato:', this.user.imageUrl);
     }
+    const formData = new FormData();
+    formData.append('file', this.user.imageUrl as any);
+    const request ={
+      FileName: File.name,
+      Image: formData
+    };
+    this.userService.uploadFile(request).subscribe(
+      (response: any) => {
+        console.log('Immagine caricata con successo:', response.imageUrl);
+        this.user.imageUrl = response.imageUrl; // Aggiorna l'URL dell'immagine dell'utente
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Errore durante il caricamento dell\'immagine:', error);
+      }
+    );
+
   }
   
 }

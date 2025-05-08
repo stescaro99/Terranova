@@ -1,3 +1,5 @@
+
+<app-background></app-background>
 <h2>Sign In</h2>
 <br>
 <form (ngSubmit)="submitForm()">
@@ -29,20 +31,17 @@
   <label for="imgUpload">Upload Image:</label>
   <input type="file" id="imgUpload" (change)="onFileSelected($event)" accept="image/*" />
   
-  <img *ngIf="user.imgUrl" [src]="user.imgUrl" alt="Uploaded Image" />
+  <!-- <img *ngIf="user.imgUrl" [src]="user.imgUrl" alt="Uploaded Image" /> -->
+
   
-  <p>
-	<app-slide-button 
-	  [(isActive)]="user.appPermissions" >
-	</app-slide-button>
-	Accetta Termini
-  </p>
-  <p>
-	<app-slide-button 
-	  [(isActive)]="user.canDrinkAlcohol" >
-	</app-slide-button>
-	Modalità senza alcool
-  </p>
+  <div class="inline-container">
+    Accetta Termini
+	<app-slide-button [(isActive)]="user.appPermissions" > </app-slide-button>
+</div>
+  <div class="inline-container">
+    Modalità senza alcool
+	<app-slide-button [(isActive)]="user.canDrinkAlcohol" ></app-slide-button>
+  </div>
   
   <button type="submit" [disabled]="!formValid()">Invia</button>
 </form>

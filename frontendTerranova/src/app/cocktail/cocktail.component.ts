@@ -9,10 +9,11 @@ import { StarButtonComponent } from '../button/star-button/star-button.component
 import { TranslateService } from './../services/translate.service';
 import { Subscription } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
+import { BackgroundComponent } from '../background/background.component';
 
 @Component({
   selector: 'app-cocktail',
-  imports: [CommonModule, StarButtonComponent],
+  imports: [CommonModule, StarButtonComponent, BackgroundComponent],
   templateUrl: './cocktail.component.html',
   styleUrl: './cocktail.component.css'
 })

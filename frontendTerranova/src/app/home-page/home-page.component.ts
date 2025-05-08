@@ -13,11 +13,12 @@ import { Subscription } from 'rxjs';
 import { WindowService } from '../services/window.service';
 import { InteractiveListComponent } from '../interactive-list/interactive-list.component';
 import { CreateButtonComponent } from '../button/create-button/create-button.component';
+import { BackgroundComponent } from '../background/background.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, SearchComponent, InteractiveListComponent, CreateButtonComponent],
+  imports: [CommonModule, SearchComponent, InteractiveListComponent, CreateButtonComponent, BackgroundComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
@@ -47,10 +48,9 @@ export class HomePageComponent implements OnInit, OnDestroy{
 			private windowService: WindowService) {
     this.user = userService.getUser() || new User();
     
-    console.log('Valore di user.ImgUrl:', this.user.imgUrl);
-    console.log('authToken:', localStorage.getItem('authToken'));
+    console.log('Valore di user.ImageUrl:', this.user.imageUrl);
     this.isAuthenticated = !!localStorage.getItem('authToken');
-    if (!this.user.imgUrl) {
+    if (!this.user.imageUrl) {
       console.log('Nessuna immagine trovata, verrà mostrato il cerchio grigio.');
     }
 	this.nuberOfDrink = windowService.getRecommendedDrinkCount();
@@ -66,9 +66,8 @@ export class HomePageComponent implements OnInit, OnDestroy{
       this.isGuest = true;
     }
     this.isListVisible = this.windowService.getListVisibility();
-    console.log('isGuest', this.isGuest);
     this.takeCocktails();
-    console.log('user :', this.user);
+  
     this.userService.getCocktailsFavorite(this.user.username).subscribe(
       (response: any) => {
         for(let i = 0; i < response.length; i++) {
@@ -99,6 +98,7 @@ export class HomePageComponent implements OnInit, OnDestroy{
       });
       const currentLanguage = this.userService.getUser()?.language || 'en';
       this.updateTranslations(currentLanguage);
+      console.log('user', this.user);
   }
 
   takeCocktails() {

@@ -6,7 +6,7 @@ export class User {
     birthDate = '';
     city = '';
     country = '';
-    imgUrl: string | ArrayBuffer | null | undefined = null;
+    imageUrl: string | ArrayBuffer | null | undefined = null;
     favoriteCocktails: string[] = [];
     createdCocktails: string[] = [];
     canDrinkAlcohol = false; 

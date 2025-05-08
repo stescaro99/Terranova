@@ -119,3 +119,17 @@
 	background-color: #ccc;
 	cursor: not-allowed;
   }
+
+  
+  .pubblicMode{
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+	border: #0056b3;
+	background-color: #0056b3;
+	color: #fff;
+	border-radius: 5px;
+	width: 70%;
+	margin: auto;
+
+  }

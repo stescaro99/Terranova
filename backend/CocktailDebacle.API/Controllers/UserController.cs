@@ -30,7 +30,7 @@ public class UserController : ControllerBase
         if (request == null || request.Image == null)
             return BadRequest("Invalid request data");
 
-        var DirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", ".images");
+        var DirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
         if (!Directory.Exists(DirectoryPath))
             Directory.CreateDirectory(DirectoryPath);
         var i = Directory.GetFiles(DirectoryPath)
@@ -47,7 +47,7 @@ public class UserController : ControllerBase
         {
             await request.Image.CopyToAsync(stream);
         }
-        var url = $"blob:http://localhost:4200/.images/{i}{extension}";
+        var url = $"blob:http://localhost:4200/images/{i}{extension}";
         return Ok(new { Url = url });
     }
 

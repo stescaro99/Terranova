@@ -1,14 +1,13 @@
 import {Component, HostListener} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import { TitleComponent } from './title/title.component';
-import { BackgroundComponent } from './background/background.component';
+
 
 @Component({
   selector: 'app-root',
-  imports: [ RouterModule, BackgroundComponent],
+  imports: [ RouterModule],
   template: `
   <main>
-    <app-background></app-background>
     <section>
       <router-outlet></router-outlet>
     </section>

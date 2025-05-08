@@ -75,4 +75,8 @@ import { User } from '../model/user';
     return this.http.get<any>(url);
     }
 
+    uploadFile(request: {FileName: string, Image: FormData}): Observable<{ imageUrl: string }> {
+      return this.http.post<{ imageUrl: string }>(`${this.apiUrl}/UploadImage`, request);
+    }
+
   }

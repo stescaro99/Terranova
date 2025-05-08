@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { User } from '../../model/user';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
+import { BackgroundComponent } from '../../background/background.component';
 
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, BackgroundComponent],
   templateUrl: './login.component.html',
   styles: ``
 })
@@ -26,6 +27,7 @@ export class LoginComponent {
         if (response) {
           console.log('Login effettuato con successo!');
           this.user = response;
+          console.log('UtenteEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE:', response);
           localStorage.setItem('user', JSON.stringify(this.user));
           localStorage.setItem('authToken', 'true');
           localStorage.setItem('guestToken', 'false');

@@ -7,10 +7,11 @@ import { CocktailService } from '../services/cocktail.service';
 import { User } from '../model/user';
 import { IngredientListComponent } from '../search/ingredient-list/ingredient-list.component';
 import { ingredientColors } from '../model/ingredient';
+import { BackgroundComponent } from '../background/background.component';
 
 @Component({
   selector: 'app-cocktail-crate',
-  imports: [CommonModule, IngredientListComponent],
+  imports: [CommonModule, IngredientListComponent, BackgroundComponent],
   templateUrl: './cocktail-crate.component.html',
   styleUrl: './cocktail-crate.component.css'
 })
@@ -23,7 +24,8 @@ export class CocktailCrateComponent {
 	ingredients: string[] = [];
 	ingredientColors: { [key: string]: string } = {};
 	numberOfIngredients: number = 1;
-	mode: 'mix' | 'pur' | 'shake' = 'mix';
+	mode: 'mix' | 'shake' = 'mix';
+	open: boolean = true;
 
 	constructor(private userservice: UserService, private cocktailservice: CocktailService) {
 		this.user = userservice.getUser() || new User();
@@ -53,6 +55,11 @@ export class CocktailCrateComponent {
 	}
 	setMode(mode: 'mix' | 'shake'): void {
 		this.mode = mode;
+	}
+
+	setOpen(open: boolean): void {
+		this.open = !open;
+		console.log('open:', this.open);
 	}
 
 	onIngredientSelected(event: { name: string; color: string }, index: number): void {

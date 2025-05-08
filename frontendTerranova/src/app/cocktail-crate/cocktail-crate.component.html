@@ -1,5 +1,15 @@
+<app-background></app-background>
 <div class="cocktail-container">
-	<!-- Display del colore -->
+	<div *ngIf="open === true; else privateMode" class ="pubblicMode">
+		<button (click)="setOpen(open)">pubblico</button>
+	</div>
+	<ng-template #privateMode>
+		<div class="privateMode">
+			<button (click)="setOpen(open)">privato</button>
+		</div>
+	</ng-template>
+
+	<br>
 	<div class="color-display">
 	  <!-- Sfondo del colore -->
 	  <div *ngIf="mode === 'mix'" class="mix-colors" [style.background]="getGradient()"></div>

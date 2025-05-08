@@ -1,0 +1,5 @@
+.inline-container{
+    display: flex; /* Usa flexbox per posizionare gli elementi in linea */
+    align-items: center; /* Allinea verticalmente al centro */
+    gap: 10px; /* Spazio tra la scritta e il pulsante */
+  }
