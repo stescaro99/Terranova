@@ -2,13 +2,15 @@ export class Cocktail {
     Id: number;
     drink: CocktailApiDrink;
     CreatedByUserId?: number;
-    FavoriteByUsers: string[]; // Array di ID o nomi degli utenti che hanno aggiunto il cocktail ai preferiti
-  
+    FavoriteByUsers: string[]; 
+	isPrivate: boolean;
+
     constructor(init?: Partial<Cocktail>) {
       this.Id = init?.Id || 0;
       this.drink = init?.drink || new CocktailApiDrink();
       this.CreatedByUserId = init?.CreatedByUserId;
       this.FavoriteByUsers = init?.FavoriteByUsers || [];
+	  this.isPrivate = false;
     }
   }
   
