@@ -3,23 +3,23 @@
 <div class="cocktail-container">
 	<br>
 	<div *ngIf="open === true; else privateMode" class="pubblicMode" (click)="setOpen(open)">
-		<span>pubblico</span>
+		<span>Public</span>
 	</div>
 	<ng-template #privateMode>
 		
 		<div class="privateMode" (click)="setOpen(open)">
-			<span>privato</span>
+			<span>Private</span>
 		</div>
 	</ng-template>
 	<br>
 	<div *ngIf="usedefaultimg === true; else useRealPhoto" class="pubblicMode" (click)="setDefaultImg(usedefaultimg)">
-		<span>generatore automatico</span>
+		<span>Automatic image generator</span>
 		<br>
 	  </div>
 	  
 	  <ng-template #useRealPhoto>
 		<div class="privateMode" (click)="setDefaultImg(usedefaultimg)">
-		  <span>carica immagine</span>
+		  <span>Upload cocktail image</span>
 		  <!-- Quadrato grigio per il caricamento dell'immagine -->
 		</div>
 	</ng-template>
@@ -42,11 +42,11 @@
 		<label *ngIf="usedefaultimg == false" class="upload-area">
 			<input type="file" (change)="onFileSelected($event)" accept="image/*" />
 			<img *ngIf="imgPreview" [src]="imgPreview" alt="Anteprima immagine" class="image-preview" />
-			<span *ngIf="!imgPreview">Clicca per caricare</span>
+			<span *ngIf="!imgPreview">Click to upload</span>
 		  </label>
 		
 	<!-- Selezione degli ingredienti -->
-	<h3>Seleziona gli ingredienti:</h3>
+	<h3>Select the ingredients:</h3>
 	<div class="ingredients-list">
 	  <div *ngFor="let i of [].constructor(numberOfIngredients); let index = index" class="ingredient-row">
 		<app-ingredient-list
@@ -66,47 +66,48 @@
   
 	<!-- Pulsante per aggiungere ingredienti -->
 	<button class="add-ingredient-button" (click)="addIngredient()" [disabled]="!isLastIngredientValid() || numberOfIngredients >= 15">
-	  Aggiungi Ingrediente
+	  Add ingredient
 	</button>
 
 	<div class="drink-details">
-		<label for="drinkName">Nome del drink:</label>
+		<label for="drinkName">Drink Name:</label>
 		<input
 		  id="drinkName"
 		  type="text"
 		  [(ngModel)]="newcocktail.drink.strDrink"
 		  class="drink-input"
-		  placeholder="Inserisci il nome del drink"
+		  placeholder="Enter the name of the drink"
 		  (blur)="checkDrinkName(newcocktail.drink.strDrink)"
 		/>
 		<span *ngIf="drinknameMessage" [style.color]="drinknameAvailable ? 'green' : 'red'">
 			{{ drinknameMessage }}
 		  </span>
 
-		<label for="drinkCategory">Categoria:</label>
+		<label for="drinkCategory">Category:</label>
 		<select id="drinkCategory" [(ngModel)]="newcocktail.drink.strCategory" class="drink-select">
 			<option *ngFor="let category of categories" [value]="category">{{ category }}</option>
 		</select>
 
-		<label for="drinkAlcoholic">Tipo di alcolico:</label>
+		<label for="drinkAlcoholic">Type of drink:</label>
 		<select id="drinkAlcoholic" [(ngModel)]="newcocktail.drink.strAlcoholic" class="drink-select">
 			<option value="Alcoholic">Alcoholic</option>
 			<option value="Non alcoholic">Non alcoholic</option>
+			<option value="Optional alcohol">Optional alcohol</option>
 		</select>
 
-		<label for="drinkGlass">Tipo di bicchiere:</label>
+		<label for="drinkGlass">Glass type:</label>
 		<select id="drinkGlass" [(ngModel)]="newcocktail.drink.strGlass" class="drink-select">
 			<option *ngFor="let glass of glasses" [value]="glass">{{ glass }}</option>
 		</select>
 		
-		<label for="drinkInstructions">Istruzioni:</label>
+		<label for="drinkInstructions">Instructions:</label>
 		<textarea
 		  id="drinkInstructions"
 		  [(ngModel)]="newcocktail.drink.strInstructionsZH_HANS"
 		  class="drink-textarea"
-		  placeholder="Inserisci le istruzioni per preparare il drink"
+		  placeholder="Enter the instructions to prepare the drink"
 		></textarea>
 	  </div>
-	  <button class="add-ingredient-button" (click)="saveCocktail()" [disabled]="!isValid()" > save cocktail</button>
+	  <button class="add-ingredient-button" (click)="saveCocktail()" [disabled]="!isValid()" > Save cocktail</button>
 
   </div>

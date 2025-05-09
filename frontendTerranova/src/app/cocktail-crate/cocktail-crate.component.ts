@@ -80,7 +80,7 @@ export class CocktailCrateComponent {
 
 	checkDrinkName(name: string | undefined): void {
 		if (!name || name.trim() === '') {
-		  this.drinknameMessage = 'Il nome del drink non può essere vuoto.';
+		this.drinknameMessage = 'The drink name cannot be empty.';
 		  this.drinknameAvailable = false;
 		  return;
 		}
@@ -89,16 +89,16 @@ export class CocktailCrateComponent {
 		  (response: any) => {
 			console.log('Risposta dal server:', response); // Verifica la risposta
 			if (response.exists) { // Mappa correttamente la proprietà Exists
-			  this.drinknameMessage = 'Il nome del drink è già in uso.';
+			  this.drinknameMessage = 'The drink name is already in use.';
 			  this.drinknameAvailable = false;
 			} else {
-			  this.drinknameMessage = 'Il nome del drink è disponibile.';
+			  this.drinknameMessage = 'The drink name is available.';
 			  this.drinknameAvailable = true;
 			}
 		  },
 		  (error) => {
 			console.error('Errore durante la verifica del nome del drink:', error);
-			this.drinknameMessage = 'Errore durante la verifica del nome. Riprova più tardi.';
+			this.drinknameMessage = 'Error during name verification. Please try again later.';
 			this.drinknameAvailable = false;
 		  }
 		);
