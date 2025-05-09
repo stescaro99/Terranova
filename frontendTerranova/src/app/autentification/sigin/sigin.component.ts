@@ -92,9 +92,10 @@ export class SiginComponent {
     const formData = new FormData();
     formData.append('file', this.user.imageUrl as any);
     const request ={
-      FileName: File.name,
+      FileName: File.name + '.png',
       Image: formData
     };
+    console.log('Richiesta di caricamento immagine:', request);
     this.userService.uploadFile(request).subscribe(
       (response: any) => {
         console.log('Immagine caricata con successo:', response.imageUrl);

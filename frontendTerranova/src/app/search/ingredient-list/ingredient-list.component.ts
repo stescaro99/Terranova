@@ -14,9 +14,11 @@ export class IngredientListComponent {
 	@Output() ingredientSelected = new EventEmitter<{ name: string; color: string }>();
 
   get availableIngredients(): string[] {
-    return Object.keys(ingredientColors).filter(
-      ingredient => !this.limitIngredients.includes(ingredient)
-    );
+    return ingredientColors
+        ? Object.keys(ingredientColors).filter(
+            ingredient => !this.limitIngredients.includes(ingredient)
+        )
+        : [];
   }
 
   ngOnInit() {
@@ -33,6 +35,10 @@ export class IngredientListComponent {
   
       this.ingredientSelected.emit({ name: this.selectedIngredient, color });
       console.log('Ingrediente selezionato:', this.selectedIngredient, 'Colore:', color);
+    }else {
+      this.selectedIngredient = selectedValue;
+      this.ingredientSelected.emit({ name: this.selectedIngredient, color: '' }); // Nessun colore
+      console.log('Ingrediente non in lista selezionato:', this.selectedIngredient);
     }
   }
 }

@@ -6,7 +6,7 @@
 	height: auto;
 	margin: 0 auto;
 	border-radius: 10px;
-	background-color: #f9f9f9;
+	background: linear-gradient(to bottom, #faf0ce, #ffe2a5);
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
   }
@@ -131,7 +131,7 @@
 	border-radius: 5px;
 	width: 70%;
 	height: 50px; /* Altezza del pulsante */
-	margin: auto;
+	margin: 20px auto;
 	text-align: center;
 	font-size: 1em;
 	font-weight: bold;
@@ -155,7 +155,7 @@
 	border-radius: 5px;
 	width: 70%;
 	height: 50px; /* Altezza del pulsante */
-	margin: auto;
+	margin: 20px auto;
 	text-align: center;
 	font-size: 1em;
 	font-weight: bold;
@@ -168,3 +168,79 @@
 	background-color: #85e085; /* Verde più chiaro */
 	transform: scale(1.05);
 }
+
+.upload-area {
+	width: 300px;
+	height: 300px;
+	background-color: #d3d3d3; /* Grigio chiaro */
+	border: 2px dashed #a9a9a9; /* Bordo tratteggiato */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 20px auto; /* Centra il quadrato */
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+  }
+  
+  .upload-area input[type="file"] {
+	opacity: 0; /* Nasconde il campo file */
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	cursor: pointer;
+  }
+  
+  .image-preview {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: cover;
+  }
+  
+  .pubblicMode {
+	margin-bottom: 20px; /* Aggiungi spazio sotto il bottone */
+  }
+  
+  .privateMode {
+	margin-top: 20px; /* Aggiungi spazio sopra il quadrato */
+  }
+
+  .ingredient-row {
+	display: flex; /* Allinea gli elementi orizzontalmente */
+	align-items: center; /* Centra verticalmente gli elementi */
+	margin-bottom: 10px; /* Spaziatura tra le righe */
+  }
+
+  .quantity-input {
+	width: 50px;
+	height: 22px;
+	margin-top: 23px;
+	margin-left: 15px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	text-align: center;
+  }
+
+  .drink-details {
+	margin: 10px;
+	padding: 0 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+  }
+  
+  .drink-input,
+  .drink-textarea {
+	width: 90%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	place-items: center;
+	font-size: 1em;
+  }
+  
+  .drink-textarea {
+	height: 100px;
+	resize: none; /* Disabilita il ridimensionamento */
+  }

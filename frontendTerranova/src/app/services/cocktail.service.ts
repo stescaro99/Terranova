@@ -30,4 +30,9 @@ export class CocktailService {
     return this.http.patch(url, request);
   }
 
+  getDrinkName(drinkName: string): Observable<any> {
+    const url = `${this.apiUrl}/CheckCocktailName?name=${drinkName}`;
+    return this.http.get<{ Exists: boolean }>(url);
+  }
+
 }

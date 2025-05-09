@@ -6,42 +6,107 @@
 		<span>pubblico</span>
 	</div>
 	<ng-template #privateMode>
+		
 		<div class="privateMode" (click)="setOpen(open)">
 			<span>privato</span>
 		</div>
 	</ng-template>
-
 	<br>
-	<div class="color-display">
-	  <!-- Sfondo del colore -->
-	  <div *ngIf="mode === 'mix'" class="mix-colors" [style.background]="getGradient()"></div>
-	  <div *ngIf="mode === 'shake'" class="shake-color" [style.background-color]="getMixedColor()"></div>
-  
-	  <!-- Immagine del bicchiere -->
-	  <div class="glass-mask">
-		<img src="assets/image-glass.png" alt="Glass" class="glass-overlay" />
+	<div *ngIf="usedefaultimg === true; else useRealPhoto" class="pubblicMode" (click)="setDefaultImg(usedefaultimg)">
+		<span>generatore automatico</span>
+		<br>
 	  </div>
+	  
+	  <ng-template #useRealPhoto>
+		<div class="privateMode" (click)="setDefaultImg(usedefaultimg)">
+		  <span>carica immagine</span>
+		  <!-- Quadrato grigio per il caricamento dell'immagine -->
+		</div>
+	</ng-template>
+	
+	<div *ngIf="usedefaultimg === true;" class="color-display">
+		
+		<div *ngIf="mode === 'mix'" class="mix-colors" [style.background]="getGradient()"></div>
+		<div *ngIf="mode === 'shake'" class="shake-color" [style.background-color]="getMixedColor()"></div>
+		
+		
+		<div class="glass-mask">
+			<img src="assets/image-glass.png" alt="Glass" class="glass-overlay" />
+		</div>
+		
 	</div>
-  
-	<!-- Pulsanti per cambiare modalità -->
-	<div class="mode-buttons">
-	  <button (click)="setMode('mix')">Mix</button>
-	  <button (click)="setMode('shake')">Shake</button>
-	</div>
-  
+		<div *ngIf="usedefaultimg === true" class="mode-buttons">
+			<button (click)="setMode('mix')">Mix</button>
+			<button (click)="setMode('shake')">Shake</button>
+		</div>
+		<label *ngIf="usedefaultimg == false" class="upload-area">
+			<input type="file" (change)="onFileSelected($event)" accept="image/*" />
+			<img *ngIf="imgPreview" [src]="imgPreview" alt="Anteprima immagine" class="image-preview" />
+			<span *ngIf="!imgPreview">Clicca per caricare</span>
+		  </label>
+		
 	<!-- Selezione degli ingredienti -->
 	<h3>Seleziona gli ingredienti:</h3>
 	<div class="ingredients-list">
-	  <div *ngFor="let i of [].constructor(numberOfIngredients); let index = index">
+	  <div *ngFor="let i of [].constructor(numberOfIngredients); let index = index" class="ingredient-row">
 		<app-ingredient-list
 		  [limitIngredients]="ingredients"
 		  (ingredientSelected)="onIngredientSelected($event, index)">
 		</app-ingredient-list>
+		<input
+		type="text"
+		[(ngModel)]="quantity[index]"
+		(blur)="onBlurQuantity(index)"
+		class="quantity-input"
+		placeholder="to taste"
+
+	  />
 	  </div>
 	</div>
   
 	<!-- Pulsante per aggiungere ingredienti -->
-	<button class="add-ingredient-button" (click)="addIngredient()" [disabled]="numberOfIngredients >= 15">
+	<button class="add-ingredient-button" (click)="addIngredient()" [disabled]="!isLastIngredientValid() || numberOfIngredients >= 15">
 	  Aggiungi Ingrediente
 	</button>
+
+	<div class="drink-details">
+		<label for="drinkName">Nome del drink:</label>
+		<input
+		  id="drinkName"
+		  type="text"
+		  [(ngModel)]="newcocktail.drink.strDrink"
+		  class="drink-input"
+		  placeholder="Inserisci il nome del drink"
+		  (blur)="checkDrinkName(newcocktail.drink.strDrink)"
+		/>
+		<span *ngIf="drinknameMessage" [style.color]="drinknameAvailable ? 'green' : 'red'">
+			{{ drinknameMessage }}
+		  </span>
+
+		<label for="drinkCategory">Categoria:</label>
+		<select id="drinkCategory" [(ngModel)]="newcocktail.drink.strCategory" class="drink-select">
+			<option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+		</select>
+
+		<label for="drinkAlcoholic">Tipo di alcolico:</label>
+		<select id="drinkAlcoholic" [(ngModel)]="newcocktail.drink.strAlcoholic" class="drink-select">
+			<option value="Alcoholic">Alcoholic</option>
+			<option value="Non alcoholic">Non alcoholic</option>
+		</select>
+
+		<label for="drinkGlass">Tipo di bicchiere:</label>
+		<select id="drinkGlass" [(ngModel)]="newcocktail.drink.strGlass" class="drink-select">
+			<option *ngFor="let glass of glasses" [value]="glass">{{ glass }}</option>
+		</select>
+		
+		<label for="drinkInstructions">Istruzioni:</label>
+		<textarea
+		  id="drinkInstructions"
+		  [(ngModel)]="newcocktail.drink.strInstructionsZH_HANS"
+		  class="drink-textarea"
+		  placeholder="Inserisci le istruzioni per preparare il drink"
+		></textarea>
+	  </div>
+	  <button class="add-ingredient-button" (click)="saveCocktail()" [disabled]="!isValid()" > save cocktail</button>
+
   </div>

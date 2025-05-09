@@ -6,13 +6,16 @@ import { UserService } from '../services/user.service';
 import { CocktailService } from '../services/cocktail.service';
 import { User } from '../model/user';
 import { IngredientListComponent } from '../search/ingredient-list/ingredient-list.component';
-import { ingredientColors } from '../model/ingredient';
+import { ingredientColors, glasses, categories } from '../model/ingredient';
 import { BackgroundComponent } from '../background/background.component';
 import  html2canvas  from 'html2canvas'
+import { FormsModule } from '@angular/forms';
+import { image } from 'html2canvas/dist/types/css/types/image';
+import { response } from 'express';
 
 @Component({
   selector: 'app-cocktail-crate',
-  imports: [CommonModule, IngredientListComponent, BackgroundComponent],
+  imports: [CommonModule, IngredientListComponent, BackgroundComponent, FormsModule],
   templateUrl: './cocktail-crate.component.html',
   styleUrl: './cocktail-crate.component.css'
 })
@@ -27,10 +30,14 @@ export class CocktailCrateComponent {
 	numberOfIngredients: number = 1;
 	mode: 'mix' | 'shake' = 'mix';
 	open: boolean = true;
-	img: string = '';
-	showOptions: boolean = false;
-	selectedOption: 'constructor' | 'photo' | null = null;
-	uploadedImage: string | null = null;
+	img: string | ArrayBuffer | null | undefined = null;
+	usedefaultimg: boolean = true;
+	imgPreview: string | null = null;
+	quantity: string[] = Array(this.numberOfIngredients).fill('to taste');
+	drinknameMessage: string = '';
+	drinknameAvailable: boolean = true;
+	glasses: string[] = glasses;
+	categories: string[] = categories;
 
 	constructor(private userservice: UserService, private cocktailservice: CocktailService) {
 		this.user = userservice.getUser() || new User();
@@ -66,6 +73,46 @@ export class CocktailCrateComponent {
 		this.open = !open;
 		console.log('open:', this.open);
 	}
+
+	setDefaultImg(usedefaultimg: boolean): void {
+		this.usedefaultimg = !usedefaultimg;
+	}
+
+	checkDrinkName(name: string | undefined): void {
+		if (!name || name.trim() === '') {
+		  this.drinknameMessage = 'Il nome del drink non può essere vuoto.';
+		  this.drinknameAvailable = false;
+		  return;
+		}
+	  
+		this.cocktailservice.getDrinkName(name).subscribe(
+		  (response: any) => {
+			console.log('Risposta dal server:', response); // Verifica la risposta
+			if (response.exists) { // Mappa correttamente la proprietà Exists
+			  this.drinknameMessage = 'Il nome del drink è già in uso.';
+			  this.drinknameAvailable = false;
+			} else {
+			  this.drinknameMessage = 'Il nome del drink è disponibile.';
+			  this.drinknameAvailable = true;
+			}
+		  },
+		  (error) => {
+			console.error('Errore durante la verifica del nome del drink:', error);
+			this.drinknameMessage = 'Errore durante la verifica del nome. Riprova più tardi.';
+			this.drinknameAvailable = false;
+		  }
+		);
+	  }
+
+	  onBlurQuantity(index: number): void {
+		// Se il valore è vuoto o "to taste", imposta "to taste"
+		if (this.quantity[index].trim() === '' || this.quantity[index].trim().toLowerCase() === 'to taste' || this.quantity[index].trim().toLowerCase() === '0') {
+		  this.quantity[index] = 'to taste';
+		}
+		else {
+		  this.quantity[index] = this.quantity[index].trim(); 
+		}
+	  }
 
 	onIngredientSelected(event: { name: string; color: string }, index: number): void {
 		const { name, color } = event;
@@ -131,13 +178,48 @@ export class CocktailCrateComponent {
 		return `rgba(${r}, ${g}, ${b}, ${a})`;
 	  }
 	
-	addIngredient(): void {
+	  addIngredient(): void {
 		if (this.numberOfIngredients < 15) {
-			this.numberOfIngredients++;
+		  this.numberOfIngredients++;
+		  this.quantity.push('to taste');
+		  this.ingredients.push('');
 		} else {
-			console.log('Hai raggiunto il numero massimo di ingredienti.');
+		  console.log('Hai raggiunto il numero massimo di ingredienti.');
 		}
-	}
+	  }
+
+	  isLastIngredientValid(): boolean {
+		if (this.numberOfIngredients === 1 && this.ingredients.length === 0) {
+		  return false;
+		}
+		if (this.ingredients.length !== 0){
+			for (let i = 0; i < this.ingredients.length; i++) {
+				if (this.ingredients[i] === '') {
+					return false; // Se c'è un ingrediente vuoto, non è valido
+				}
+			}
+		}
+	  
+		const lastIndex = this.numberOfIngredients - 1;
+		const lastQuantity = this.quantity[lastIndex]?.trim();
+	  
+		// Controlla che ci sia almeno un ingrediente e che la quantità sia valida
+		return typeof lastQuantity === 'string' && (lastQuantity.toLowerCase() === 'to taste' || lastQuantity !== '');
+	  }
+
+	  isValid(): boolean {
+		if (this.newcocktail.drink.strDrink && this.newcocktail.drink.strDrink.trim() !== '' && this.newcocktail.drink.strDrink.length < 50) {
+			if (this.newcocktail.drink.strInstructionsZH_HANS && this.newcocktail.drink.strInstructionsZH_HANS.trim() !== '' && this.newcocktail.drink.strInstructionsZH_HANS.length < 500) {
+				if (this.isLastIngredientValid() && this.drinknameAvailable && this.newcocktail.drink.strGlass && this.newcocktail.drink.strGlass.trim() !== '' && this.newcocktail.drink.strAlcoholic
+					&& this.newcocktail.drink.strAlcoholic.trim() !== '' && this.newcocktail.drink.strCategory && this.newcocktail.drink.strCategory.trim() !== '') {
+				  return true; 
+				}
+			}
+		}
+		return false; 
+
+	  }
+
 	rgbaToComponents(rgba: string): { r: number; g: number; b: number; a: number } | null {
 		const match = rgba.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*([\d.]+)?\)$/);
 		if (!match) {
@@ -152,45 +234,90 @@ export class CocktailCrateComponent {
 		};
 	  }
 
-	captureImage(): void {
-		const element = document.querySelector('.glass-mask') as HTMLElement;
-		if (element) {
+	captureImage(): Promise<void> {
+		return new Promise((resolve, reject) => {
+			const element = document.querySelector('.glass-mask') as HTMLElement;
+			if (element) {
 			html2canvas(element).then(canvas => {
-				const imageUrl = canvas.toDataURL('image/png');
-				console.log('Image URL:', imageUrl);
-				this.img = imageUrl;
+				canvas.toBlob(blob => {
+				if (blob) {
+					const formData = new FormData();
+					formData.append('Image', blob, 'image.png'); // Aggiungi il blob al FormData
+		
+					const request = {
+					FileName: `${this.user.username}_generated.png`, // Nome file generato
+					Image: formData
+					};
+		
+					this.userservice.uploadFile(request).subscribe(
+					(response: { imageUrl: string }) => {
+						this.newcocktail.drink.strDrinkThumb = response.imageUrl; // Salva l'URL restituito
+						console.log('URL dell\'immagine:', this.newcocktail.drink.strDrinkThumb);
+						resolve();
+					},
+					(error) => {
+						console.error('Errore durante il caricamento dell\'immagine:', error);
+						reject(error);
+					}
+					);
+				} else {
+					reject('Errore durante la conversione in Blob.');
+				}
+				}, 'image/png');
 			}).catch(error => {
 				console.error('Errore durante la cattura dell\'immagine:', error);
+				reject(error);
 			});
-		} else {
-		console.error('Elemento non trovato per la cattura.');
-		}
-		
- 	}
-
-	toggleOption(): void {
-		this.showOptions = !this.showOptions;
-	}
-	
-	useConstructor(): void {
-		this.selectedOption = 'constructor';
-	}
-	
-	uploadPhoto(): void {
-		const input = document.createElement('input');
-		input.type = 'file';
-		input.accept = 'image/*';
-		input.onchange = (event: any) => {
-			const file = event.target.files[0];
-			if (file) {
-				const reader = new FileReader();
-				reader.onload = (e: any) => {
-					this.uploadedImage = e.target.result;
-					this.selectedOption = 'photo';
-				};
-				reader.readAsDataURL(file);
+			} else {
+			console.error('Elemento non trovato per la cattura.');
+			reject('Elemento non trovato');
 			}
-		};
-		input.click();
+		});
 	}
+
+	onFileSelected(event: Event): void {
+		const input = event.target as HTMLInputElement;
+	
+		if (input.files && input.files.length > 0) {
+			const file = input.files[0];
+	
+
+			this.imgPreview = URL.createObjectURL(file);
+	
+			const formData = new FormData();
+			formData.append('FileName', file.name); 
+			formData.append('Image', file);
+	
+
+			const request = {
+				FileName: file.name,
+				Image: formData
+			};
+	
+			console.log('Richiesta di caricamento:', request); // Aggiungi questa riga per il debug
+			this.userservice.uploadFile(request).subscribe(
+				(response: any) => {
+					// Assegna l'URL restituito dal backend a drink.strDrinkThumb
+					this.newcocktail.drink.strDrinkThumb = response.imageUrl;
+					console.log('URL immagine salvato:', this.newcocktail.drink.strDrinkThumb);
+				},
+				(error) => {
+					console.error('Errore durante il caricamento dell\'immagine:', error);
+				}
+			);
+		}
+	}
+
+	  async saveCocktail(): Promise<void> {
+		if (this.usedefaultimg) {
+		  await this.captureImage(); // Aspetta che l'immagine venga catturata
+		}
+	  
+		for (let i = 0; i < this.ingredients.length; i++) {
+		  (this.newcocktail.drink as any)[`strIngredient${i + 1}`] = this.ingredients[i];
+		  (this.newcocktail.drink as any)[`strMeasure${i + 1}`] = this.quantity[i];
+		}
+	  
+		console.log('Cocktail da salvare:', this.newcocktail); // Ora viene eseguito dopo
+	  }
 }

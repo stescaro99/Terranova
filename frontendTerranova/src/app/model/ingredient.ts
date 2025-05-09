@@ -199,3 +199,54 @@ export const ingredientColors: Record<string, string> = {
   "Yellow Chartreuse": "rgba(255, 255, 51, 0.6)",
   "Yukon Jack": "rgba(255, 255, 51, 0.6)"
 };
+
+
+export const categories: string[] = [
+    'Cocktail',
+    'Ordinary Drink',
+    'Punch / Party Drink',
+    'Shake',
+    'Other / Unknown',
+    'Cocoa',
+    'Shot',
+    'Coffee / Tea',
+    'Homemade Liqueur',
+    'Beer',
+    'Soft Drink'
+  ];
+
+  export const glasses: string[] = [
+    'Highball glass',
+    'Old-fashioned glass',
+    'Cocktail glass',
+    'Copper Mug',
+    'Whiskey Glass',
+    'Collins glass',
+    'Pousse cafe glass',
+    'Champagne flute',
+    'Whiskey sour glass',
+    'Brandy snifter',
+    'White wine glass',
+    'Nick and Nora Glass',
+    'Hurricane glass',
+    'Coffee mug',
+    'Shot glass',
+    'Jar',
+    'Irish coffee cup',
+    'Punch bowl',
+    'Pitcher',
+    'Pint glass',
+    'Cordial glass',
+    'Beer mug',
+    'Margarita/Coupette glass',
+    'Beer pilsner',
+    'Beer Glass',
+    'Parfait glass',
+    'Wine Glass',
+    'Mason jar',
+    'Margarita glass',
+    'Martini Glass',
+    'Balloon Glass',
+    'Coupe Glass'
+  ];
+  
