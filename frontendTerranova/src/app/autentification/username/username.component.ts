@@ -21,7 +21,7 @@ export class UsernameComponent {
 
 	checkUsername() {
 		if (!this.user.username) {
-		this.usernameMessage = 'Username non può essere vuoto.';
+		this.usernameMessage = 'Username cannot be empty.';
 		this.usernameAvailable = false;
 		return;
 		}
@@ -29,18 +29,18 @@ export class UsernameComponent {
 		this.userService.getUserByUsername(this.user.username).subscribe(
 		(isAvailable: boolean) => {
 			if (isAvailable) {
-			this.usernameMessage = `L'username "${this.user.username}" è disponibile.`;
+			this.usernameMessage = `The Username "${this.user.username}" is available.`;
 			this.usernameAvailable = true;
 			this.userSelected.emit(this.usernameAvailable)
 			} else {
-			this.usernameMessage = `L'username "${this.user.username}" è già utilizzato.`;
+			this.usernameMessage = `The Username "${this.user.username}" is already in use.`;
 			this.usernameAvailable = false;
 			this.userSelected.emit(this.usernameAvailable)
 			}
 		},
 		(error: HttpErrorResponse) => {
 			console.error('Errore durante il controllo dell\'username:', error);
-			this.usernameMessage = 'Errore durante il controllo dell\'username.';
+			this.usernameMessage = 'Error while checking the Username.';
 			this.usernameAvailable = false;
 		}
 		);

@@ -36,9 +36,9 @@ export class SiginComponent {
   validateEmail() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex per validare l'email
     if (!this.user.email) {
-      this.emailErrorMessage = 'Il campo email è obbligatorio.';
+      this.emailErrorMessage = 'Email field cannot be empty.';
     } else if (!emailRegex.test(this.user.email)) {
-      this.emailErrorMessage = 'Inserisci un\'email valida (esempio@email.com).';
+      this.emailErrorMessage = 'Please enter a valid email (example@email.com).';
     } else {
       this.emailErrorMessage = ''; // Nessun errore
     }
@@ -47,12 +47,11 @@ export class SiginComponent {
   submitForm() {
       if (this.usernameAvailable) {
         this.user.language = 'en';
-        console.log('UtenteaaaaaaaaaaaaaaaAAAAAAAAAAAA :', this.user);
 
           this.userService.createUser(this.user).subscribe(
               (response: User) => {
                   console.log('Utente creato con successo:', response);
-                  alert('Utente creato con successo!');
+                  alert('User created successfully!');
                   localStorage.setItem('username', this.user.username);
                   localStorage.setItem('authToken', 'true');
                   localStorage.setItem('user', JSON.stringify(this.user));
@@ -61,11 +60,11 @@ export class SiginComponent {
               },
               (error: HttpErrorResponse) => {
                   console.error('Errore durante la creazione dell\'utente:', error);
-                  alert('Errore durante la creazione dell\'utente.');
+                    alert('Error occurred while creating the user.');
               }
           );
       } else {
-          alert('L\'username non è disponibile.');
+          alert('Username is not available. Please choose another one.');
       }
   }
 

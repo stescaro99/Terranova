@@ -1,0 +1,8 @@
+select {
+	text-align: center; /* Centra il testo selezionato */
+	text-align-last: center; /* Centra il testo nel menu a tendina */
+  }
+
+option[value=""] {
+	text-align: center;
+  }

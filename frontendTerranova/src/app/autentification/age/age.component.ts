@@ -23,7 +23,7 @@ export class AgeComponent {
       yesterday.setDate(today.getDate() - 1);
   
       if (birthDateObj > yesterday) {
-        this.dateErrorMessage = 'La data di nascita non può essere futura o il giorno corrente.';
+        this.dateErrorMessage = 'The birth date cannot be in the future or the current day.';
         return;
       } else {
         this.dateErrorMessage = '';

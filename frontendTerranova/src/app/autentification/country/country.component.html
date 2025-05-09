@@ -1,7 +1,7 @@
-<p>
-	Nazione*: 
+<p class="center-text">
+	Country*: 
 	<select [(ngModel)]="selectedCountry" name="country" (change)="onCountryChange()" required>
-	  <option value="" disabled selected>Seleziona una nazione</option>
+	  <option value="" disabled selected>Select a Country</option>
 	  <option *ngFor="let country of countries" [value]="country">
 		{{ country }}
 	  </option>

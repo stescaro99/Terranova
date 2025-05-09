@@ -35,12 +35,12 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         } else {
           console.log('Username o password errati!');
-          this.errorMessage = 'Username o password errati!';
+          this.errorMessage = 'Wrong Username or Password!';
         }
       },
       (error) => {
         console.error('Errore durante il login:', error);
-        this.errorMessage = 'Si è verificato un errore durante il login. Riprova più tardi.';
+        this.errorMessage = 'An error occurred during login. Please try again later.';
       }
     );
 

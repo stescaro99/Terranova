@@ -1,15 +1,15 @@
 <app-background></app-background>
-<h1> login</h1>
+<h1> Log In</h1>
 <br>
   <input type="text" placeholder="username"  [(ngModel)]="username"/>
   <input type="password" placeholder="password" [(ngModel)]="password" />
-  <button (click)="loginRoute()">login</button>
+  <button (click)="loginRoute()">Log In</button>
   <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
 <br>
 <br>
 <br>
-  <button (click)="sigInButton()">iscriviti</button>
+  <button (click)="sigInButton()">Sign Up</button>
 <br>
 <br>
 <br>
-  <button (click)="notRegister()">continua enza accedere</button>
+  <button (click)="notRegister()">Continue without logging in</button>
