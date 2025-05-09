@@ -8,6 +8,7 @@ import { User } from '../model/user';
 import { IngredientListComponent } from '../search/ingredient-list/ingredient-list.component';
 import { ingredientColors } from '../model/ingredient';
 import { BackgroundComponent } from '../background/background.component';
+import  html2canvas  from 'html2canvas'
 
 @Component({
   selector: 'app-cocktail-crate',
@@ -26,6 +27,10 @@ export class CocktailCrateComponent {
 	numberOfIngredients: number = 1;
 	mode: 'mix' | 'shake' = 'mix';
 	open: boolean = true;
+	img: string = '';
+	showOptions: boolean = false;
+	selectedOption: 'constructor' | 'photo' | null = null;
+	uploadedImage: string | null = null;
 
 	constructor(private userservice: UserService, private cocktailservice: CocktailService) {
 		this.user = userservice.getUser() || new User();
@@ -146,4 +151,46 @@ export class CocktailCrateComponent {
 		  a: match[4] ? parseFloat(match[4]) : 1 // Alpha predefinito a 1 se non specificato
 		};
 	  }
+
+	captureImage(): void {
+		const element = document.querySelector('.glass-mask') as HTMLElement;
+		if (element) {
+			html2canvas(element).then(canvas => {
+				const imageUrl = canvas.toDataURL('image/png');
+				console.log('Image URL:', imageUrl);
+				this.img = imageUrl;
+			}).catch(error => {
+				console.error('Errore durante la cattura dell\'immagine:', error);
+			});
+		} else {
+		console.error('Elemento non trovato per la cattura.');
+		}
+		
+ 	}
+
+	toggleOption(): void {
+		this.showOptions = !this.showOptions;
+	}
+	
+	useConstructor(): void {
+		this.selectedOption = 'constructor';
+	}
+	
+	uploadPhoto(): void {
+		const input = document.createElement('input');
+		input.type = 'file';
+		input.accept = 'image/*';
+		input.onchange = (event: any) => {
+			const file = event.target.files[0];
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = (e: any) => {
+					this.uploadedImage = e.target.result;
+					this.selectedOption = 'photo';
+				};
+				reader.readAsDataURL(file);
+			}
+		};
+		input.click();
+	}
 }
