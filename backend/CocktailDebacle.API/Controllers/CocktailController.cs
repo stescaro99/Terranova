@@ -125,7 +125,7 @@ public class CocktailController : ControllerBase
         return Ok(cocktail);
     }
 
-    [HttpPost]
+    /*[HttpPost]
     public async Task<IActionResult> AddCocktail([FromBody] Cocktail newCocktail)
     {
         if (newCocktail == null)
@@ -135,7 +135,25 @@ public class CocktailController : ControllerBase
         await _context.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetCocktailById), new { id = newCocktail.Drink.IdDrink }, newCocktail);
+    }*/
+
+    [HttpPost]
+    public async Task<IActionResult> AddCocktail([FromBody] AddCocktailRequest request)
+    {
+        if (request.Drink == null)
+            return BadRequest("Invalid cocktail data");
+
+        _context.Cocktails.Add(new Cocktail
+        {
+            Drink = request.Drink,
+            CreatedByUser = request.Username,
+            isPrivate = request.Private,
+            FavoriteByUsers = new List<string>()
+        });
+        await _context.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetCocktailById), new { id = request.Drink.IdDrink }, request.Drink);
     }
+
 
     [HttpPost("Populate")]
     public async Task<IActionResult> FastPopulate([FromServices] CocktailApiService apiService)
@@ -248,7 +266,7 @@ public class CocktailController : ControllerBase
         return Ok($"Database updated with {count} new cocktails.");
     }
 
-    [HttpDelete("reset")]
+    /*[HttpDelete("reset")]
     public async Task<IActionResult> ResetDatabase()
     {
         try
@@ -261,5 +279,5 @@ public class CocktailController : ControllerBase
         {
             return StatusCode(500, $"Error resetting database: {ex.Message}");
         }
-    }
+    }*/
 }
