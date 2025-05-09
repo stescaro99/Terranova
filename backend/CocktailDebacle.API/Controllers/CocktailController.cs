@@ -54,9 +54,10 @@ public class CocktailController : ControllerBase
     {
         if (string.IsNullOrEmpty(name))
             return BadRequest("Cocktail name cannot be null or empty");
+        string nameLower = name.ToLower();
 
         var CocktailExists = await _context.Cocktails
-            .AnyAsync(c => c.Drink != null && c.Drink.StrDrink != null && c.Drink.StrDrink.Equals(name, StringComparison.OrdinalIgnoreCase));
+            .AnyAsync(c => c.Drink != null && c.Drink.StrDrink != null && c.Drink.StrDrink.FirstOrDefaultAsync(c => c.Drink.StrDrink.ToLower() == nameLower));
         if (CocktailExists)
             return Ok(new { Exists = true });
         else

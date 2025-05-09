@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+      - translator
+
+  frontend:
+    build:
+      context: ./frontendTerranova
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: terranova
+      POSTGRES_PASSWORD: terranova
+      POSTGRES_DB: terranova
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  translator:
+    build:
+      context: ./LibreTranslate
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "5001:5000"
+    environment:
+      - LT_LOAD_ONLY=en,es,fr,it
+      - LT_UPDATE_MODELS=true
+    volumes:
+      - libretranslate_models:/home/libretranslate/.local:rw
+
+volumes:
+  db_data:
+  libretranslate_models:
