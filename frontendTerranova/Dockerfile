@@ -16,5 +16,6 @@ FROM nginx:alpine
 COPY --from=build /app/dist/frontend-terranova /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/frontend-terranova/. /usr/share/nginx/html/
+COPY --from=build index.html /usr/share/nginx/html/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
