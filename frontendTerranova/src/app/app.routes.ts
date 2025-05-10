@@ -32,5 +32,9 @@ export const routes: Routes = [
 	{
 	path: 'cocktail-create',
 	component: CocktailCrateComponent,
+	},
+	{
+	path:'cocktail-create/:idCocktail',
+	component: CocktailCrateComponent,
 	}
 ];

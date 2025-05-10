@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { image } from 'html2canvas/dist/types/css/types/image';
 import { Router } from '@angular/router';
 import { response } from 'express';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cocktail-crate',
@@ -21,8 +22,8 @@ import { response } from 'express';
   styleUrl: './cocktail-crate.component.css'
 })
 export class CocktailCrateComponent {
-	@Input() idCocktail! : string | null ;
 	user : User ;
+	idCocktail: string = '';
 	newcocktail: Cocktail = new Cocktail();
 	oldcocktail?: CocktailApiDrink;
 	useRealimg: boolean = true;
@@ -40,8 +41,10 @@ export class CocktailCrateComponent {
 	glasses: string[] = glasses;
 	categories: string[] = categories;
 
-	constructor(private userservice: UserService, private cocktailservice: CocktailService, private router: Router) {
+	constructor(private userservice: UserService, private cocktailservice: CocktailService, private router: Router, private route: ActivatedRoute)
+	{
 		this.user = userservice.getUser() || new User();
+		this.idCocktail = this.route.snapshot.paramMap.get('idCocktail') || '';
 		if (this.idCocktail) {
 		  this.cocktailservice.takeCocktailById(this.idCocktail).subscribe(
 			(cocktail: CocktailApiDrink) => {

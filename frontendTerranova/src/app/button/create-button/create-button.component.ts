@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,8 +8,13 @@ import { Router } from '@angular/router';
   styleUrl: './create-button.component.css'
 })
 export class CreateButtonComponent {
-  constructor(private router: Router) {}
-  click(){
+	@Input() text: string = '';
+	@Input() cocktailId: string = '';
+	constructor(private router: Router) {}
+	click(){
+		if (this.cocktailId !== ''){
+			this.router.navigate(['/cocktail-create'],this.cocktailId)
+		}
     this.router.navigate(['/cocktail-create']);
   }
 }
