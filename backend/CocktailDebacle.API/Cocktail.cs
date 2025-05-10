@@ -11,10 +11,9 @@ public class Cocktail
     [Required]
     public CocktailApiDrink Drink { get; set; } = new();
 
-    [ForeignKey("CreatedByUser")] //username dell'utente che ha creato il cocktail
+    [ForeignKey("CreatedByUser")]
     public string? CreatedByUser { get; set; } = string.Empty;
 
-    [InverseProperty("FavoriteCocktails")] //username degli utenti che hanno messo il cocktail tra i preferiti
     [JsonIgnore]
     public ICollection<string> FavoriteByUsers { get; set; } = new List<string>();
 

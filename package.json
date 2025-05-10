@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "html2canvas": "^1.4.1"
+    "html2canvas": "^2.4.3"
   }
 }

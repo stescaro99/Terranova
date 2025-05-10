@@ -138,20 +138,55 @@ public class CocktailController : ControllerBase
         return CreatedAtAction(nameof(GetCocktailById), new { id = newCocktail.Drink.IdDrink }, newCocktail);
     }*/
 
+    private int GenerateNewCocktailId()
+    {
+        int maxId = 0;
+
+        foreach (var cocktail in _context.Cocktails)
+        {
+            if (cocktail.Drink != null && int.TryParse(cocktail.Drink.IdDrink, out int id))
+            {
+                if (id > maxId)
+                    maxId = id;
+            }
+        }
+
+        if (maxId < 200000)
+            return 200000;
+        return maxId + 1;
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddCocktail([FromBody] AddCocktailRequest request)
     {
-        if (request.Drink == null)
-            return BadRequest("Invalid cocktail data");
+        if (request?.Drink == null || string.IsNullOrEmpty(request.Username))
+            return BadRequest("Invalid cocktail data or username.");
 
-        _context.Cocktails.Add(new Cocktail
+        int newId = GenerateNewCocktailId();
+        request.Drink.IdDrink = newId.ToString();
+
+        var newCocktail = new Cocktail
         {
             Drink = request.Drink,
             CreatedByUser = request.Username,
             isPrivate = request.Private,
             FavoriteByUsers = new List<string>()
-        });
+        };
+
+        _context.Cocktails.Add(newCocktail);
         await _context.SaveChangesAsync();
+
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Username == request.Username);
+
+        if (user != null)
+        {
+            user.CreatedCocktails ??= new List<int>();
+            user.CreatedCocktails.Add(newId);
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
+
         return CreatedAtAction(nameof(GetCocktailById), new { id = request.Drink.IdDrink }, request.Drink);
     }
 

@@ -6,6 +6,7 @@ services:
       - "5000:5000"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=terranova;Username=terranova;Password=terranova
     volumes:
       - ./backend:/app
     depends_on:
@@ -17,6 +18,8 @@ services:
       context: ./frontendTerranova
     ports:
       - "4200:80"
+    environment:
+      - BACKEND_URL=http://backend:5000
     depends_on:
       - backend
 

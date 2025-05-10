@@ -41,3 +41,27 @@ public class User
 
 	public string Language { get; set; } = "en";
 }
+
+
+
+
+
+/*
+appsettings.json before modification
+
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=CocktailDB;Trusted_Connection=True;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=true"
+  },
+  "DeepSeek": {
+    "ApiKey": "AIzaSyCN7C0eyh9psWs7iOgVuDLxV415ly39Xxw",
+    "Endpoint": "https://api.deepseek.com/chat/completions"
+  }
+}*/

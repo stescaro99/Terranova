@@ -1,0 +1,6 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make.exe: Entering directory `/c/Users/Pc/Desktop/Terranova'
+make.exe: Leaving directory `/c/Users/Pc/Desktop/Terranova'
+ 
+Makefile:4: *** missing separator.  Stop.
+
