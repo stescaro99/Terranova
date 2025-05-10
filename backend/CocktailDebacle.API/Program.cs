@@ -5,9 +5,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configura i servizi
 builder.Services.AddHttpClient<CocktailApiService>();
 builder.Services.AddDbContext<CocktailDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -34,6 +36,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Configura Swagger per l'ambiente di sviluppo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -43,18 +46,26 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// Applica automaticamente le migrazioni al runtime
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<CocktailDbContext>();
     var apiService = scope.ServiceProvider.GetRequiredService<CocktailApiService>();
 
-    if (!context.Cocktails.Any())
+    if (!context.Database.CanConnect())
     {
-        var controller = new CocktailController(context, scope.ServiceProvider.GetRequiredService<IDeepSeekService>());
-        await controller.FastPopulate(apiService);
+        context.Database.Migrate();
+
+        // Populate the database if empty
+        if (!context.Cocktails.Any())
+        {
+            var controller = new CocktailController(context, scope.ServiceProvider.GetRequiredService<IDeepSeekService>());
+            await controller.FastPopulate(apiService);
+        }
     }
 }
 
+// Configura la directory per le immagini caricate
 var uploadedImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedImages");
 if (!Directory.Exists(uploadedImagesPath))
 {
@@ -67,6 +78,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/images"
 });
 
+// Configura il middleware
 app.UseHttpsRedirection();
 app.UseCors("AllowAllOrigins");
 app.MapControllers();

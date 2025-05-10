@@ -6,9 +6,7 @@ services:
       - "5000:5000"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=db;Database=terranova;Username=terranova;Password=terranova
-    volumes:
-      - ./backend:/app
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=CocktailDB;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True;
     depends_on:
       - db
       - translator
@@ -17,22 +15,22 @@ services:
     build:
       context: ./frontendTerranova
     ports:
-      - "4200:80"
+      - "4200:4200"
     environment:
       - BACKEND_URL=http://backend:5000
     depends_on:
       - backend
 
   db:
-    image: postgres:15
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-      POSTGRES_USER: terranova
-      POSTGRES_PASSWORD: terranova
-      POSTGRES_DB: terranova
+      SA_PASSWORD: "YourStrong@Password"
+      ACCEPT_EULA: "Y"
     ports:
-      - "5432:5432"
+      - "1433:1433"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/opt/mssql
+    user: "0"
 
   translator:
     build:

@@ -21,8 +21,8 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-				"src/assets",
-				"src/favicon.ico"
+              "src/assets",
+              "src/favicon.ico"
             ],
             "styles": [
               "src/styles.css"
@@ -31,12 +31,12 @@
           },
           "configurations": {
             "production": {
-				"fileReplacements": [
-					{
-						"replace": "src/environments/environment.ts",
-						"with": "src/environments/environment.prod.ts"
-					}
-				],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -61,6 +61,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "host": "0.0.0.0",
+            "port": 4200
+          },
           "configurations": {
             "production": {
               "buildTarget": "frontendTerranova:build:production"
