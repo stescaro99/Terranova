@@ -29,6 +29,7 @@ export class SiginComponent {
   message: string = '';
   emailErrorMessage: string = '';
   usernameAvailable: boolean = false;
+  selectedFile: File | null = null;
    
   constructor(private userService: UserService, private router: Router) {
   }
@@ -84,27 +85,21 @@ export class SiginComponent {
   
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      this.user.imageUrl = URL.createObjectURL(file); // Converte il file in un URL temporaneo
-      console.log('URL immagine generato:', this.user.imageUrl);
-    }
-    const formData = new FormData();
-    formData.append('file', this.user.imageUrl as any);
-    const request ={
-      FileName: File.name + '.png',
-      Image: formData
-    };
-    console.log('Richiesta di caricamento immagine:', request);
-    this.userService.uploadFile(request).subscribe(
-      (response: any) => {
-        console.log('Immagine caricata con successo:', response.imageUrl);
-        this.user.imageUrl = response.imageUrl; // Aggiorna l'URL dell'immagine dell'utente
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Errore durante il caricamento dell\'immagine:', error);
-      }
-    );
+	if (input.files && input.files.length > 0) {
+    	this.selectedFile = input.files[0];
+	}
+	if (this.selectedFile !== null){
+		const fileName = this.selectedFile.name;
+		this.userService.uploadFile(fileName, this.selectedFile).subscribe(
+		  (response: any) => {
+			console.log('Immagine caricata con successo:', response.imageUrl);
+			this.user.imageUrl = response.imageUrl; // Aggiorna l'URL dell'immagine dell'utente
+		  },
+		  (error: HttpErrorResponse) => {
+			console.error('Errore durante il caricamento dell\'immagine:', error);
+		  }
+		);
+	}
 
   }
   

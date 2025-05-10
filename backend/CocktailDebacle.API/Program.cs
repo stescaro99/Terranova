@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,18 @@ using (var scope = app.Services.CreateScope())
         await controller.FastPopulate(apiService);
     }
 }
+
+var uploadedImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedImages");
+if (!Directory.Exists(uploadedImagesPath))
+{
+    Directory.CreateDirectory(uploadedImagesPath);
+}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(uploadedImagesPath),
+    RequestPath = "/images"
+});
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAllOrigins");

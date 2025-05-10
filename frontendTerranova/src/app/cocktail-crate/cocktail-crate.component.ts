@@ -11,6 +11,7 @@ import { BackgroundComponent } from '../background/background.component';
 import  html2canvas  from 'html2canvas'
 import { FormsModule } from '@angular/forms';
 import { image } from 'html2canvas/dist/types/css/types/image';
+import { Router } from '@angular/router';
 import { response } from 'express';
 
 @Component({
@@ -30,7 +31,7 @@ export class CocktailCrateComponent {
 	numberOfIngredients: number = 1;
 	mode: 'mix' | 'shake' = 'mix';
 	open: boolean = true;
-	img: string | ArrayBuffer | null | undefined = null;
+	img: File | null = null;
 	usedefaultimg: boolean = true;
 	imgPreview: string | null = null;
 	quantity: string[] = Array(this.numberOfIngredients).fill('to taste');
@@ -39,7 +40,7 @@ export class CocktailCrateComponent {
 	glasses: string[] = glasses;
 	categories: string[] = categories;
 
-	constructor(private userservice: UserService, private cocktailservice: CocktailService) {
+	constructor(private userservice: UserService, private cocktailservice: CocktailService, private router: Router) {
 		this.user = userservice.getUser() || new User();
 		if (this.idCocktail) {
 		  this.cocktailservice.takeCocktailById(this.idCocktail).subscribe(
@@ -236,75 +237,60 @@ export class CocktailCrateComponent {
 
 	captureImage(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			const element = document.querySelector('.glass-mask') as HTMLElement;
-			if (element) {
-			html2canvas(element).then(canvas => {
-				canvas.toBlob(blob => {
-				if (blob) {
-					const formData = new FormData();
-					formData.append('Image', blob, 'image.png'); // Aggiungi il blob al FormData
-		
-					const request = {
-					FileName: `${this.user.username}_generated.png`, // Nome file generato
-					Image: formData
-					};
-		
-					this.userservice.uploadFile(request).subscribe(
-					(response: { imageUrl: string }) => {
-						this.newcocktail.drink.strDrinkThumb = response.imageUrl; // Salva l'URL restituito
-						console.log('URL dell\'immagine:', this.newcocktail.drink.strDrinkThumb);
-						resolve();
-					},
-					(error) => {
-						console.error('Errore durante il caricamento dell\'immagine:', error);
-						reject(error);
-					}
-					);
-				} else {
-					reject('Errore durante la conversione in Blob.');
-				}
-				}, 'image/png');
-			}).catch(error => {
-				console.error('Errore durante la cattura dell\'immagine:', error);
-				reject(error);
-			});
-			} else {
+			const element = document.querySelector('.color-display') as HTMLElement;
+
+			if (!element) {
 			console.error('Elemento non trovato per la cattura.');
-			reject('Elemento non trovato');
+			return reject('Elemento non trovato');
 			}
+
+			html2canvas(element, { backgroundColor: null }).then(canvas => {
+			canvas.toBlob(blob => {
+				if (!blob) {
+				return reject('Errore durante la conversione in Blob.');
+				}
+
+				const fileName = `${this.newcocktail.drink.strDrink}_generated.png`;
+				const file = new File([blob], fileName, { type: 'image/png' });
+
+				this.userservice.uploadFile(file.name, file).subscribe({
+				next: (response) => {
+					this.newcocktail.drink.strDrinkThumb = response.imageUrl;
+					console.log('URL immagine generata:', response.imageUrl);
+					resolve();
+				},
+				error: (err) => {
+					console.error('Errore durante l\'upload:', err);
+					reject(err);
+				}
+				});
+			}, 'image/png');
+			}).catch(err => {
+			console.error('Errore durante la cattura dell\'immagine:', err);
+			reject(err);
+			});
 		});
 	}
 
 	onFileSelected(event: Event): void {
 		const input = event.target as HTMLInputElement;
-	
 		if (input.files && input.files.length > 0) {
-			const file = input.files[0];
-	
-
-			this.imgPreview = URL.createObjectURL(file);
-	
-			const formData = new FormData();
-			formData.append('FileName', file.name); 
-			formData.append('Image', file);
-	
-
-			const request = {
-				FileName: file.name,
-				Image: formData
-			};
-	
-			console.log('Richiesta di caricamento:', request); // Aggiungi questa riga per il debug
-			this.userservice.uploadFile(request).subscribe(
+			this.img = input.files[0];
+		}
+		if (this.img !== null)
+		{
+			const imgName = this.img.name;
+			this.userservice.uploadFile(imgName, this.img).subscribe(
 				(response: any) => {
-					// Assegna l'URL restituito dal backend a drink.strDrinkThumb
 					this.newcocktail.drink.strDrinkThumb = response.imageUrl;
+					this.imgPreview = response.imageUrl;
 					console.log('URL immagine salvato:', this.newcocktail.drink.strDrinkThumb);
 				},
 				(error) => {
 					console.error('Errore durante il caricamento dell\'immagine:', error);
 				}
 			);
+
 		}
 	}
 
@@ -318,6 +304,16 @@ export class CocktailCrateComponent {
 		  (this.newcocktail.drink as any)[`strMeasure${i + 1}`] = this.quantity[i];
 		}
 	  
-		console.log('Cocktail da salvare:', this.newcocktail); // Ora viene eseguito dopo
+		console.log('Cocktail da salvare:', this.newcocktail); 
+		this.newcocktail.drink.idDrink = (Math.random() + 200000).toString();
+		this.cocktailservice.createNewCocktail(this.newcocktail.drink, this.user.username, this.open).subscribe(
+			(response: any) =>{
+				console.log('cocktail creato con successo');
+				this.router.navigate(['/home']);
+			},
+			(error) => {
+				console.error('errore nella creazione del cocktail', error);
+			}
+		);
 	  }
 }

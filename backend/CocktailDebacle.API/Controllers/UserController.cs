@@ -25,31 +25,28 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("UploadImage")]
-    public async Task<IActionResult> UploadImage([FromForm] ImageUploadRequest request)
-    {
-        if (request == null || request.Image == null)
-            return BadRequest("Invalid request data");
+    public async Task<IActionResult> UploadImage([FromForm] UploadRequest request)
+{
+    if (request.Image == null || request.Image.Length == 0)
+        return BadRequest("Nessuna immagine ricevuta");
 
-        var DirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-        if (!Directory.Exists(DirectoryPath))
-            Directory.CreateDirectory(DirectoryPath);
-        var i = Directory.GetFiles(DirectoryPath)
-                 .Select(file => Path.GetFileNameWithoutExtension(file))
-                 .Where(name => int.TryParse(name, out _))
-                 .Select(int.Parse)
-                 .DefaultIfEmpty(0)
-                 .Max() + 1;
-        if (i == -1)
-            return BadRequest("Error in getting index");
-        string extension = Path.GetExtension(request.Image.FileName);
-        string filePath = Path.Combine(DirectoryPath, $"{i}{extension}");
-        using (var stream = new FileStream(filePath, FileMode.Create))
-        {
-            await request.Image.CopyToAsync(stream);
-        }
-        var url = $"blob:http://localhost:4200/images/{i}{extension}";
-        return Ok(new { Url = url });
+    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(request.Image.FileName);
+    var savePath = Path.Combine("UploadedImages", fileName);
+    Directory.CreateDirectory("UploadedImages");
+
+    using (var stream = new FileStream(savePath, FileMode.Create))
+    {
+        await request.Image.CopyToAsync(stream);
     }
+
+    var imageUrl = $"{Request.Scheme}://{Request.Host}/images/{fileName}";
+
+    return Ok(new
+    {
+        nome = request.Nome,
+        imageUrl
+    });
+}
 
     [HttpGet("UpdateUser")]
     public async Task<IActionResult> UpdateUser([FromQuery] UpdateUserRequest request)

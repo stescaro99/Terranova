@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 public class FavoriteRequest
 {
     public required string Username { get; set; }
@@ -11,10 +13,13 @@ public class UpdateUserRequest
     public required string Value;
 }
 
-public class ImageUploadRequest
+public class UploadRequest
 {
-    public required string FileName { get; set; }
-    public required IFormFile Image { get; set; }
+    [FromForm]
+    public string Nome { get; set; }
+
+    [FromForm]
+    public IFormFile Image { get; set; }
 }
 
 public class AddCocktailRequest
