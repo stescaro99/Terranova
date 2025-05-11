@@ -3,7 +3,7 @@ services:
     build:
       context: ./backend
     ports:
-      - "5000:5000"
+      - "5267:5267"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=db,1433;Database=CocktailDB;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True;
@@ -17,7 +17,7 @@ services:
     ports:
       - "4200:4200"
     environment:
-      - BACKEND_URL=http://backend:5000
+      - BACKEND_URL=http://backend:5267
     depends_on:
       - backend
 
@@ -37,9 +37,9 @@ services:
       context: ./LibreTranslate
       dockerfile: ./docker/Dockerfile
     ports:
-      - "5001:5000"
+      - "5000:5000"
     environment:
-      - LT_LOAD_ONLY=en,es,fr,it
+      - LT_LOAD_ONLY=en,es,fr,it,de
       - LT_UPDATE_MODELS=true
     volumes:
       - libretranslate_models:/home/libretranslate/.local:rw

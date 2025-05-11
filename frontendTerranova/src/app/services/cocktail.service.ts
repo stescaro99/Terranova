@@ -14,7 +14,7 @@ export class CocktailService {
   takeCocktailOfDay(num: number , alcool: boolean): Observable<any> {
     const url = `${this.apiUrl}/RandomCocktails?number=${num}&alcohol=${alcool}`;
     console.log('URL chiamato:', url);
-    return <any>(url);
+    return this.http.get<any>(url);
   }
 
   takeCocktailById(id: string): Observable<any> {

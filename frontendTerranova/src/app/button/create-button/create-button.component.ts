@@ -13,7 +13,7 @@ export class CreateButtonComponent {
 	constructor(private router: Router) {}
 	click(){
 		if (this.cocktailId !== ''){
-			this.router.navigate(['/cocktail-create'],this.cocktailId)
+			this.router.navigate(['/cocktail-create'], { queryParams: { id: this.cocktailId } })
 		}
     this.router.navigate(['/cocktail-create']);
   }

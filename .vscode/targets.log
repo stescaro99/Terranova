@@ -7,7 +7,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 
 # This program built for i686-pc-msys
 
-# Make data base, printed on Sat May 10 11:50:04 2025
+# Make data base, printed on Sun May 11 06:16:55 2025
 
 # Variables
 
@@ -44,8 +44,6 @@ PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
-FPS_BROWSER_USER_PROFILE_STRING = Default
-# environment
 TMP = /tmp
 # environment
 PROGRAMW6432 = C:\Program Files
@@ -54,7 +52,7 @@ PROGRAMDATA = C:\ProgramData
 # environment
 VSCODE_CWD = C:\Users\Pc\AppData\Local\Programs\Microsoft VS Code
 # environment
-PATH = /c/Python313/Scripts/:/c/Python313/:/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/c/WINDOWS/System32/OpenSSH/:/mingw/bin:/mingw/mingw32/bin:/usr/bin:/c/Program Files/Git/cmd:/c/Program Files/Docker/Docker/resources/bin:/c/Program Files/nodejs/:/c/ProgramData/chocolatey/bin:/c/Program Files/dotnet/:/c/Users/Pc/AppData/Local/Microsoft/WindowsApps:/c/Users/Pc/Desktop/42Firenze/gcc/bin:.:/c/Users/Pc/AppData/Local/Programs/Microsoft VS Code/bin:/c/Users/Pc/AppData/Roaming/npm:/c/Users/Pc/.dotnet/tools
+PATH = /c/Python313/Scripts/:/c/Python313/:/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/c/WINDOWS/System32/OpenSSH/:/mingw/bin:/mingw/mingw32/bin:/usr/bin:/c/Program Files/Git/cmd:/c/Program Files/Docker/Docker/resources/bin:/c/Program Files/nodejs/:/c/ProgramData/chocolatey/bin:/c/Program Files/dotnet/:/c/Program Files (x86)/Microsoft SQL Server/160/Tools/Binn/:/c/Program Files/Microsoft SQL Server/160/Tools/Binn/:/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/c/Program Files/Microsoft SQL Server/160/DTS/Binn/:/c/Program Files (x86)/Microsoft SQL Server/160/DTS/Binn/:/c/Users/Pc/AppData/Local/Microsoft/WindowsApps:/c/Users/Pc/Desktop/42Firenze/gcc/bin:.:/c/Users/Pc/AppData/Local/Programs/Microsoft VS Code/bin:/c/Users/Pc/AppData/Roaming/npm:/c/Users/Pc/.dotnet/tools
 # environment
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # environment
@@ -72,8 +70,6 @@ CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 ALLUSERSPROFILE = C:\ProgramData
 # environment
-EFC_9140 = 1
-# environment
 NUMBER_OF_PROCESSORS = 8
 # environment
 ELECTRON_RUN_AS_NODE = 1
@@ -82,7 +78,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_17140_MMZDDFCBORJJHXHY
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5972_FWFYMQRRJMNNCHAU
 # environment
 COMPUTERNAME = DESKTOP-L00VK7M
 # environment
@@ -126,7 +122,7 @@ PROGRAMFILES(X86) = C:\Program Files (x86)
 # environment
 LOCALAPPDATA = C:\Users\Pc\AppData\Local
 # environment
-PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\PowerShell\Modules\
 # default
 MAKE_COMMAND := make.exe
 # environment
@@ -192,13 +188,13 @@ PROCESSOR_LEVEL = 6
 # environment
 TERM = cygwin
 # environment
-FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
+VSCODE_PID = 5972
 # environment
-VSCODE_PID = 17140
+EFC_10004 = 1
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-L00VK7M
 # variable set hash-table stats:
-# Load=93/1024=9%, Rehash=0, Collisions=7/106=7%
+# Load=91/1024=9%, Rehash=0, Collisions=7/104=7%
 
 # Pattern-specific Variable Values
 
@@ -258,7 +254,7 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat May 10 11:50:04 2025
+# Finished Make data base on Sun May 11 06:16:55 2025
 
  
 Makefile:4: *** missing separator.  Stop.
