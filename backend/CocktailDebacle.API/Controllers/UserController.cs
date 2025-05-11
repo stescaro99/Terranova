@@ -48,7 +48,7 @@ public class UserController : ControllerBase
     });
 }
 
-    [HttpGet("UpdateUser")]
+    [HttpPut("UpdateUser")]
     public async Task<IActionResult> UpdateUser([FromQuery] UpdateUserRequest request)
     {
         if (request == null)
@@ -307,27 +307,6 @@ public class UserController : ControllerBase
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetUserById), new { id = newUser.Id }, newUser);
-    }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
-    {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-        if (user == null)
-            return NotFound($"User with ID {id} not found");
-
-        user.Name = updatedUser.Name;
-        user.Email = updatedUser.Email;
-        user.Country = updatedUser.Country;
-        user.City = updatedUser.City;
-        user.CanDrinkAlcohol = updatedUser.CanDrinkAlcohol;
-        user.AppPermissions = updatedUser.AppPermissions;
-        user.ImageUrl = updatedUser.ImageUrl;
-        user.FavoriteCocktails = updatedUser.FavoriteCocktails;
-        user.CreatedCocktails = updatedUser.CreatedCocktails;
-
-        await _context.SaveChangesAsync();
-        return NoContent();
     }
 
     [HttpDelete("{id}")]

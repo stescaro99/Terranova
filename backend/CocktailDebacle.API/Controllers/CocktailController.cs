@@ -126,18 +126,6 @@ public class CocktailController : ControllerBase
         return Ok(cocktail);
     }
 
-    /*[HttpPost]
-    public async Task<IActionResult> AddCocktail([FromBody] Cocktail newCocktail)
-    {
-        if (newCocktail == null)
-            return BadRequest("Invalid cocktail data");
-
-        _context.Cocktails.Add(newCocktail);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(GetCocktailById), new { id = newCocktail.Drink.IdDrink }, newCocktail);
-    }*/
-
     private int GenerateNewCocktailId()
     {
         int maxId = 0;
@@ -262,7 +250,7 @@ public class CocktailController : ControllerBase
         return Ok(randomCocktails);
     }
 
-    [HttpGet("Price(premium)")]
+    [HttpGet("Price(premium)")] // funzionalità premium non implementate nel frontend (API DeepSeek a pagamento)
     public async Task<IActionResult> GetCocktailPrice(string cocktail, string username)
     {
         var user = await _context.Users
@@ -284,7 +272,7 @@ public class CocktailController : ControllerBase
         }
     }
 
-    [HttpPost("UpdateCocktail(Premium)")]
+    [HttpPost("UpdateCocktail(Premium)")] // funzionalità premium (API thecocktaildb premium)
     public async Task<IActionResult> UpdateDatabase([FromServices] CocktailApiService apiService)
     {
         int count = 0;
@@ -301,19 +289,4 @@ public class CocktailController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok($"Database updated with {count} new cocktails.");
     }
-
-    /*[HttpDelete("reset")]
-    public async Task<IActionResult> ResetDatabase()
-    {
-        try
-        {
-            _context.Cocktails.RemoveRange(_context.Cocktails);
-            await _context.SaveChangesAsync();
-            return Ok("Database reset successfully.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Error resetting database: {ex.Message}");
-        }
-    }*/
 }

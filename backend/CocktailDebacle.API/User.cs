@@ -33,10 +33,10 @@ public class User
 
 	public string? ImageUrl { get; set; } = string.Empty;
 
-	[InverseProperty("FavoriteByUsers")] //id dei cocktail preferiti
+	[InverseProperty("FavoriteByUsers")]
 	public ICollection<int>? FavoriteCocktails { get; set; } = new List<int>();
 
-	[InverseProperty("CreatedByUser")] //id dei cocktail creati
+	[InverseProperty("CreatedByUser")]
 	public ICollection<int>? CreatedCocktails { get; set; } = new List<int>();
 
 	public string Language { get; set; } = "en";
@@ -47,7 +47,7 @@ public class User
 
 
 /*
-appsettings.json before modification
+appsettings.json without dockerfiles
 
 {
   "Logging": {
