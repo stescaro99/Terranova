@@ -9,7 +9,6 @@ using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura i servizi
 builder.Services.AddHttpClient<CocktailApiService>();
 builder.Services.AddDbContext<CocktailDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
