@@ -78,7 +78,6 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/images"
 });
 
-// Configura il middleware
 app.UseHttpsRedirection();
 app.UseCors("AllowAllOrigins");
 app.MapControllers();
