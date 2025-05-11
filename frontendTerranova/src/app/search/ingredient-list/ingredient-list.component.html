@@ -5,6 +5,7 @@
 	  list="availableIngredients"
 	  (input)="onIngredientSelect($event)"
 	  placeholder="Ingredients"
+	  [value]="selectedIngredient" 
 	/>
 	<datalist id="availableIngredients">
 	  <option *ngFor="let ingredient of availableIngredients" [value]="ingredient">

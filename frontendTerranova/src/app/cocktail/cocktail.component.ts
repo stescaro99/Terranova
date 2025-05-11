@@ -10,10 +10,11 @@ import { TranslateService } from './../services/translate.service';
 import { Subscription } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
 import { BackgroundComponent } from '../background/background.component';
+import { CreateButtonComponent} from '../button/create-button/create-button.component'
 
 @Component({
   selector: 'app-cocktail',
-  imports: [CommonModule, StarButtonComponent, BackgroundComponent],
+  imports: [CommonModule, StarButtonComponent, BackgroundComponent, CreateButtonComponent],
   templateUrl: './cocktail.component.html',
   styleUrl: './cocktail.component.css'
 })
@@ -25,15 +26,15 @@ export class CocktailComponent {
   ingredients: string[] = [];
 
   
-  originalString: string [] = [
-    'Cocktail',
-    'Category',
-    'Glass',
-    'Ingredients',
-    'Instructions',
-    'aggiungi ai preferiti',
-
-  ];
+originalString: string [] = [
+	'Cocktail',
+	'Category',
+	'Glass',
+	'Ingredients',
+	'Instructions',
+	'add to favorites',
+	'create your cocktail starting from this'
+];
   
   translatedString: string [] = [];
   private languageChangeSubscription!: Subscription;

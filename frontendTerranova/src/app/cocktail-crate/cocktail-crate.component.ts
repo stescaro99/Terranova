@@ -14,6 +14,7 @@ import { image } from 'html2canvas/dist/types/css/types/image';
 import { Router } from '@angular/router';
 import { response } from 'express';
 import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-cocktail-crate',
@@ -35,38 +36,53 @@ export class CocktailCrateComponent {
 	img: File | null = null;
 	usedefaultimg: boolean = true;
 	imgPreview: string | null = null;
-	quantity: string[] = Array(this.numberOfIngredients).fill('to taste');
+	quantity: string[] = [];
 	drinknameMessage: string = '';
 	drinknameAvailable: boolean = true;
 	glasses: string[] = glasses;
 	categories: string[] = categories;
 
-	constructor(private userservice: UserService, private cocktailservice: CocktailService, private router: Router, private route: ActivatedRoute)
-	{
+	constructor(
+		private userservice: UserService,
+		private cocktailservice: CocktailService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private cdr: ChangeDetectorRef 
+	) {
 		this.user = userservice.getUser() || new User();
-		this.idCocktail = this.route.snapshot.paramMap.get('idCocktail') || '';
+		this.idCocktail = this.route.snapshot.paramMap.get('id') || '';
 		if (this.idCocktail) {
 		  this.cocktailservice.takeCocktailById(this.idCocktail).subscribe(
-			(cocktail: CocktailApiDrink) => {
-			  this.oldcocktail = cocktail;
-			  for(const object in  this.oldcocktail)
-			  {
-				if (this.oldcocktail.hasOwnProperty(object))
-				{
-					if (object === 'strInstructions')
-					{
-						this.newcocktail.drink.strInstructionsZH_HANS = (this.oldcocktail as any)[object];
-						continue;
-					}
-					(this.newcocktail.drink as any)[object] = (this.oldcocktail as any)[object];
+			(cocktail: Cocktail) => {
+			  this.oldcocktail = cocktail.drink;
+				for (let i = 1; i <= 15; i++) {
+					const ingredient = this.oldcocktail[`strIngredient${i}` as keyof CocktailApiDrink];
+					const measure = this.oldcocktail[`strMeasure${i}` as keyof CocktailApiDrink];
 					
+					if (ingredient && ingredient.trim() !== '') {
+						this.ingredients.push(ingredient.trim());
+						this.quantity.push(measure?.trim() || '');
+						const color = ingredientColors[ingredient.trim()] || '#000000';
+   						this.ingredientColors[ingredient.trim()] = color;
+					}
 				}
-			  }
+				this.newcocktail.drink.strAlcoholic = cocktail.drink.strAlcoholic ;
+				this.newcocktail.drink.strDrink = cocktail.drink.strDrink + ' by ' + this.user.username;
+				this.newcocktail.drink.strGlass = cocktail.drink.strGlass;
+				this.newcocktail.drink.strCategory = cocktail.drink.strCategory;
+				this.numberOfIngredients = this.ingredients.length;
+				this.newcocktail.drink.strDrinkThumb = cocktail.drink.strDrinkThumb;
+				this.imgPreview = cocktail.drink.strDrinkThumb ?? null;
+
+				this.cdr.detectChanges();
+				console.log('saaa', this.ingredients);
 			},
 			(error) => {
 			  console.error('error to find cocktail id');
 			}
 		  );
+		}else{
+			this.quantity = Array(this.numberOfIngredients).fill('to taste');
 		}
 	}
 	setMode(mode: 'mix' | 'shake'): void {
@@ -192,14 +208,25 @@ export class CocktailCrateComponent {
 		}
 	  }
 
+	  removeIngredient(index: number): void{
+		if (index <= this.numberOfIngredients){
+			this.numberOfIngredients--;
+			this.ingredients.splice(index, 1);
+			this.quantity.splice(index, 1);
+		}
+
+	  }
+
 	  isLastIngredientValid(): boolean {
+		if (this.numberOfIngredients == 0)
+			return true;
 		if (this.numberOfIngredients === 1 && this.ingredients.length === 0) {
 		  return false;
 		}
 		if (this.ingredients.length !== 0){
 			for (let i = 0; i < this.ingredients.length; i++) {
 				if (this.ingredients[i] === '') {
-					return false; // Se c'è un ingrediente vuoto, non è valido
+					return false; 
 				}
 			}
 		}
@@ -207,14 +234,13 @@ export class CocktailCrateComponent {
 		const lastIndex = this.numberOfIngredients - 1;
 		const lastQuantity = this.quantity[lastIndex]?.trim();
 	  
-		// Controlla che ci sia almeno un ingrediente e che la quantità sia valida
 		return typeof lastQuantity === 'string' && (lastQuantity.toLowerCase() === 'to taste' || lastQuantity !== '');
 	  }
 
 	  isValid(): boolean {
 		if (this.newcocktail.drink.strDrink && this.newcocktail.drink.strDrink.trim() !== '' && this.newcocktail.drink.strDrink.length < 50) {
 			if (this.newcocktail.drink.strInstructionsZH_HANS && this.newcocktail.drink.strInstructionsZH_HANS.trim() !== '' && this.newcocktail.drink.strInstructionsZH_HANS.length < 500) {
-				if (this.isLastIngredientValid() && this.drinknameAvailable && this.newcocktail.drink.strGlass && this.newcocktail.drink.strGlass.trim() !== '' && this.newcocktail.drink.strAlcoholic
+				if (this.isLastIngredientValid()&& this.ingredients.length > 0 && this.drinknameAvailable && this.newcocktail.drink.strGlass && this.newcocktail.drink.strGlass.trim() !== '' && this.newcocktail.drink.strAlcoholic
 					&& this.newcocktail.drink.strAlcoholic.trim() !== '' && this.newcocktail.drink.strCategory && this.newcocktail.drink.strCategory.trim() !== '') {
 				  return true; 
 				}

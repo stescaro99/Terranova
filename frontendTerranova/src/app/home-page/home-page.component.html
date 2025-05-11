@@ -12,6 +12,8 @@
   (favoritChanged)="onFavoriteChanged()">
 </app-interactive-list>
 <br>
+<br>
+<br>
 <div *ngIf="!isGuest">
   <app-interactive-list
     [phrase]="translatedText[2] || stringsToTranslate[2]"
@@ -35,5 +37,5 @@
   </app-interactive-list>
 </div>
 <br>
-<app-create-button></app-create-button>
+<app-create-button [text]="translatedText[5] || stringsToTranslate[5]"></app-create-button>
 <br>

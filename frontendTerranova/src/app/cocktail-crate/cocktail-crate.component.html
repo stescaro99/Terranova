@@ -20,7 +20,6 @@
 	  <ng-template #useRealPhoto>
 		<div class="privateMode" (click)="setDefaultImg(usedefaultimg)">
 		  <span>Upload cocktail image</span>
-		  <!-- Quadrato grigio per il caricamento dell'immagine -->
 		</div>
 	</ng-template>
 	
@@ -51,6 +50,7 @@
 	  <div *ngFor="let i of [].constructor(numberOfIngredients); let index = index" class="ingredient-row">
 		<app-ingredient-list
 		  [limitIngredients]="ingredients"
+		  [selectedIngredient]="ingredients[index]"
 		  (ingredientSelected)="onIngredientSelected($event, index)">
 		</app-ingredient-list>
 		<input
@@ -61,6 +61,7 @@
 		placeholder="to taste"
 
 	  />
+	  <button class="remove-ingredient-button" (click)="removeIngredient(index)" style="color: red; margin-left: 10px;">X</button>
 	  </div>
 	</div>
   

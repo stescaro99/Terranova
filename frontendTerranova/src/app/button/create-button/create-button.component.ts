@@ -11,10 +11,12 @@ export class CreateButtonComponent {
 	@Input() text: string = '';
 	@Input() cocktailId: string = '';
 	constructor(private router: Router) {}
-	click(){
-		if (this.cocktailId !== ''){
-			this.router.navigate(['/cocktail-create'], { queryParams: { id: this.cocktailId } })
-		}
-    this.router.navigate(['/cocktail-create']);
-  }
+	click() {
+	  console.log('cocktailId:', this.cocktailId);
+	  if (this.cocktailId && this.cocktailId.trim() !== '') {
+	    this.router.navigate(['/cocktail-create', this.cocktailId], { queryParams: { id: this.cocktailId } });
+	  } else {
+	    this.router.navigate(['/cocktail-create']);
+	  }
+	}
 }

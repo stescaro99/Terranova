@@ -244,3 +244,17 @@
 	height: 100px;
 	resize: none; /* Disabilita il ridimensionamento */
   }
+
+  .remove-ingredient-button {
+  background: none;
+  margin-top: 23px;
+  border: none;
+  color: red;
+  font-size: 1.5rem; /* Ingrandisce la X */
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: middle; /* Allinea verticalmente */
+}
+.remove-ingredient-button:active{
+	color: brown;
+}

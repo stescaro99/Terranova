@@ -34,7 +34,7 @@ export const routes: Routes = [
 	component: CocktailCrateComponent,
 	},
 	{
-	path:'cocktail-create/:idCocktail',
+	path:'cocktail-create/:id',
 	component: CocktailCrateComponent,
 	}
 ];

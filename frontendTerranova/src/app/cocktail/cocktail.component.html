@@ -22,4 +22,5 @@
         <div *ngIf="!isGuestUser()" >{{ translatedString[5] || originalString[5] }} 
            <app-star-button  [cocktailId]="cocktailId" [user]="user"></app-star-button>
         </div>
+	<app-create-button [text]="translatedString[6] || originalString[6]" [cocktailId]="cocktail?.idDrink || ''"></app-create-button>
 </div>

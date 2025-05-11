@@ -38,7 +38,8 @@ export class HomePageComponent implements OnInit, OnDestroy{
     'Cocktail',
     'Favorite Cocktails',
     'You have not added any cocktails to your favorites yet.',
-    'Recommended Cocktails for you'
+    'Recommended Cocktails for you',
+	'Make your cocktail'
   ];
   translatedText: string[] = [];
   private languageChangeSubscription!: Subscription;
