@@ -36,7 +36,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configura Swagger per l'ambiente di sviluppo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -46,26 +45,30 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Applica automaticamente le migrazioni al runtime
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<CocktailDbContext>();
     var apiService = scope.ServiceProvider.GetRequiredService<CocktailApiService>();
 
-    if (!context.Database.CanConnect())
+    try
     {
-        context.Database.Migrate();
-
-        // Populate the database if empty
-        if (!context.Cocktails.Any())
+        if (!context.Database.CanConnect())
         {
-            var controller = new CocktailController(context, scope.ServiceProvider.GetRequiredService<IDeepSeekService>());
-            await controller.FastPopulate(apiService);
+            context.Database.Migrate();
+
+            if (!context.Cocktails.Any())
+            {
+                var controller = new CocktailController(context, scope.ServiceProvider.GetRequiredService<IDeepSeekService>());
+                await controller.FastPopulate(apiService);
+            }
         }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"{ex.Message}");
     }
 }
 
-// Configura la directory per le immagini caricate
 var uploadedImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedImages");
 if (!Directory.Exists(uploadedImagesPath))
 {

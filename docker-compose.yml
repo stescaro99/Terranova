@@ -9,6 +9,8 @@ services:
       - ConnectionStrings__DefaultConnection=Server=db,1433;Database=CocktailDB;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True;
     depends_on:
       - db
+    volumes:
+      - ./UploadedImages:/app/UploadedImages
 
   frontend:
     build:
