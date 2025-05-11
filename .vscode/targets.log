@@ -6,8 +6,11 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # PARTICULAR PURPOSE.
 
 # This program built for i686-pc-msys
+ 
+Makefile:4: *** missing separator.  Stop.
 
-# Make data base, printed on Sun May 11 06:16:55 2025
+
+# Make data base, printed on Sun May 11 07:50:21 2025
 
 # Variables
 
@@ -78,7 +81,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5972_FWFYMQRRJMNNCHAU
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_16452_IMEKWYYRJQHTNONH
 # environment
 COMPUTERNAME = DESKTOP-L00VK7M
 # environment
@@ -166,6 +169,8 @@ MAKEFILES :=
 # automatic
 <F = $(notdir $<)
 # environment
+EFC_9648 = 1
+# environment
 LC_ALL = C
 # automatic
 ^F = $(notdir $^)
@@ -188,9 +193,7 @@ PROCESSOR_LEVEL = 6
 # environment
 TERM = cygwin
 # environment
-VSCODE_PID = 5972
-# environment
-EFC_10004 = 1
+VSCODE_PID = 16452
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-L00VK7M
 # variable set hash-table stats:
@@ -202,9 +205,9 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-L00VK7M
 
 # Directories
 
-# . (device -31440, inode 34212029): 18 files, no impossibilities.
+# . (device -31440, inode 34212029): 17 files, no impossibilities.
 
-# 18 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -254,8 +257,6 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sun May 11 06:16:55 2025
+# Finished Make data base on Sun May 11 07:50:21 2025
 
  
-Makefile:4: *** missing separator.  Stop.
-

@@ -1,2 +1,12 @@
-start cmd /k "cd frontendTerranova && npm install && ng serve"
-start cmd /k "cd backend\CocktailDebacle.API && dotnet run"
+@echo off
+REM
+git clone https://github.com/LibreTranslate/LibreTranslate
+
+REM
+docker-compose up --build
+
+REM
+timeout /t 10 > nul
+
+REM
+start http://localhost:4200

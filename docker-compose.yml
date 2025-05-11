@@ -9,7 +9,6 @@ services:
       - ConnectionStrings__DefaultConnection=Server=db,1433;Database=CocktailDB;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True;
     depends_on:
       - db
-      - translator
 
   frontend:
     build:
@@ -20,6 +19,7 @@ services:
       - BACKEND_URL=http://backend:5267
     depends_on:
       - backend
+      - translator
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
