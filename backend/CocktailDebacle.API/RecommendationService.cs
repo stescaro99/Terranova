@@ -154,7 +154,7 @@ public class RecommendationService
 
         dictionary = dictionary.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
         var sortedCocktails = dictionary.Keys.ToList();
-        return sortedCocktails.Take(10).ToList();
+        return sortedCocktails.Take(5).ToList();
     }
 
     public async Task<List<Cocktail>> GetRecommendedCocktails(User user)

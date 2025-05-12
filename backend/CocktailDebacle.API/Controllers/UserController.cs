@@ -216,9 +216,17 @@ public class UserController : ControllerBase
         var recommendationService = new RecommendationService(_context, new CocktailApiService(new HttpClient()));
         var recommendedCocktails = await recommendationService.GetRecommendedCocktails(user);
 
-        if (recommendedCocktails == null || !recommendedCocktails.Any())
-            return await GetTopCocktails(username, 10, 5);
-
+        if (recommendedCocktails.Count < 5)
+        {
+            var topCocktails = await GetTopCocktails(username, 15, 7);
+            while (recommendedCocktails.Count < 5)
+            {
+                var randomCocktail = topCocktails.FirstOrDefault();
+                if (user.FavoriteCocktails != null && !user.FavoriteCocktails.Contains(int.Parse(randomCocktail.Drink.IdDrink)))
+                    recommendedCocktails.Add(randomCocktail);
+                topCocktails.Remove(randomCocktail);
+            }
+        }
         return Ok(recommendedCocktails);
     }
 
