@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-button',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './create-button.component.html',
   styleUrl: './create-button.component.css'
 })
@@ -19,4 +20,11 @@ export class CreateButtonComponent {
 	    this.router.navigate(['/cocktail-create']);
 	  }
 	}
+	isGuestUser(): boolean {
+		if (localStorage.getItem('guestToken') === 'true') {
+			return true;
+		}
+		else
+		return false;
+    }
 }

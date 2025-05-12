@@ -1,1 +1,1 @@
-<button text="Create"  (click)="click()">{{text}}</button>
+<button text="Create" *ngIf="!isGuestUser()"  (click)="click()">{{text}}</button>
