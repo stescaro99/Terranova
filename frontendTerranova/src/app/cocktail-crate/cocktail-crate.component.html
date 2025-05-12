@@ -44,7 +44,7 @@
 			<span *ngIf="!imgPreview">Click to upload</span>
 		  </label>
 		
-	<!-- Selezione degli ingredienti -->
+
 	<h3>Select the ingredients:</h3>
 	<div class="ingredients-list">
 	  <div *ngFor="let i of [].constructor(numberOfIngredients); let index = index" class="ingredient-row">
@@ -65,7 +65,7 @@
 	  </div>
 	</div>
   
-	<!-- Pulsante per aggiungere ingredienti -->
+
 	<button class="add-ingredient-button" (click)="addIngredient()" [disabled]="!isLastIngredientValid() || numberOfIngredients >= 15">
 	  Add ingredient
 	</button>

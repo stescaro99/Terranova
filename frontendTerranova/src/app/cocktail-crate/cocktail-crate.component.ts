@@ -335,7 +335,7 @@ export class CocktailCrateComponent {
 	  
 		console.log('Cocktail da salvare:', this.newcocktail); 
 		this.newcocktail.drink.idDrink = (Math.random() + 200000).toString();
-		this.cocktailservice.createNewCocktail(this.newcocktail.drink, this.user.username, this.open).subscribe(
+		this.cocktailservice.createNewCocktail(this.newcocktail.drink, this.user.username, !this.open).subscribe(
 			(response: any) =>{
 				console.log('cocktail creato con successo');
 				this.router.navigate(['/home']);

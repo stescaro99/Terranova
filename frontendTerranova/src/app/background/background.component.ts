@@ -67,5 +67,19 @@ export class BackgroundComponent {
     this.userService.setUser(new User());
     window.location.reload();
   }
+  delete(){
+	localStorage.removeItem('user');
+    localStorage.removeItem('guestToken');
+    localStorage.removeItem('authToken');
+	this.userService.deleteUser(this.user.id).subscribe(
+		(value: any)=>{
+			console.log('user delete', value);
+		},
+		(error)=>{
+			console.error(error);
+		}
+	)
+	this.router.navigate(['login']);
+  }
 
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../model/user';
+import { request } from 'express';
 
 
 @Injectable({
@@ -80,6 +81,21 @@ import { User } from '../model/user';
 		formData.append('nome', FileName);
 		formData.append('image', Image)
 		return this.http.post<{ imageUrl: string }>(`${this.apiUrl}/UploadImage`, formData);
+	}
+
+	deleteUser(id: string): Observable<any> {
+		const url = `${this.apiUrl}/${id}`;
+		return this.http.delete<any>(url);
+ 	}
+
+	updateUser(userid: string, toChange: string, newcontent: string){
+		const url = `${this.apiUrl}/UpdateUser`;
+		const params = {
+			id : parseInt(userid, 10),
+			field: toChange,
+			value: newcontent,
+		}
+		return this.http.put<any>(url, {params});
 	}
 
   }

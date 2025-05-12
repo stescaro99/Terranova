@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class LanguageButtonComponent {
   user: User;
-  isDropdownOpen: boolean = false; // Per gestire l'apertura del menu a tendina
+  isDropdownOpen: boolean = false;
   availableLanguages: { code: string, name: string, flag: string }[] = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'it', name: 'Italiano', flag: '🇮🇹' },
@@ -32,7 +32,16 @@ export class LanguageButtonComponent {
 
   selectLanguage(languageCode: string): void {
     this.user.language = languageCode;
-    this.userService.setUser(this.user); 
+    this.userService.setUser(this.user);
+	this.userService.updateUser(this.user.id, this.user.language, languageCode).subscribe(
+		(value: any) =>{
+			console.log('language change', value);
+		},
+		(error) =>
+		{
+			console.error(error);
+		}
+	);
     this.isDropdownOpen = false;
   }
 

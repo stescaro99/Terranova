@@ -85,7 +85,7 @@ originalString: string [] = [
         this.ingredients.push(ingredient);
       }
       else {
-        break; // Esci dal ciclo se non ci sono più ingredienti
+        break;
       }
       j++;
     }

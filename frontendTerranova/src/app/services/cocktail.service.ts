@@ -43,7 +43,6 @@ export class CocktailService {
 		username: name,
 		private: prv,
 	}
-	console.log('request', request);
 	return this.http.post<any>(url, request);
   }
 

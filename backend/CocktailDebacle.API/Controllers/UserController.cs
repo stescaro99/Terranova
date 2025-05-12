@@ -49,7 +49,7 @@ public class UserController : ControllerBase
 }
 
     [HttpPut("UpdateUser")]
-    public async Task<IActionResult> UpdateUser([FromQuery] UpdateUserRequest request)
+    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request)
     {
         if (request == null)
             return BadRequest("Invalid request data");
