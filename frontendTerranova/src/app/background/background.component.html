@@ -14,9 +14,9 @@
 	</button>
 	<div class="dropdown-menu" *ngIf="isDropdownOpen">
 		<ul>
-		  <button *ngif="isIn()" (click)="goToSettings()">Settings</button>
-		  <button *ngif="isIn()" (click)="logout()">Log Out</button>
-		  <button *ngif="isIn()" (click)="delete()" style="color: red;">delete account</button>
+		  <button *ngIf="hasAuthToken" (click)="goToSettings()">Settings</button>
+		  <button *ngIf="hasAuthToken" (click)="logout()">Log Out</button>
+		  <button *ngIf="hasAuthToken" (click)="delete()" style="color: red;">delete account</button>
 		  <app-language-button></app-language-button>
 		</ul>
 	  </div>

@@ -84,11 +84,8 @@ export class BackgroundComponent {
 	this.router.navigate(['/login']);
   }
 
-  isIn() {
-    if (localStorage.getItem('authToken') === 'true')
-      this.islog = true;
-    else
-      this.islog = false;
+  get hasAuthToken(): boolean {
+    return !!localStorage.getItem('authToken'); // Controlla se l'authToken è presente
   }
 
 }
