@@ -49,14 +49,14 @@ public class UserController : ControllerBase
 }
 
     [HttpPut("UpdateUser")]
-    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request)
+    public async Task<IActionResult> UpdateUser([FromBody]UpdateUserRequest request)
     {
         if (request == null)
             return BadRequest("Invalid request data");
 
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.Id);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
         if (user == null)
-            return NotFound($"User with Id {request.Id} not found");
+            return NotFound($"User with Id {request.Username} not found");
 
         _context.Attach(user);
         var field = request.Field;
@@ -310,11 +310,11 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(int id)
+    public async Task<IActionResult> DeleteUser(string username)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
         if (user == null)
-            return NotFound($"User with ID {id} not found");
+            return NotFound($"User with ID {username} not found");
 
         foreach (var cocktailId in user.CreatedCocktails ?? new List<int>())
         {
@@ -335,5 +335,23 @@ public class UserController : ControllerBase
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
         return NoContent();
+    }
+
+    [HttpGet("GetUserCocktails")]
+    public async Task<IActionResult> GetUserCocktails([FromQuery] string username)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Username == username);
+
+        if (user == null)
+            return NotFound($"User with ID {username} not found");
+
+        var cocktails = await _context.Cocktails
+            .Where(c => c.CreatedByUser == username)
+            .ToListAsync();
+        
+        if (cocktails == null || !cocktails.Any())
+            return NotFound($"User with ID {username} has no cocktails");
+        return Ok(cocktails);
     }
 }

@@ -8,9 +8,9 @@ public class FavoriteRequest
 
 public class UpdateUserRequest
 {
-    public required int Id;
-    public required string Field;
-    public required string Value;
+    public required string Username { get; set; }
+    public required string Field { get; set; }
+    public required string Value { get; set; }
 }
 
 public class UploadRequest

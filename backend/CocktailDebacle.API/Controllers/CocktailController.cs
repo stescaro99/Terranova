@@ -289,4 +289,35 @@ public class CocktailController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok($"Database updated with {count} new cocktails.");
     }
+
+    [HttpDelete("DeleteCocktail")]
+    public async Task<IActionResult> DeleteCocktail(string id)
+    {
+        var cocktail = await _context.Cocktails
+            .Include(c => c.Drink)
+            .FirstOrDefaultAsync(c => c.Drink != null && c.Drink.IdDrink == id);
+
+        if (cocktail == null)
+            return NotFound($"Cocktail with ID {id} not found.");
+
+        int cocktailId = int.Parse(cocktail.Drink.IdDrink);
+        
+        foreach (var user in _context.Users)
+        {
+            if (user.FavoriteCocktails != null && user.FavoriteCocktails.Contains(cocktailId))
+            {
+                user.FavoriteCocktails.Remove(cocktailId);
+                _context.Users.Update(user);
+            }
+            if (user.CreatedCocktails != null && user.CreatedCocktails.Contains(cocktailId))
+            {
+                user.CreatedCocktails.Remove(cocktailId);
+                _context.Users.Update(user);
+            }
+            _context.Users.Update(user);
+        }
+        _context.Cocktails.Remove(cocktail);
+        await _context.SaveChangesAsync();
+        return Ok($"Cocktail with ID {cocktailId} deleted successfully.");
+    }
 }
