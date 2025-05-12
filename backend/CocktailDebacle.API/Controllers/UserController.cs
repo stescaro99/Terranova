@@ -218,13 +218,18 @@ public class UserController : ControllerBase
 
         if (recommendedCocktails.Count < 5)
         {
-            var topCocktails = await GetTopCocktails(username, 15, 7);
-            while (recommendedCocktails.Count < 5)
+            var topCocktailsResult = await GetTopCocktails(username, 15, 7) as OkObjectResult;
+            if (topCocktailsResult?.Value is List<Cocktail> topCocktails)
             {
-                var randomCocktail = topCocktails.FirstOrDefault();
-                if (user.FavoriteCocktails != null && !user.FavoriteCocktails.Contains(int.Parse(randomCocktail.Drink.IdDrink)))
-                    recommendedCocktails.Add(randomCocktail);
-                topCocktails.Remove(randomCocktail);
+                while (recommendedCocktails.Count < 5 && topCocktails.Any())
+                {
+                    var randomCocktail = topCocktails.First(); // Prendi il primo elemento
+                    if (user.FavoriteCocktails != null && !user.FavoriteCocktails.Contains(int.Parse(randomCocktail.Drink.IdDrink)))
+                    {
+                        recommendedCocktails.Add(randomCocktail);
+                    }
+                    topCocktails.Remove(randomCocktail); // Rimuovi l'elemento dalla lista
+                }
             }
         }
         return Ok(recommendedCocktails);

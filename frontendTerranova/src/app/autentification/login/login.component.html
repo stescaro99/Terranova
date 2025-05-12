@@ -1,15 +1,15 @@
 <app-background></app-background>
-<h1> Log In</h1>
-<br>
-  <input type="text" placeholder="username"  [(ngModel)]="username"/>
-  <input type="password" placeholder="password" [(ngModel)]="password" />
-  <button (click)="loginRoute()">Log In</button>
-  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
-<br>
-<br>
-<br>
-  <button (click)="sigInButton()">Sign Up</button>
-<br>
-<br>
-<br>
-  <button (click)="notRegister()">Continue without logging in</button>
+<div class="login-container">
+  <h1 class="login-title">Welcome Back</h1>
+  <p class="login-subtitle">Log in to continue</p>
+  <div class="login-form" (keydown.enter)="loginRoute()">
+    <input type="text" placeholder="Username" [(ngModel)]="username" class="login-input" />
+    <input type="password" placeholder="Password" [(ngModel)]="password" class="login-input" />
+    <button (click)="loginRoute()" class="login-button">Log In</button>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>
+  <div class="login-actions">
+    <button (click)="sigInButton()" class="secondary-button">Sign Up</button>
+    <button (click)="notRegister()" class="secondary-button">Continue as Guest</button>
+  </div>
+</div>

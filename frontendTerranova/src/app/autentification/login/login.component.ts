@@ -11,7 +11,7 @@ import { BackgroundComponent } from '../../background/background.component';
   selector: 'app-login',
   imports: [FormsModule, CommonModule, BackgroundComponent],
   templateUrl: './login.component.html',
-  styles: ``
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   username = '';

@@ -42,6 +42,7 @@ export class CocktailService {
       drink: newdrink,
       username: name,
       private: prv,
+      instructions: newdrink.strInstructionsZH_HANS,
     }
     return this.http.post<any>(url, request);
   }

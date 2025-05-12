@@ -22,7 +22,16 @@ export class SettingsComponent {
 	user: User;
 	emailErrorMessage: string = '';
 	selectedFile: File | null = null;
-	usernameAvailable: boolean = false
+	usernameAvailable: boolean = false;
+	origin:string[] = [
+		'Update Settings',
+		'Name',
+		'Username',
+		'Password',
+		'Email',
+		'Plase enter a valid email ',
+		
+	]
 
 	constructor(private userService: UserService, private router: Router){
 		this.user = this.userService.getUser() || new User();

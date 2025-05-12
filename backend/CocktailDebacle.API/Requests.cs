@@ -27,5 +27,5 @@ public class AddCocktailRequest
     public required CocktailApiDrink Drink { get; set; }
     public required string Username { get; set; }
     public required bool Private { get; set; }
-    public required string Instructions { get; set; };
+    public required string Instructions { get; set; }
 }

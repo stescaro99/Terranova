@@ -51,6 +51,7 @@ originalString: string [] = [
         (response) => {
           this.cocktail = response.drink;
           this.takeIngredients(this.cocktail);
+          console.log('cocktailYYYYYYYYY', this.cocktail?.strInstructions);
         }
       );
     }
@@ -117,10 +118,11 @@ originalString: string [] = [
       );
     });
 
-    if (this.cocktail && this.user.language != 'en') {
+    if (this.cocktail) {
       const cocktailElements = [
         { key: 'strAlcoholic', value: this.cocktail.strAlcoholic },
-        { key: 'strInstructions', value: this.cocktail.strInstructions }
+        { key: 'strInstructions', value: this.cocktail.strInstructions },
+        { key: 'strInstructionsZH_HANS', value: this.cocktail.strInstructionsZH_HANS }
       ];
   
       cocktailElements.forEach((element) => {

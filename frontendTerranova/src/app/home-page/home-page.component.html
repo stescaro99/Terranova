@@ -13,7 +13,6 @@
 </app-interactive-list>
 <br>
 <br>
-<br>
 <div *ngIf="!isGuest">
   
   <app-interactive-list
@@ -24,8 +23,9 @@
   [user]="user"
   (favoritChanged)="onFavoriteChanged()">
 </app-interactive-list>
-
-  <app-interactive-list
+<br>
+<br>
+<app-interactive-list
   [phrase]="translatedText[7] || stringsToTranslate[7]"
   [cocktails]="yourCocktails"
     [isListVisible]="isListVisible"
@@ -33,6 +33,8 @@
     [user]="user"
     (favoritChanged)="onFavoriteChanged()">
   </app-interactive-list>
+  <br>
+  <br>
   <app-interactive-list
     [phrase]="translatedText[2] || stringsToTranslate[2]"
     [cocktails]="favoriteCocktails"

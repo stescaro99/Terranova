@@ -180,6 +180,7 @@ public class CocktailController : ControllerBase
         int newId = GenerateNewCocktailId();
         request.Drink.IdDrink = newId.ToString();
         request.Drink.StrInstructionsZH_HANS = request.Instructions;
+        request.Drink.StrInstructions = request.Instructions;
 
         var newCocktail = new Cocktail
         {

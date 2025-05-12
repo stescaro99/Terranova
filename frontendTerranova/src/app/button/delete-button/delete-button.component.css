@@ -1,9 +1,30 @@
-.delete-button{
+.delete-button {
     width: auto;
     height: auto;
+    padding: 10px 20px; /* Aggiunge spazio interno */
     border-radius: 5px;
     border: none;
     color: white;
-    background-color: red;
-    pointer-events: auto;
+    background-color: #e63946; /* Rosso più elegante */
+    font-size: 16px; /* Dimensione del testo */
+    font-weight: bold; /* Testo in grassetto */
+    cursor: pointer; /* Cambia il cursore in "pointer" */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Effetti di transizione */
+}
+
+.delete-button:hover {
+    background-color: #d62828; /* Colore più scuro al passaggio del mouse */
+    transform: scale(1.05); /* Leggero ingrandimento */
+}
+
+.delete-button:active {
+    background-color: #b71c1c; /* Colore ancora più scuro quando cliccato */
+    transform: scale(0.95); /* Leggero rimpicciolimento */
+}
+
+.delete-button:disabled {
+    background-color: #cccccc; /* Colore grigio per stato disabilitato */
+    color: #666666; /* Testo grigio per stato disabilitato */
+    cursor: not-allowed; /* Cambia il cursore in "non consentito" */
+    opacity: 0.6; /* Riduce l'opacità */
 }

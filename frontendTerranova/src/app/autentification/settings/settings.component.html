@@ -3,7 +3,7 @@
 <br>
 <form (ngSubmit)="submitForm()">
   <p>Name: <input type="text" [(ngModel)]="newUserdata.name" name="name" /></p>
-  <app-username [user]="newUserdata" (userSelected)="usernameAvailable = $event"></app-username>
+  <p>Birth Date*:<app-username [user]="newUserdata" (userSelected)="usernameAvailable = $event"></app-username></p>
   <p>Password: <input type="password" [(ngModel)]="newUserdata.password" name="password"></p>
   <p>
     Email: 

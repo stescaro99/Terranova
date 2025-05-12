@@ -24,7 +24,7 @@
       {{ emailErrorMessage }}
     </span>
   </p>
-  <app-age (DateSelected)="user.birthDate = $event"></app-age>
+  <p>Birth Date*:<app-age (DateSelected)="user.birthDate = $event"></app-age></p>
   <app-country (countrySelected)="user.country = $event"></app-country>
   <p>City: <input type="text" [(ngModel)]="user.city" name="city"></p>
   

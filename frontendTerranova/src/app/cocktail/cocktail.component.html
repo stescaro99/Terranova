@@ -23,5 +23,6 @@
            <app-star-button  [cocktailId]="cocktailId" [user]="user"></app-star-button>
            <app-delete-button *ngIf="isMyCocktail(cocktail?.idDrink || '')" [cocktailId]="cocktail?.idDrink || ''" [text]="translatedString[7] || originalString[7]"></app-delete-button>
         </div>
+        <br>
 	<app-create-button [text]="translatedString[6] || originalString[6]" [cocktailId]="cocktail?.idDrink || ''">{{ translatedString[6] || originalString[6]}}</app-create-button>
 </div>
