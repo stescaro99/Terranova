@@ -1,12 +1,14 @@
 #!/bin/bash
 
-if [ ! -d "./LibreTranslate" ]; then
+if [ ! -d "./LibreTranslate/.git" ]; then
     echo "Cloning LibreTranslate repository..."
     git clone https://github.com/LibreTranslate/LibreTranslate
 fi
 
 echo "Starting Docker Compose..."
-docker-compose up --build -d
+gnome-terminal -- bash -c "docker-compose up --build; exec bash" || \
+x-terminal-emulator -e "bash -c 'docker-compose up --build; exec bash'" || \
+xterm -e "bash -c 'docker-compose up --build; exec bash'"
 
 echo "Waiting for services to start... (the first time may take a couple of minutes after the build)"
 sleep 10
