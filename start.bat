@@ -3,7 +3,7 @@ REM
 git clone https://github.com/LibreTranslate/LibreTranslate
 
 REM
-docker-compose up --build -d
+start cmd /k docker-compose up --build
 
 REM
 sleep 10
