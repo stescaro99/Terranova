@@ -177,8 +177,11 @@ public class CocktailController : ControllerBase
         if (request?.Drink == null || string.IsNullOrEmpty(request.Username))
             return BadRequest("Invalid cocktail data or username.");
 
+        string instructions = request.Drink.StrInstructionsZH_HANS;
         int newId = GenerateNewCocktailId();
         request.Drink.IdDrink = newId.ToString();
+        request.Drink.StrInstructions = instructions;
+        request.Drink.StrInstructionsZH_HANS = instructions;
 
         var newCocktail = new Cocktail
         {
