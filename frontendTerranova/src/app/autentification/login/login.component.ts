@@ -51,6 +51,7 @@ export class LoginComponent {
   notRegister() {
     const guestUser = new User();
     guestUser.username = 'Guest';
+    guestUser.language = 'en';
     this.userService.setUser(guestUser);
     localStorage.setItem('user', JSON.stringify(guestUser));
     localStorage.setItem('authToken', 'true');

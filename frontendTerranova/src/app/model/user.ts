@@ -8,7 +8,7 @@ export class User {
     country = '';
     imageUrl: string | ArrayBuffer | null | undefined = null;
     favoriteCocktails: string[] = [];
-    createdCocktails: string[] = [];
+    createdCocktails: number[] = [];
     canDrinkAlcohol = false; 
     appPermissions = false;  
     language = '';

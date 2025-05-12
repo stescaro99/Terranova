@@ -102,6 +102,9 @@ import { request } from 'express';
 		return this.http.put<any>(url, payload);
 	}
 
-	
+	getUserCocktails(username: string): Observable<any> {
+		const url = `${this.apiUrl}/GetUserCocktails?username=${encodeURIComponent(username)}`;
+		return this.http.get<any>(url);
+	}
 
   }

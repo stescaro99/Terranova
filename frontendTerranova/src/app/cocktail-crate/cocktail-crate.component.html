@@ -91,17 +91,17 @@
 
 		<label for="drinkAlcoholic">{{translatedText[15] || originalText[15]}}</label>
 		<select id="drinkAlcoholic" [(ngModel)]="newcocktail.drink.strAlcoholic" class="drink-select">
-			<option value="Alcoholic">{{translatedText[16] || originalText[16]}}</option>
-			<option value="Non alcoholic">{{translatedText[17] || originalText[17]}}</option>
-			<option value="Optional alcohol">{{translatedText[18] || originalText[18]}}</option>
+			<option value="Alcoholic">{{translatedText[15] || originalText[15]}}</option>
+			<option value="Non alcoholic">{{translatedText[16] || originalText[16]}}</option>
+			<option value="Optional alcohol">{{translatedText[17] || originalText[17]}}</option>
 		</select>
 
-		<label for="drinkGlass">{{translatedText[19] || originalText[19]}}</label>
+		<label for="drinkGlass">{{translatedText[18] || originalText[18]}}</label>
 		<select id="drinkGlass" [(ngModel)]="newcocktail.drink.strGlass" class="drink-select">
 			<option *ngFor="let glass of glasses" [value]="glass">{{ glass }}</option>
 		</select>
 		
-		<label for="drinkInstructions">{{translatedText[20] || originalText[20]}}</label>
+		<label for="drinkInstructions">{{translatedText[19] || originalText[19]}}</label>
 		<textarea
 		  id="drinkInstructions"
 		  [(ngModel)]="newcocktail.drink.strInstructionsZH_HANS"
@@ -109,6 +109,6 @@
 		  placeholder="Enter the instructions to prepare the drink"
 		></textarea>
 	  </div>
-	  <button class="add-ingredient-button" (click)="saveCocktail()" [disabled]="!isValid()" >{{translatedText[21] || originalText[21]}}</button>
+	  <button class="add-ingredient-button" (click)="saveCocktail()" [disabled]="!isValid()" >{{translatedText[20] || originalText[20]}}</button>
 
   </div>

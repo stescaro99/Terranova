@@ -44,6 +44,33 @@ public class CocktailController : ControllerBase
                         && c.Drink.StrDrink.Contains(str.ToLower())
                         && c.isPrivate == false)
             .ToListAsync();
+          {
+            var additionalCocktails = await _context.Cocktails
+                .Include(c => c.Drink)
+                .Where(c => c.Drink != null
+                            && c.Drink.StrIngredient1 != null && c.Drink.StrIngredient1.Contains(str.ToLower())
+                            || c.Drink.StrIngredient2 != null && c.Drink.StrIngredient2.Contains(str.ToLower())
+                            || c.Drink.StrIngredient3 != null && c.Drink.StrIngredient3.Contains(str.ToLower())
+                            || c.Drink.StrIngredient4 != null && c.Drink.StrIngredient4.Contains(str.ToLower())
+                            || c.Drink.StrIngredient5 != null && c.Drink.StrIngredient5.Contains(str.ToLower())
+                            || c.Drink.StrIngredient6 != null && c.Drink.StrIngredient6.Contains(str.ToLower())
+                            || c.Drink.StrIngredient7 != null && c.Drink.StrIngredient7.Contains(str.ToLower())
+                            || c.Drink.StrIngredient8 != null && c.Drink.StrIngredient8.Contains(str.ToLower())
+                            || c.Drink.StrIngredient9 != null && c.Drink.StrIngredient9.Contains(str.ToLower())
+                            || c.Drink.StrIngredient10 != null && c.Drink.StrIngredient10.Contains(str.ToLower())
+                            || c.Drink.StrIngredient11 != null && c.Drink.StrIngredient11.Contains(str.ToLower())
+                            || c.Drink.StrIngredient12 != null && c.Drink.StrIngredient12.Contains(str.ToLower())
+                            || c.Drink.StrIngredient13 != null && c.Drink.StrIngredient13.Contains(str.ToLower())
+                            || c.Drink.StrIngredient14 != null && c.Drink.StrIngredient14.Contains(str.ToLower())
+                            || c.Drink.StrIngredient15 != null && c.Drink.StrIngredient15.Contains(str.ToLower())
+                            && c.isPrivate == false)
+                .ToListAsync();
+            while (cocktail.Count < 5 && additionalCocktails.Count > 0)
+            {
+                cocktail.Add(additionalCocktails[0]);
+                additionalCocktails.RemoveAt(0);
+            }
+        }
         if (cocktail == null || cocktail.Count == 0)
             return NotFound($"No cocktails found containing '{str}'");
         return Ok(cocktail);

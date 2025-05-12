@@ -32,6 +32,7 @@ export class HomePageComponent implements OnInit, OnDestroy{
   cocktails: CocktailApiDrink[] = [];
   favoriteCocktails: CocktailApiDrink[] = [];
   recommendedCocktails: CocktailApiDrink[] = [];
+  yourCocktails: CocktailApiDrink[] = [];
   
   stringsToTranslate: string[] = [
     'Welcome to the Home Page',
@@ -40,7 +41,8 @@ export class HomePageComponent implements OnInit, OnDestroy{
     'You have not added any cocktails to your favorites yet.',
     'Recommended Cocktails for you',
 	  'Make your cocktail',
-    'search cocktail:'
+    'search cocktail:',
+    'Your Cocktails:',
   ];
   translatedText: string[] = [];
   private languageChangeSubscription!: Subscription;
@@ -97,6 +99,17 @@ export class HomePageComponent implements OnInit, OnDestroy{
       this.languageChangeSubscription = this.userService.getLanguageChangeObservable().subscribe((language) => {
         this.updateTranslations(this.user.language);
       });
+      this.userService.getUserCocktails(this.user.username).subscribe(
+        (response: any) => { 
+          for (let i = 0; i < response.length; i++) {
+            this.yourCocktails.push(response[i].drink);
+          }
+          console.log('I tuoi cocktail:', this.yourCocktails);
+        },
+        (error) => {
+          console.error('Errore durante il recupero dei cocktail dell\'utente:', error);
+        }
+      );
       const currentLanguage = this.userService.getUser()?.language || 'en';
       this.updateTranslations(currentLanguage);
       console.log('user', this.user);

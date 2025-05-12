@@ -10,11 +10,12 @@ import { TranslateService } from './../services/translate.service';
 import { Subscription } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
 import { BackgroundComponent } from '../background/background.component';
-import { CreateButtonComponent} from '../button/create-button/create-button.component'
+import { CreateButtonComponent} from '../button/create-button/create-button.component';
+import { DeleteButtonComponent } from '../button/delete-button/delete-button.component';
 
 @Component({
   selector: 'app-cocktail',
-  imports: [CommonModule, StarButtonComponent, BackgroundComponent, CreateButtonComponent],
+  imports: [CommonModule, StarButtonComponent, BackgroundComponent, CreateButtonComponent, DeleteButtonComponent],
   templateUrl: './cocktail.component.html',
   styleUrl: './cocktail.component.css'
 })
@@ -33,7 +34,8 @@ originalString: string [] = [
 	'Ingredients',
 	'Instructions',
 	'add to favorites',
-	'create your cocktail starting from this'
+	'create your cocktail starting from this',
+  'delete cocktail',
 ];
   
   translatedString: string [] = [];
@@ -117,9 +119,7 @@ originalString: string [] = [
 
     if (this.cocktail && this.user.language != 'en') {
       const cocktailElements = [
-        { key: 'strGlass', value: this.cocktail.strGlass },
         { key: 'strAlcoholic', value: this.cocktail.strAlcoholic },
-        { key: 'strCategory', value: this.cocktail.strCategory },
         { key: 'strInstructions', value: this.cocktail.strInstructions }
       ];
   
@@ -188,6 +188,15 @@ originalString: string [] = [
       });
     }
   }
+}
+
+isMyCocktail(id: string): boolean {
+
+  if (!id)
+    return false;
+  if(this.user.createdCocktails.includes( Number(id)))
+    return true;
+  return false;
 }
 
   ngOnDestroy(): void {

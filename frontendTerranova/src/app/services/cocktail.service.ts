@@ -8,7 +8,7 @@ import { CocktailApiDrink } from '../model/cocktail';
   providedIn: 'root'
 })
 export class CocktailService {
-  private apiUrl = `${environment.baseUrl}cocktail`;
+  private apiUrl = `${environment.baseUrl}Cocktail`;
   constructor(private http: HttpClient) { }
 
   takeCocktailOfDay(num: number , alcool: boolean): Observable<any> {
@@ -18,12 +18,12 @@ export class CocktailService {
   }
 
   takeCocktailById(id: string): Observable<any> {
-  const url = `${this.apiUrl}/${id}`;
-  return this.http.get<any>(url);
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<any>(url);
   }
   searchCocktailByName(name: string): Observable<any> {
-  const url = `${this.apiUrl}/Search?str=${name}`;
-  return this.http.get<any>(url);
+    const url = `${this.apiUrl}/Search?str=${name}`;
+    return this.http.get<any>(url);
   }
 
   setFavorite(request: { Username: string; CocktailId: string }) {
@@ -37,13 +37,19 @@ export class CocktailService {
   }
 
   createNewCocktail(newdrink: CocktailApiDrink, name:string, prv:  boolean): Observable<any>{
-	const url = `${this.apiUrl}`;
-	const request = {
-		drink: newdrink,
-		username: name,
-		private: prv,
-	}
-	return this.http.post<any>(url, request);
+    const url = `${this.apiUrl}`;
+    const request = {
+      drink: newdrink,
+      username: name,
+      private: prv,
+    }
+    return this.http.post<any>(url, request);
+  }
+
+  deleteCocktail(id: string): Observable<any> {
+    console.log('cocktailId', id);
+    const url = `${this.apiUrl}/DeleteCocktail?id=${id}`;
+    return this.http.delete<any>(url);
   }
 
 }

@@ -6,7 +6,7 @@
         <h2>{{cocktail?.strDrink}}</h2>
         <p>{{ translatedString[1] || originalString[1] }}: {{ cocktail?.strCategory}}</p>
         <p>{{cocktail?.strAlcoholic}}</p>
-        <p>{{ translatedString[2] || originalString[2] }}: {{ cocktail?.strGlass}}</p>
+        <p>{{ originalString[2] }}: {{ cocktail?.strGlass}}</p>
     </div>
     <div class="cocktail-ingredients">
         <h3>{{ translatedString[3] || originalString[3] }}:</h3>
@@ -21,6 +21,7 @@
         <br>
         <div *ngIf="!isGuestUser()" >{{ translatedString[5] || originalString[5] }} 
            <app-star-button  [cocktailId]="cocktailId" [user]="user"></app-star-button>
+           <app-delete-button *ngIf="isMyCocktail(cocktail?.idDrink || '')" [cocktailId]="cocktail?.idDrink || ''" [text]="translatedString[7] || originalString[7]"></app-delete-button>
         </div>
-	<app-create-button [text]="translatedString[6] || originalString[6]" [cocktailId]="cocktail?.idDrink || ''"></app-create-button>
+	<app-create-button [text]="translatedString[6] || originalString[6]" [cocktailId]="cocktail?.idDrink || ''">{{ translatedString[6] || originalString[6]}}</app-create-button>
 </div>

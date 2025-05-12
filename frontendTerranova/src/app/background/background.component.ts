@@ -9,7 +9,7 @@ import { TitleComponent } from '../title/title.component';
 
 @Component({
   selector: 'app-background',
-  imports: [CommonModule, LanguageButtonComponent, TitleComponent],
+  imports: [CommonModule, LanguageButtonComponent, TitleComponent, CommonModule],
   templateUrl: './background.component.html',
   styleUrl: './background.component.css'
 })
@@ -19,6 +19,7 @@ export class BackgroundComponent {
   isPopupVisible: boolean = false;
   user: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : new User();
   isDropdownOpen: boolean = false;
+  islog: boolean = false;
 
   constructor(private userService: UserService, private router: Router) {
     this.generateImages(20); 
@@ -65,6 +66,7 @@ export class BackgroundComponent {
     localStorage.removeItem('guestToken');
     localStorage.removeItem('authToken');
     this.userService.setUser(new User());
+    this.router.navigate(['/login']);
     window.location.reload();
   }
   delete(){
@@ -80,6 +82,13 @@ export class BackgroundComponent {
 		}
 	)
 	this.router.navigate(['/login']);
+  }
+
+  isIn() {
+    if (localStorage.getItem('authToken') === 'true')
+      this.islog = true;
+    else
+      this.islog = false;
   }
 
 }
