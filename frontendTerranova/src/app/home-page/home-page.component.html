@@ -1,7 +1,7 @@
 <app-background></app-background>
 
 <h1>{{translatedText[0] || stringsToTranslate[0]}}</h1>
-<h3>search cocktail: </h3>
+<h3>{{translatedText[6] || stringsToTranslate[6]}} </h3>
 <app-search></app-search>
 <app-interactive-list
   [phrase]="translatedText[1] || stringsToTranslate[1]"

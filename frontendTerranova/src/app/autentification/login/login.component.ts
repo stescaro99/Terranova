@@ -27,7 +27,7 @@ export class LoginComponent {
         if (response) {
           console.log('Login effettuato con successo!');
           this.user = response;
-          console.log('UtenteEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE:', response);
+          console.log('Utente:', response);
           localStorage.setItem('user', JSON.stringify(this.user));
           localStorage.setItem('authToken', 'true');
           localStorage.setItem('guestToken', 'false');

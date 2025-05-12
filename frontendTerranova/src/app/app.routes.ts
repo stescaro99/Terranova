@@ -5,7 +5,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { authGuard } from './guard/auth.guard';
 import { CocktailComponent } from './cocktail/cocktail.component';
 import { CocktailCrateComponent } from './cocktail-crate/cocktail-crate.component';
-import { SetingsComponent } from './autentification/setings/setings.component'
+import { SettingsComponent } from './autentification/settings/settings.component'
 
 export const routes: Routes = [
 {
@@ -39,6 +39,7 @@ export const routes: Routes = [
 	component: CocktailCrateComponent,
 	},
 	{
-		path: 'settings'
+		path: 'settings',
+		component: SettingsComponent,
 	}
 ];

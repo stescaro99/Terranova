@@ -33,15 +33,15 @@ export class LanguageButtonComponent {
   selectLanguage(languageCode: string): void {
     this.user.language = languageCode;
     this.userService.setUser(this.user);
-	this.userService.updateUser(this.user.id, this.user.language, languageCode).subscribe(
-		(value: any) =>{
-			console.log('language change', value);
-		},
-		(error) =>
-		{
-			console.error(error);
-		}
-	);
+  	this.userService.updateUser(this.user.username, "language", languageCode).subscribe(
+      (value: any) =>{
+        console.log('language change', value);
+      },
+      (error) =>
+      {
+        console.error(error);
+      }
+    );
     this.isDropdownOpen = false;
   }
 

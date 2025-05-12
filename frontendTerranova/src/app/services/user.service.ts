@@ -25,6 +25,7 @@ import { request } from 'express';
 		}
 		return this.user;
 	}
+
 	setUser(user: User): void {
 		this.userSubject.next(user);
 		localStorage.setItem('user', JSON.stringify(user));
@@ -45,6 +46,8 @@ import { request } from 'express';
 
 	createUser(user: User): Observable<User> {
 		const url = `${this.apiUrl}`;
+		console.log('URL chiamato:', url);
+		console.log('User:', user);
 		return this.http.post<User>(url, user);
 	}
 	registerUser(user: User): Observable<any> {
@@ -90,12 +93,15 @@ import { request } from 'express';
 
 	updateUser(userid: string, toChange: string, newcontent: string){
 		const url = `${this.apiUrl}/UpdateUser`;
-		const params = {
-			id : parseInt(userid, 10),
+		const payload = {
+			username: userid,
 			field: toChange,
-			value: newcontent,
+			value: newcontent
 		}
-		return this.http.put<any>(url, {params});
+		console.log('params', payload);
+		return this.http.put<any>(url, payload);
 	}
+
+	
 
   }

@@ -309,7 +309,7 @@ public class UserController : ControllerBase
         return CreatedAtAction(nameof(GetUserById), new { id = newUser.Id }, newUser);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("deleteUser")]
     public async Task<IActionResult> DeleteUser(string username)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);

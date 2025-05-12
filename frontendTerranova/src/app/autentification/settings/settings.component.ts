@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BackgroundComponent } from '../../background/background.component';
 import { User } from '../../model/user';
@@ -8,18 +8,21 @@ import { AgeComponent } from '../age/age.component';
 import { UsernameComponent } from '../username/username.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { SlideButtonComponent } from '../../button/slide-button/slide-button.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-setings',
-  imports: [BackgroundComponent, CountryComponent, AgeComponent, UsernameComponent, CommonModule],
-  templateUrl: './setings.component.html',
-  styleUrl: './setings.component.css'
+  selector: 'app-settings',
+  imports: [BackgroundComponent, FormsModule, CountryComponent, AgeComponent, SlideButtonComponent, UsernameComponent, CommonModule],
+  templateUrl: './settings.component.html',
+  styleUrl: './settings.component.css'
 })
-export class SetingsComponent {
-	newUserdata: User = new User();
+export class SettingsComponent {
+  newUserdata: User = new User();
 	user: User;
 	emailErrorMessage: string = '';
 	selectedFile: File | null = null;
+	usernameAvailable: boolean = false
 
 	constructor(private userService: UserService, private router: Router){
 		this.user = this.userService.getUser() || new User();
@@ -45,7 +48,7 @@ export class SetingsComponent {
 			this.userService.uploadFile(fileName, this.selectedFile).subscribe(
 			(response: any) => {
 				console.log('Immagine caricata con successo:', response.imageUrl);
-				this.user.imageUrl = response.imageUrl; // Aggiorna l'URL dell'immagine dell'utente
+				this.user.imageUrl = response.imageUrl; 
 			},
 			(error: HttpErrorResponse) => {
 				console.error('Errore durante il caricamento dell\'immagine:', error);
@@ -58,21 +61,22 @@ export class SetingsComponent {
 		for( const key in this.newUserdata){
 			if (key === 'id')
 				continue;
-			const value = this.newUserdata[key as keyof User]
-			if (typeof value === 'string') {
-            	if (value.trim() === '')
+			const value = this.newUserdata[key as keyof User] as string;
+        if (value.trim() === '')
 					continue;
-				if (value !== this.user[key as keyof User])
-					this.userService.updateUser(this.user.id, key, value).subscribe(
-						(value: any)=>{
-							console.log('change ${key}', value);
-						},
-						(error)=>{
-							console.error(error);
-						}
-					);
+				if (value !== this.user[key as keyof User]) {
+          this.userService.updateUser(this.user.username, key, value).subscribe(
+              (response: any) => {
+                  (this.user as any)[key as keyof User] = value;
+                  console.log(`change ${key}`, value);
+              },
+              (error) => {
+                  console.error(error);
+              }
+          );
     		}
 		}
+    
 		this.router.navigate(['/home']);
  	}
 }

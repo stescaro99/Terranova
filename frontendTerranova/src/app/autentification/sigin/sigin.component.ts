@@ -48,7 +48,6 @@ export class SiginComponent {
   submitForm() {
       if (this.usernameAvailable) {
         this.user.language = 'en';
-
           this.userService.createUser(this.user).subscribe(
               (response: User) => {
                   console.log('Utente creato con successo:', response);
@@ -85,21 +84,21 @@ export class SiginComponent {
   
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-	if (input.files && input.files.length > 0) {
-    	this.selectedFile = input.files[0];
-	}
-	if (this.selectedFile !== null){
-		const fileName = this.selectedFile.name;
-		this.userService.uploadFile(fileName, this.selectedFile).subscribe(
-		  (response: any) => {
-			console.log('Immagine caricata con successo:', response.imageUrl);
-			this.user.imageUrl = response.imageUrl; // Aggiorna l'URL dell'immagine dell'utente
-		  },
-		  (error: HttpErrorResponse) => {
-			console.error('Errore durante il caricamento dell\'immagine:', error);
-		  }
-		);
-	}
+    if (input.files && input.files.length > 0) {
+        this.selectedFile = input.files[0];
+    }
+    if (this.selectedFile !== null){
+      const fileName = this.selectedFile.name;
+      this.userService.uploadFile(fileName, this.selectedFile).subscribe(
+        (response: any) => {
+        console.log('Immagine caricata con successo:', response.imageUrl);
+        this.user.imageUrl = response.imageUrl; // Aggiorna l'URL dell'immagine dell'utente
+        },
+        (error: HttpErrorResponse) => {
+        console.error('Errore durante il caricamento dell\'immagine:', error);
+        }
+      );
+    }
 
   }
   

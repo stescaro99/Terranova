@@ -14,11 +14,10 @@ export class TranslateService {
   translateText(text: string, targetLanguage: string): Observable<any> {
     const body = {
       q: text,
-      source: "auto", // Rileva automaticamente la lingua di origine
+      source: "auto",
       target: targetLanguage,
       format: "text"
     };
-
     return this.http.post(`${this.url}/translate`, body, {
       headers: { "Content-Type": "application/json" }
     });

@@ -71,7 +71,7 @@ export class BackgroundComponent {
 	localStorage.removeItem('user');
     localStorage.removeItem('guestToken');
     localStorage.removeItem('authToken');
-	this.userService.deleteUser(this.user.id).subscribe(
+	this.userService.deleteUser(this.user.username).subscribe(
 		(value: any)=>{
 			console.log('user delete', value);
 		},

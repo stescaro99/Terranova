@@ -1,5 +1,4 @@
 export class User {
-	id = ''
     name = '';
     username = '';
     password = '';
@@ -16,7 +15,6 @@ export class User {
   }
 
 export interface user {
-	id: string;
     name: string;
     username: string;
     email: string;

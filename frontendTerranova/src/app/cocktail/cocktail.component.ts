@@ -59,7 +59,7 @@ originalString: string [] = [
     this.name = this.user.username;
     
     this.languageChangeSubscription = this.userService.getLanguageChangeObservable().subscribe((language) => {
-      this.updateTranslations(language);
+      this.updateTranslations(this.user.language);
     });
     const currentLanguage = this.user.language || 'en';
     setTimeout(() => {
@@ -104,7 +104,7 @@ originalString: string [] = [
     let toChange: boolean = false;
      this.translatedString = [];
     this.originalString.forEach((text, index) => {
-      this.translateService.translateText(text, language).subscribe(
+      this.translateService.translateText(text, this.user.language).subscribe(
         (response) => {
           this.translatedString[index] = response.translatedText;
           this.cdr.detectChanges();
@@ -125,7 +125,7 @@ originalString: string [] = [
   
       cocktailElements.forEach((element) => {
         if (element.value) {
-          this.translateService.translateText(element.value, language).subscribe(
+          this.translateService.translateText(element.value, this.user.language).subscribe(
             (response) => {
               if (element.key == 'strInstructions') {
                 switch (this.user.language)

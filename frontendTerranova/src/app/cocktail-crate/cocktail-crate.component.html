@@ -3,23 +3,23 @@
 <div class="cocktail-container">
 	<br>
 	<div *ngIf="open === true; else privateMode" class="pubblicMode" (click)="setOpen(open)">
-		<span>Public</span>
+		<span>{{translatedText[0] || originalText[0]}}</span>
 	</div>
 	<ng-template #privateMode>
 		
 		<div class="privateMode" (click)="setOpen(open)">
-			<span>Private</span>
+			<span>{{translatedText[1] || originalText[2]}}</span>
 		</div>
 	</ng-template>
 	<br>
 	<div *ngIf="usedefaultimg === true; else useRealPhoto" class="pubblicMode" (click)="setDefaultImg(usedefaultimg)">
-		<span>Automatic image generator</span>
+		<span>{{translatedText[2] || originalText[2]}}</span>
 		<br>
 	  </div>
 	  
 	  <ng-template #useRealPhoto>
 		<div class="privateMode" (click)="setDefaultImg(usedefaultimg)">
-		  <span>Upload cocktail image</span>
+		  <span>{{translatedText[3] || originalText[3]}}</span>
 		</div>
 	</ng-template>
 	
@@ -35,17 +35,17 @@
 		
 	</div>
 		<div *ngIf="usedefaultimg === true" class="mode-buttons">
-			<button (click)="setMode('mix')">Mix</button>
-			<button (click)="setMode('shake')">Shake</button>
+			<button (click)="setMode('mix')">{{translatedText[4] || originalText[4]}}</button>
+			<button (click)="setMode('shake')">{{translatedText[5] || originalText[5]}}</button>
 		</div>
 		<label *ngIf="usedefaultimg == false" class="upload-area">
 			<input type="file" (change)="onFileSelected($event)" accept="image/*" />
 			<img *ngIf="imgPreview" [src]="imgPreview" alt="Anteprima immagine" class="image-preview" />
-			<span *ngIf="!imgPreview">Click to upload</span>
+			<span *ngIf="!imgPreview">{{translatedText[6] || originalText[6]}}</span>
 		  </label>
 		
 
-	<h3>Select the ingredients:</h3>
+	<h3>{{translatedText[7] || originalText[7]}}</h3>
 	<div class="ingredients-list">
 	  <div *ngFor="let i of [].constructor(numberOfIngredients); let index = index" class="ingredient-row">
 		<app-ingredient-list
@@ -67,11 +67,11 @@
   
 
 	<button class="add-ingredient-button" (click)="addIngredient()" [disabled]="!isLastIngredientValid() || numberOfIngredients >= 15">
-	  Add ingredient
+		{{translatedText[8] || originalText[8]}}
 	</button>
 
 	<div class="drink-details">
-		<label for="drinkName">Drink Name:</label>
+		<label for="drinkName">{{translatedText[9] || originalText[9]}}:</label>
 		<input
 		  id="drinkName"
 		  type="text"
@@ -84,24 +84,24 @@
 			{{ drinknameMessage }}
 		  </span>
 
-		<label for="drinkCategory">Category:</label>
+		<label for="drinkCategory">{{translatedText[14] || originalText[14]}}</label>
 		<select id="drinkCategory" [(ngModel)]="newcocktail.drink.strCategory" class="drink-select">
 			<option *ngFor="let category of categories" [value]="category">{{ category }}</option>
 		</select>
 
-		<label for="drinkAlcoholic">Type of drink:</label>
+		<label for="drinkAlcoholic">{{translatedText[15] || originalText[15]}}</label>
 		<select id="drinkAlcoholic" [(ngModel)]="newcocktail.drink.strAlcoholic" class="drink-select">
-			<option value="Alcoholic">Alcoholic</option>
-			<option value="Non alcoholic">Non alcoholic</option>
-			<option value="Optional alcohol">Optional alcohol</option>
+			<option value="Alcoholic">{{translatedText[16] || originalText[16]}}</option>
+			<option value="Non alcoholic">{{translatedText[17] || originalText[17]}}</option>
+			<option value="Optional alcohol">{{translatedText[18] || originalText[18]}}</option>
 		</select>
 
-		<label for="drinkGlass">Glass type:</label>
+		<label for="drinkGlass">{{translatedText[19] || originalText[19]}}</label>
 		<select id="drinkGlass" [(ngModel)]="newcocktail.drink.strGlass" class="drink-select">
 			<option *ngFor="let glass of glasses" [value]="glass">{{ glass }}</option>
 		</select>
 		
-		<label for="drinkInstructions">Instructions:</label>
+		<label for="drinkInstructions">{{translatedText[20] || originalText[20]}}</label>
 		<textarea
 		  id="drinkInstructions"
 		  [(ngModel)]="newcocktail.drink.strInstructionsZH_HANS"
@@ -109,6 +109,6 @@
 		  placeholder="Enter the instructions to prepare the drink"
 		></textarea>
 	  </div>
-	  <button class="add-ingredient-button" (click)="saveCocktail()" [disabled]="!isValid()" > Save cocktail</button>
+	  <button class="add-ingredient-button" (click)="saveCocktail()" [disabled]="!isValid()" >{{translatedText[21] || originalText[21]}}</button>
 
   </div>

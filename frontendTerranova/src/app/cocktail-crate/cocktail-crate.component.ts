@@ -10,11 +10,11 @@ import { ingredientColors, glasses, categories } from '../model/ingredient';
 import { BackgroundComponent } from '../background/background.component';
 import  html2canvas  from 'html2canvas'
 import { FormsModule } from '@angular/forms';
-import { image } from 'html2canvas/dist/types/css/types/image';
 import { Router } from '@angular/router';
-import { response } from 'express';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { TranslateService } from '../services/translate.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cocktail-crate',
@@ -41,13 +41,39 @@ export class CocktailCrateComponent {
 	drinknameAvailable: boolean = true;
 	glasses: string[] = glasses;
 	categories: string[] = categories;
+	originalText: string[] = [
+		'public',
+		'private',
+		'automatic image generation',
+		'Upload cocktail image',
+		'Mix',
+		'Shake',
+		'Click to upload',
+		'Select the ingredients:',
+		'Add ingredient',
+		'Drink Name:',
+		'The drink name cannot be empty.',
+		'The drink name is already in use.',
+		'The drink name is available.',
+		'Error during name verification. Please try again later.',
+		'Category:',
+		'Alcoholic',
+		'Non alcoholic',
+		'Optional alcohol',
+		'Glass type:',
+		'Instructions:',
+		'Save cocktail'
+	];
+	translatedText: string[] = [];
+	private languageChangeSubscription!: Subscription
 
 	constructor(
 		private userservice: UserService,
 		private cocktailservice: CocktailService,
 		private router: Router,
 		private route: ActivatedRoute,
-		private cdr: ChangeDetectorRef 
+		private cdr: ChangeDetectorRef,
+		private translateService: TranslateService,
 	) {
 		this.user = userservice.getUser() || new User();
 		this.idCocktail = this.route.snapshot.paramMap.get('id') || '';
@@ -85,6 +111,14 @@ export class CocktailCrateComponent {
 			this.quantity = Array(this.numberOfIngredients).fill('to taste');
 		}
 	}
+	ngOnInit(): void {
+		
+		const currentLanguage = this.user.language || 'en';
+		this.updateTranslations(currentLanguage);
+		this.languageChangeSubscription = this.userservice.getLanguageChangeObservable().subscribe((language) => {
+			this.updateTranslations(language);
+		});
+	}
 	setMode(mode: 'mix' | 'shake'): void {
 		this.mode = mode;
 	}
@@ -100,32 +134,51 @@ export class CocktailCrateComponent {
 
 	checkDrinkName(name: string | undefined): void {
 		if (!name || name.trim() === '') {
-		this.drinknameMessage = 'The drink name cannot be empty.';
+		this.drinknameMessage = this.translatedText[10] || this.originalText[10];
 		  this.drinknameAvailable = false;
 		  return;
 		}
 	  
 		this.cocktailservice.getDrinkName(name).subscribe(
 		  (response: any) => {
-			console.log('Risposta dal server:', response); // Verifica la risposta
-			if (response.exists) { // Mappa correttamente la proprietà Exists
-			  this.drinknameMessage = 'The drink name is already in use.';
+			console.log('Risposta dal server:', response); 
+			if (response.exists) { 
+			  this.drinknameMessage = this.translatedText[11] || this.originalText[11];
 			  this.drinknameAvailable = false;
 			} else {
-			  this.drinknameMessage = 'The drink name is available.';
+			  this.drinknameMessage = this.translatedText[12] || this.originalText[12];
 			  this.drinknameAvailable = true;
 			}
 		  },
 		  (error) => {
 			console.error('Errore durante la verifica del nome del drink:', error);
-			this.drinknameMessage = 'Error during name verification. Please try again later.';
+			this.drinknameMessage = this.translatedText[13] || this.originalText[13];
 			this.drinknameAvailable = false;
 		  }
 		);
 	  }
 
+	  updateTranslations(language: string): void {
+		if (language !== 'en') {
+			this.translatedText = [];
+			this.originalText.forEach((text, index) => {
+				this.translateService.translateText(text, language).subscribe(
+					(response: any) => {
+						this.translatedText[index] = response.translatedText;
+						this.cdr.detectChanges(); // Forza il change detection
+					},
+					(error) => {
+						console.error('Errore durante la traduzione:', error);
+						this.translatedText[index] = text;
+					}
+				);
+			});
+		} else {
+			this.translatedText = [...this.originalText];
+		}
+	}
+
 	  onBlurQuantity(index: number): void {
-		// Se il valore è vuoto o "to taste", imposta "to taste"
 		if (this.quantity[index].trim() === '' || this.quantity[index].trim().toLowerCase() === 'to taste' || this.quantity[index].trim().toLowerCase() === '0') {
 		  this.quantity[index] = 'to taste';
 		}
@@ -136,15 +189,12 @@ export class CocktailCrateComponent {
 
 	onIngredientSelected(event: { name: string; color: string }, index: number): void {
 		const { name, color } = event;
-	  
-		// Rimuovi l'ingrediente precedente dallo slot
 		if (this.ingredients[index]) {
 		  const previousIngredient = this.ingredients[index];
 		  console.log(`Rimuovendo ingrediente precedente: ${previousIngredient}`);
 		  delete this.ingredientColors[previousIngredient];
 		}
 	  
-		// Aggiorna l'ingrediente nello slot corrente
 		this.ingredients[index] = name;
 		this.ingredientColors[name] = color;
 	  
@@ -159,13 +209,13 @@ export class CocktailCrateComponent {
 		
 		const colors = this.ingredients
 			.map(ingredient => this.ingredientColors[ingredient] || '#000000')
-			.filter(color => color); // Filtra eventuali valori nulli o undefined
+			.filter(color => color); 
 		
 		if (colors.length === 0) {
 			return '#000000';
 		}
 		
-		// Crea un gradiente lineare con i colori disponibili
+
 		return `linear-gradient(to bottom, ${colors.join(', ')})`;
 	}
 	getMixedColor(): string {
@@ -173,7 +223,7 @@ export class CocktailCrateComponent {
 		console.log('Colori degli ingredienti:', colors);
 	  
 		if (colors.length === 0) {
-		  return 'rgba(0, 0, 0, 1)'; // Colore di fallback
+		  return 'rgba(0, 0, 0, 1)';
 		}
 	  
 		let r = 0, g = 0, b = 0, a = 0;
@@ -188,13 +238,13 @@ export class CocktailCrateComponent {
 		  }
 		});
 	  
-		// Calcola la media dei valori RGBA
+
 		r = Math.round(r / colors.length);
 		g = Math.round(g / colors.length);
 		b = Math.round(b / colors.length);
-		a = Math.round((a / colors.length) * 100) / 100; // Mantieni due decimali per l'alpha
+		a = Math.round((a / colors.length) * 100) / 100;
 	  
-		// Restituisci il colore medio in formato RGBA
+
 		return `rgba(${r}, ${g}, ${b}, ${a})`;
 	  }
 	
@@ -260,7 +310,7 @@ export class CocktailCrateComponent {
 		  r: parseInt(match[1], 10),
 		  g: parseInt(match[2], 10),
 		  b: parseInt(match[3], 10),
-		  a: match[4] ? parseFloat(match[4]) : 1 // Alpha predefinito a 1 se non specificato
+		  a: match[4] ? parseFloat(match[4]) : 1 
 		};
 	  }
 
@@ -273,8 +323,8 @@ export class CocktailCrateComponent {
 			return reject('Elemento non trovato');
 			}
 
-			html2canvas(element, { backgroundColor: null }).then(canvas => {
-			canvas.toBlob(blob => {
+			html2canvas(element, { backgroundColor: null }).then((canvas: HTMLCanvasElement) => {
+			canvas.toBlob((blob: Blob | null) => {
 				if (!blob) {
 				return reject('Errore durante la conversione in Blob.');
 				}
@@ -294,7 +344,7 @@ export class CocktailCrateComponent {
 				}
 				});
 			}, 'image/png');
-			}).catch(err => {
+			}).catch((err: unknown) => {
 			console.error('Errore durante la cattura dell\'immagine:', err);
 			reject(err);
 			});
@@ -325,7 +375,7 @@ export class CocktailCrateComponent {
 
 	  async saveCocktail(): Promise<void> {
 		if (this.usedefaultimg) {
-		  await this.captureImage(); // Aspetta che l'immagine venga catturata
+		  await this.captureImage(); 
 		}
 	  
 		for (let i = 0; i < this.ingredients.length; i++) {
@@ -345,4 +395,10 @@ export class CocktailCrateComponent {
 			}
 		);
 	  }
+
+	ngOnDestroy(): void {
+		if (this.languageChangeSubscription) {
+			this.languageChangeSubscription.unsubscribe();
+		}
+	}
 }

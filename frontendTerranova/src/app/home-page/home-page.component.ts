@@ -39,7 +39,8 @@ export class HomePageComponent implements OnInit, OnDestroy{
     'Favorite Cocktails',
     'You have not added any cocktails to your favorites yet.',
     'Recommended Cocktails for you',
-	'Make your cocktail'
+	  'Make your cocktail',
+    'search cocktail:'
   ];
   translatedText: string[] = [];
   private languageChangeSubscription!: Subscription;
@@ -86,7 +87,6 @@ export class HomePageComponent implements OnInit, OnDestroy{
           console.error('Errore durante il recupero dell\'utente:', error);
         }
       );
-      console.log('aaaa');
       this.userService.getRecommendedtails(this.user.username).subscribe(
         (response: any) => {
           for (let i = 0; i < response.length; i++) {
@@ -95,7 +95,7 @@ export class HomePageComponent implements OnInit, OnDestroy{
           console.log('Cocktail raccomandati:', this.recommendedCocktails);
         });
       this.languageChangeSubscription = this.userService.getLanguageChangeObservable().subscribe((language) => {
-        this.updateTranslations(language);
+        this.updateTranslations(this.user.language);
       });
       const currentLanguage = this.userService.getUser()?.language || 'en';
       this.updateTranslations(currentLanguage);
@@ -133,16 +133,17 @@ export class HomePageComponent implements OnInit, OnDestroy{
   );    
   }
   updateTranslations(language: string): void {
-    if (this.user.language !== 'it') {
+    if (this.user.language !== 'en') {
         
       this.translatedText = [];
       this.stringsToTranslate.forEach((text, index) => {
-        this.translateService.translateText(text, language).subscribe(
+        this.translateService.translateText(text, this.user.language).subscribe(
           (response) => {
             this.translatedText[index] = response.translatedText;
-            this.cdr.detectChanges(); // Forza il change detection
+            this.cdr.detectChanges();
           },
           (error) => {
+            console.error('Errore durante la traduzione:', error);
           }
         );
       });
