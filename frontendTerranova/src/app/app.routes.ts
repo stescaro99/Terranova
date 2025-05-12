@@ -4,7 +4,8 @@ import { SiginComponent } from './autentification/sigin/sigin.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { authGuard } from './guard/auth.guard';
 import { CocktailComponent } from './cocktail/cocktail.component';
-import { CocktailCrateComponent } from './cocktail-crate/cocktail-crate.component'
+import { CocktailCrateComponent } from './cocktail-crate/cocktail-crate.component';
+import { SetingsComponent } from './autentification/setings/setings.component'
 
 export const routes: Routes = [
 {
@@ -36,5 +37,8 @@ export const routes: Routes = [
 	{
 	path:'cocktail-create/:id',
 	component: CocktailCrateComponent,
+	},
+	{
+		path: 'settings'
 	}
 ];
