@@ -1,5 +1,99 @@
-.inline-container{
-    display: flex; /* Usa flexbox per posizionare gli elementi in linea */
-    align-items: center; /* Allinea verticalmente al centro */
-    gap: 10px; /* Spazio tra la scritta e il pulsante */
-  }
+.sigin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+    background-color: #f3f7bea4; /* Sfondo chiaro */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    border-radius: 10px;
+}
+
+.sigin-title {
+    font-size: 2.5rem;
+    color: #2d3748; /* Grigio scuro */
+    margin-bottom: 10px;
+}
+
+.sigin-subtitle {
+    font-size: 1.2rem;
+    color: #4a5568; /* Grigio medio */
+    margin-bottom: 20px;
+}
+
+.sigin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.sigin-input {
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #cbd5e0; /* Grigio chiaro */
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sigin-input:focus {
+    border-color: #3182ce; /* Blu */
+    box-shadow: 0 0 5px rgba(49, 130, 206, 0.5); /* Effetto focus */
+}
+
+.sigin-button {
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #3182ce; /* Blu */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sigin-button:hover {
+    background-color: #2b6cb0; /* Blu scuro */
+    transform: scale(1.05);
+}
+
+.sigin-button:active {
+    background-color: #2c5282; /* Blu ancora più scuro */
+    transform: scale(0.95);
+}
+
+.error-message {
+    color: #e53e3e; /* Rosso */
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.sigin-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.secondary-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #3182ce; /* Blu */
+    background-color: #e2e8f0; /* Grigio chiaro */
+    border: 2px solid #3182ce; /* Blu */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.secondary-button:hover {
+    background-color: #3182ce; /* Blu */
+    color: white;
+}
+
+.secondary-button:active {
+    background-color: #2b6cb0; /* Blu scuro */
+}

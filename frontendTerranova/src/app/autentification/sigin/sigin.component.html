@@ -1,48 +1,56 @@
-
 <app-background></app-background>
-<h2>Sign Up</h2>
-<br>
-<form (ngSubmit)="submitForm()">
-  <p>Name*: <input type="text" [(ngModel)]="user.name" name="name" required /></p>
-<app-username [user]="user" (userSelected)="usernameAvailable = $event"></app-username>
-  <p>Password*: <input type="password" [(ngModel)]="user.password" name="password" required></p>
-  <p>
-    Email*: 
-   <input 
-      type="email" 
-      placeholder="Enter your email"
-      [(ngModel)]="user.email" 
-      name="email" 
-      required 
-      (input)="validateEmail()" 
-      #emailInput="ngModel" 
-    />
-    <span *ngIf="emailInput.invalid && emailInput.touched" style="color: red;">
-      Please enter a valid email.
-    </span>
-    <span *ngIf="emailErrorMessage" style="color: red;">
-      {{ emailErrorMessage }}
-    </span>
-  </p>
-  <p>Birth Date*:<app-age (DateSelected)="user.birthDate = $event"></app-age></p>
-  <app-country (countrySelected)="user.country = $event"></app-country>
-  <p>City: <input type="text" [(ngModel)]="user.city" name="city"></p>
-  
-  <label for="imgUpload">Upload Image:</label>
-  <input type="file" id="imgUpload" (change)="onFileSelected($event)" accept="image/*" />
-  
-  <!-- <img *ngIf="user.imgUrl" [src]="user.imgUrl" alt="Uploaded Image" /> -->
-
-  
-  <div class="inline-container">
-    No-Alcohol mode
-  <app-slide-button [(isActive)]="user.canDrinkAlcohol" ></app-slide-button>
-  </div>
-  <div class="inline-container">
-    Accept 
-    <a href="https://www.termsfeed.com/live/b54efd79-4654-4127-a1ab-c1b00dfa882a" target="_blank">Terms and Conditions</a>
-	<app-slide-button [(isActive)]="user.appPermissions" > </app-slide-button>
+<div class="sigin-container">
+  <h2 class="sigin-title">Sign Up</h2>
+  <p class="sigin-subtitle">Create your account to get started</p>
+  <form class="sigin-form" (ngSubmit)="submitForm()">
+    <p>
+      Name*: 
+      <input type="text" class="sigin-input" [(ngModel)]="user.name" name="name" required />
+    </p>
+    <app-username [user]="user" (userSelected)="usernameAvailable = $event"></app-username>
+    <p>
+      Password*: 
+      <input type="password" class="sigin-input" [(ngModel)]="user.password" name="password" required />
+    </p>
+    <p>
+      Email*: 
+      <input 
+        type="email" 
+        class="sigin-input" 
+        placeholder="Enter your email"
+        [(ngModel)]="user.email" 
+        name="email" 
+        required 
+        (input)="validateEmail()" 
+        #emailInput="ngModel" 
+      />
+      <span *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
+        Please enter a valid email.
+      </span>
+      <span *ngIf="emailErrorMessage" class="error-message">
+        {{ emailErrorMessage }}
+      </span>
+    </p>
+    <p>
+      Birth Date*: 
+      <app-age (DateSelected)="user.birthDate = $event"></app-age>
+    </p>
+    <app-country (countrySelected)="user.country = $event"></app-country>
+    <p>
+      City: 
+      <input type="text" class="sigin-input" [(ngModel)]="user.city" name="city" />
+    </p>
+    <label for="imgUpload" class="sigin-subtitle">Upload Image:</label>
+    <input type="file" id="imgUpload" class="sigin-input" (change)="onFileSelected($event)" accept="image/*" />
+    <div class="inline-container">
+      No-Alcohol mode
+      <app-slide-button [(isActive)]="user.canDrinkAlcohol"></app-slide-button>
+    </div>
+    <div class="inline-container">
+      Accept 
+      <a href="https://www.termsfeed.com/live/b54efd79-4654-4127-a1ab-c1b00dfa882a" target="_blank">Terms and Conditions</a>
+      <app-slide-button [(isActive)]="user.appPermissions"></app-slide-button>
+    </div>
+    <button type="submit" class="sigin-button" [disabled]="!formValid()">Confirm</button>
+  </form>
 </div>
-  
-  <button type="submit" [disabled]="!formValid()">Confirm</button>
-</form>
